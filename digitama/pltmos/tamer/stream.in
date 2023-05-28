@@ -1,0 +1,13 @@
+#pragma once // 确保只被 include 一次 [事实标准]
+
+namespace WarGrey::PLT::Tamer {
+    /**
+     * This file works for the concept "Stream"
+     * 这个文件为概念“流”而生
+     *
+     * You can also specify other file with the '--pipe' option
+     * 你也可以通过“--pipe”选项指定其他文件
+     */
+
+    static float percentage = 100.0F; 
+}
