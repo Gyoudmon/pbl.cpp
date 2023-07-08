@@ -21,6 +21,19 @@
             "intelliSenseMode": "macos-clang-x64",
             "configurationProvider": "makefile-tools",
             "compilerArgs": []
+        },
+        {
+            "name": "win32",
+            "includePath": [
+                "C:\\opt\\vcso\\include"
+            ],
+            "defines": [
+                "__windows__",
+                "__lambda__=",
+                "__ffi__=",
+                "DECLSPEC=",
+                "SDLCALL="
+            ]
         }
     ],
     "version": 4
