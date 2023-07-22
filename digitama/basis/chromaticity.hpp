@@ -1,7 +1,7 @@
 #pragma once // 确保只被 include 一次
 
-#include "../big_bang/bang.hpp"
-#include "../big_bang/matter/graphlet/chromalet.hpp"
+#include <gydm_stem/bang.hpp>
+#include <gydm_stem/matter/graphlet/chromalet.hpp>
 
 #include <vector>
 

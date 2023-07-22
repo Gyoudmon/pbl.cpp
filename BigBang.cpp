@@ -14,7 +14,7 @@
 #include "digitama/basis/evolution.hpp"
 
 // Additional Demos
-#include "digitama/pltmos/stream.hpp"
+#include <pltmos/stream.hpp>
 
 using namespace WarGrey::STEM;
 using namespace WarGrey::PLT;

@@ -1,5 +1,5 @@
 // shape.cpp 文件
-#include "../../digitama/big_bang/game.hpp" // 导入游戏模块
+#include <gydm_stem/game.hpp> // 导入游戏模块
 
 using namespace WarGrey::STEM; // 声明本模块的类和函数默认以 WarGrey::STEM 的名义使用
 

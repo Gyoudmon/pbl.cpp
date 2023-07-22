@@ -1,6 +1,6 @@
 #pragma once // 确保只被 include 一次
 
-#include "../../big_bang/bang.hpp"
+#include <gydm_stem/bang.hpp>
 
 #include <map>
 
@@ -21,12 +21,12 @@ namespace WarGrey::STEM {
     public:
         void show_grid(bool yes);
         void set_color(uint32_t hex);
-        void modify_life_at_location(float x, float y);
-        int current_generation() { return this->generation; }
+        void toggle_life_at_location(float x, float y);
+        int get_generation() { return this->generation; }
 
     public:
         void construct_random_world();
-        bool pace_forward(int repeats);
+        bool pace_forward();
         void reset();
 
     public:

@@ -1,5 +1,5 @@
-#include "digitama/big_bang/game.hpp"
-#include "digitama/big_bang/graphics/text.hpp"
+#include <gydm_stem/game.hpp>
+#include <gydm_stem/graphics/text.hpp>
 
 using namespace WarGrey::STEM;
 

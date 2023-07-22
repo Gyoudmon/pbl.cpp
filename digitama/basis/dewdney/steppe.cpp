@@ -1,6 +1,6 @@
 #include "steppe.hpp"
 
-#include "../../big_bang/datum/fixnum.hpp"
+#include <gydm_stem/datum/fixnum.hpp>
 
 using namespace WarGrey::STEM;
 

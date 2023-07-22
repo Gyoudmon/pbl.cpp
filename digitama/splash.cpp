@@ -1,7 +1,9 @@
 #include "splash.hpp"
 
-#include "big_bang/bang.hpp"
-#include "big_bang/datum/string.hpp"
+#include <gydm_stem/bang.hpp>
+
+#include <gydm_stem/datum/string.hpp>
+#include <gydm_stem/datum/path.hpp>
 
 using namespace WarGrey::STEM;
 
@@ -249,6 +251,13 @@ void WarGrey::STEM::TheCosmos::construct(int argc, char* argv[]) {
     GameFont::fontsize(21);
     
     enter_digimon_zone(argv[0]);
+
+#ifdef __windows__
+    digimon_appdata_setup("C:\\opt\\GYDMstem\\");
+#else
+    digimon_appdata_setup("/opt/GYDMstem/");
+#endif
+
     digimon_mascot_setup("C:\\opt\\mascot");
     imgdb_setup(digimon_subdir("stone"));
     

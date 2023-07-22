@@ -1,6 +1,6 @@
 #pragma once // 确保只被 include 一次
 
-#include "../big_bang/bang.hpp"
+#include <gydm_stem/bang.hpp>
 
 #include <vector>
 

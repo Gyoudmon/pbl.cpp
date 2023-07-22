@@ -1,6 +1,6 @@
 #include "evolution.hpp"
 
-#include "../big_bang/datum/fixnum.hpp"
+#include <gydm_stem/datum/fixnum.hpp>
 
 #include <algorithm>
 
