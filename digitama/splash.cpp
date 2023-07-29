@@ -252,14 +252,15 @@ void WarGrey::STEM::TheCosmos::construct(int argc, char* argv[]) {
     
     enter_digimon_zone(argv[0]);
 
+    imgdb_setup(digimon_subdir("stone"));
+    
 #ifdef __windows__
     digimon_appdata_setup("C:\\opt\\GYDMstem\\");
+    digimon_mascot_setup("C:\\opt\\GYDMstem\\stone\\mascot");
 #else
     digimon_appdata_setup("/opt/GYDMstem/");
+    digimon_mascot_setup("/opt/GYDMstem/stone/mascot");
 #endif
-
-    digimon_mascot_setup("C:\\opt\\mascot");
-    imgdb_setup(digimon_subdir("stone"));
     
     this->parse_cmdline_options(argc, argv);
     
