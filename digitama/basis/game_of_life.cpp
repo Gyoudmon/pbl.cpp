@@ -86,15 +86,27 @@ void WarGrey::STEM::GameOfLifeWorld::update(uint64_t count, uint32_t interval, u
 
 /*************************************************************************************************/
 bool WarGrey::STEM::GameOfLifeWorld::can_select(IMatter* m) {
+    Labellet* menu = dynamic_cast<Labellet*>(m);
+
     return m == this->agent
         || ((this->state == GameState::Edit)
-            && (m == this->gameboard));
+            && (m == this->gameboard))
+        || ((menu != nullptr)
+            && (menu->get_text_color() == GREEN));
 }
 
 void WarGrey::STEM::GameOfLifeWorld::on_tap(IMatter* matter, float x, float y) {
     if (isinstance(matter, GameOfLifelet)) {
         this->gameboard->toggle_life_at_location(x, y);
         this->instructions[WRTE_KEY]->set_text_color(GREEN);
+    } else if (isinstance(matter, Labellet)) {
+        for (size_t idx = 0; idx < sizeof(ordered_keys) / sizeof(char);  idx ++) {
+            if (this->instructions[ordered_keys[idx]] == matter) {
+                this->on_char(ordered_keys[idx], 0, 1, false);
+                this->no_selected();
+                break;
+            }
+        }
     }
 }
 
