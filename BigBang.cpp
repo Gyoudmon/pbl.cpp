@@ -55,17 +55,6 @@ namespace {
             this->push_plane(new StreamPlane(this->stream_source.c_str()));
         }
 
-    public:
-        void on_char(char key, uint16_t modifiers, uint8_t repeats, bool pressed) override {
-            if (pressed) {
-                printf("Key Event is okay, you pressed '%c'\n", key);
-            }
-        }
-        
-        void on_unhandled_event(uint32_t type, SDL_Event& self) override {
-            printf("Caught an unknown event whose type is 0x%x(%d)\n", type, type);
-        }
-
     protected:
         void parse_cmdline_options(int argc, char* argv[]) override {
             CmdlineOps opt = CmdlineOps::_;
