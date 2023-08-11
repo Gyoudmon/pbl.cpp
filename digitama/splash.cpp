@@ -276,15 +276,3 @@ void WarGrey::STEM::TheCosmos::update(uint64_t count, uint32_t interval, uint64_
 bool WarGrey::STEM::TheCosmos::can_exit() {
     return this->splash->has_mission_completed();
 }
-
-void WarGrey::STEM::TheCosmos::on_char(char key, uint16_t modifiers, uint8_t repeats, bool pressed) {
-    if (pressed) {
-        printf("you pressed '%c'\n", key);
-    }
-
-    Cosmos::on_char(key, modifiers, repeats, pressed);
-}
-        
-void WarGrey::STEM::TheCosmos::on_unhandled_event(uint32_t type, SDL_Event& self) {
-    printf("Caught an unknown event whose type is 0x%x(%d)\n", type, type);
-}
