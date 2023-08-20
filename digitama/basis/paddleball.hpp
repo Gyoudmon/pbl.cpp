@@ -8,7 +8,7 @@ namespace WarGrey::STEM {
     /******************************************* 声明游戏世界 ******************************************/
     class PaddleBallWorld : public WarGrey::STEM::TheBigBang {
         public:
-            PaddleBallWorld() : TheBigBang("托球游戏", 0xFFFFFFU) {}
+            PaddleBallWorld() : TheBigBang("托球游戏") {}
 
         public:    // 覆盖游戏基本方法
             void load(float width, float height) override;

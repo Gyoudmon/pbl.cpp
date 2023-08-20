@@ -1,5 +1,7 @@
 #include "paddleball.hpp"
 
+#include <gydm_stem/physics/random.hpp>
+
 using namespace WarGrey::STEM;
 
 const float ball_radius = 8.0F;
@@ -14,13 +16,11 @@ const float paddle_speed = ball_speed * 1.5F;
 void WarGrey::STEM::PaddleBallWorld::load(float width, float height) {
     TheBigBang::load(width, height);
 
-    this->ball = this->insert(new Circlet(ball_radius, GHOSTWHITE));
-    this->paddle = this->insert(new Rectanglet(paddle_width, paddle_height, WHITESMOKE));
+    this->ball = this->insert(new Circlet(ball_radius, CHOCOLATE));
+    this->paddle = this->insert(new Rectanglet(paddle_width, paddle_height, ROYALBLUE));
 
     this->ball->set_border_strategy(BorderStrategy::BOUNCE, BorderStrategy::BOUNCE, BorderStrategy::STOP, BorderStrategy::BOUNCE);
     this->paddle->set_border_strategy(BorderStrategy::IGNORE, BorderStrategy::STOP);
-    
-    this->set_background(BLACK);
 }
 
 // 实现 PaddleBallWorld::on_mission_start 方法，调整球和桨的位置
@@ -32,7 +32,7 @@ void WarGrey::STEM::PaddleBallWorld::on_mission_start(float width, float height)
     this->move_to(this->paddle, width * 0.5F, height - paddle_height * 4.0F, MatterAnchor::CC);
 
     // 设置球的速度
-    this->ball->set_velocity(ball_speed, 45.0F);
+    this->ball->set_velocity(ball_speed, double(random_uniform(30, 150)));
 }
 
 // 实现 PaddleBallWorld::update 方法，根据球和桨的当前位置判断是否有碰撞，无需考虑运动细节
@@ -50,14 +50,14 @@ void WarGrey::STEM::PaddleBallWorld::update(uint64_t count, uint32_t interval, u
             this->ball->motion_bounce(false, true); // 正常，反弹球
         }
     } else {
-        this->ball->set_color(LIGHTGRAY);
+        this->ball->set_color(FIREBRICK);
     }
 }
 
 // 实现 PaddleBallWorld::on_char 方法，处理键盘事件，用于控制桨的移动
 void WarGrey::STEM::PaddleBallWorld::on_char(char key, uint16_t modifiers, uint8_t repeats, bool pressed) {
     switch(key) {
-        case 'a': this->paddle->set_velocity(pressed ? paddle_speed : 0.0F, 180.0F); break;
-        case 'd': this->paddle->set_velocity(pressed ? paddle_speed : 0.0F, 000.0F); break;
+    case 'a': this->paddle->set_velocity(pressed ? paddle_speed : 0.0F, 180.0F); break;
+    case 'd': this->paddle->set_velocity(pressed ? paddle_speed : 0.0F, 000.0F); break;
     }
 }
