@@ -17,7 +17,8 @@ void 踢(const char* 猫, const char* 谁, const char* 哪只) {
 
 // 定义类和方法(用 struct 可默认 public)
 struct BadPerson {
-    BadPerson(const char* name) : name(name) {
+    BadPerson(const char* name) {
+        this->name = name;
         printf("%s is ready\n", name);
     }
 
@@ -56,7 +57,7 @@ int main(int 参数数量, char* 参数小组[]) {
 
         参数小组[0] = const_cast<char*>("Cat");
         while (idx < 参数数量) {
-            踢(参数小组[idx + 1], 参数小组[idx], "right");
+            踢(参数小组[idx + 1], 参数小组[idx], "右");
             idx = idx + 1;
         }
     }
