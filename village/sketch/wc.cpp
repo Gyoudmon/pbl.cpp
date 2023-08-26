@@ -35,6 +35,7 @@ int main(int argc, char* argv[]) {
             }
         }
     } else {
+        std::cout << "[read from user input]" << std::endl;
         wc_by_line(std::cin);
     }
 

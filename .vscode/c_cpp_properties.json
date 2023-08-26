@@ -3,8 +3,10 @@
         {
             "name": "macOS",
             "includePath": [
+                "/opt/GYDMstem/include",
                 "/usr/local/include",
-                "/opt/GYDMstem/include"
+                "C:\\opt\\GYDMstem\\include",
+                "cpp"
             ],
             "defines": [
                 "__macosx__",
@@ -22,20 +24,6 @@
             "intelliSenseMode": "macos-clang-x64",
             "configurationProvider": "makefile-tools",
             "compilerArgs": []
-        },
-
-        {
-            "name": "win32",
-            "includePath": [
-                "C:\\opt\\GYDMstem\\include"
-            ],
-            "defines": [
-                "__windows__",
-                "__lambda__=__declspec(dllexport)",
-                "__ffi__=__declspec(dllexport)",
-                "DECLSPEC=",
-                "SDLCALL="
-            ]
         }
     ],
     "version": 4

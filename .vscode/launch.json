@@ -1,58 +1,23 @@
 {
+    "version": "0.2.0",
     "configurations": [
         {
-            "name": "宇宙大爆炸@macOS",
+            "name": "C++ 快捷运行",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/compiled/native/BigBang",
+            "program": "${fileDirname}/compiled/native/${fileBasenameNoExtension}",
             "args": [],
             "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
+            "cwd": "${fileDirname}",
             "environment": [],
-            "externalConsole": false,
+            "internalConsoleOptions": "openOnSessionStart",
             "MIMode": "lldb",
-            "preLaunchTask": "宇宙大爆炸@macOS[Release]"
-        },
-        
-        {
-            "name": "macDBG宇宙大爆炸",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/compiled/native/debug/BigBang",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "lldb",
-            "preLaunchTask": "宇宙大爆炸@macOS[Debug]"
-        },
+            "preLaunchTask": "快捷构建",
 
-        {
-            "name": "win宇宙大爆炸",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/compiled/native/BigBang.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "preLaunchTask": "宇宙大爆炸@Windows[Release]"
-        },
-        
-        {
-            "name": "winDBG宇宙大爆炸",
-            "type": "cppvsdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/compiled/native/debug/BigBang.exe",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "externalConsole": false,
-            "preLaunchTask": "宇宙大爆炸@Windows[Debug]"
+            "windows": {
+                "program": "${fileDirname}/compiled/native/${fileBasenameNoExtension}.exe",
+                "type": "cppvsdbg"    
+            }
         }
-    ],
-    "version": "2.0.0"
+    ]
 }

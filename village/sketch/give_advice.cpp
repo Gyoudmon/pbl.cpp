@@ -19,13 +19,13 @@ struct Person {
         this->颜值 = good_looking;
     }
 
-    // 人会提关于颜值比较的问题
+    // 人会臭美，问别人谁更美
     void 问(const Person* 回答者, const Person* 比较者) const {
         printf("%s: 吾孰与%s美?\n", this->name, 比较者->name);
         回答者->曰(this, 比较者);
     }
     
-    // 人会回答关于颜值比较的问题
+    // 人会奉承，见人说人话 见鬼说鬼话
     void 曰(const Person* 提问者, const Person* 比较者) const {
         printf("%s: 君美甚，%s何能及君也!\n", this->name, 比较者->name);
     }
