@@ -12,22 +12,39 @@
     
     "tasks": [
         {
-            "label": "快捷构建",
-            "detail": "构建和运行当前活动文件",
+            "label": "一键编译",
+            "detail": "构建当前活动文件",
             "command": "raco",
             "type": "cppbuild",
-            "args": [ "wisemon", "-d", "cc", "${file}"],
-            "problemMatcher": ["$gcc"],
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
-            "options": {
-                "cwd": "${fileDirname}"
-            },
-            "windows": {
-                "problemMatcher": ["$msCompile"]
-            }
+            "args": [ "wisemon", "-d", "cc", "${file}" ],
+            "problemMatcher": [ "$gcc" ],
+            "group": { "kind": "build", "isDefault": true },
+            "options": { "cwd": "${fileDirname}" },
+            "windows": { "problemMatcher": ["$msCompile"] }
+        },
+
+        {
+            "label": "宇宙大爆炸[Release]",
+            "detail": "构建和运行 青少计算机科学：宇宙大爆炸",
+            "command": "raco",
+            "type": "cppbuild",
+            "problemMatcher": [ "$gcc" ],
+            "args": [ "wisemon", "-d", "cc" ],
+            "options": { "cwd": "${workspaceFolder}" },
+            "group": { "kind": "build", "isDefault": false },
+            "windows": { "problemMatcher": ["$msCompile"] }
+        },
+
+        {
+            "type": "cppbuild",
+            "label": "宇宙大爆炸[Debug]",
+            "detail": "构建和调试 青少计算机科学：宇宙大爆炸",
+            "command": "raco",
+            "problemMatcher": [ "$gcc" ],
+            "args": [ "wisemon", "-d", "cc-dbg" ],
+            "options": { "cwd": "${workspaceFolder}" },
+            "group": { "kind": "build", "isDefault": false },
+            "windows": { "problemMatcher": ["$msCompile"] }
         }
     ]
 }
