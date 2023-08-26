@@ -12,8 +12,8 @@
     
     "tasks": [
         {
-            "label": "一键编译",
-            "detail": "构建当前活动文件",
+            "label": "快捷构建",
+            "detail": "构建和运行当前活动文件",
             "command": "raco",
             "type": "cppbuild",
             "args": [ "wisemon", "-d", "cc", "${file}" ],

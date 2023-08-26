@@ -3,7 +3,7 @@
     
     "configurations": [
         {
-            "name": "一键编译/运行 main 函数",
+            "name": "一键编译运行 C++ 程序",
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/compiled/native/${fileBasenameNoExtension}",
@@ -13,14 +13,14 @@
             "environment": [],
             "internalConsoleOptions": "openOnSessionStart",
             "MIMode": "lldb",
-            "preLaunchTask": "一键编译",
+            "preLaunchTask": "快捷构建",
 
             "windows": {
                 "program": "${fileDirname}/compiled/native/${fileBasenameNoExtension}.exe",
                 "type": "cppvsdbg"
             }
         },
-
+        
         {
             "name": "宇宙大爆炸",
             "type": "cppdbg",
