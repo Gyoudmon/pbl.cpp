@@ -19,14 +19,12 @@ void 踢(const char* 猫, const char* 谁, const char* 哪只) {
 int main(int 参数数量, char* 参数小组[]) {
     printf("Kick the Cat Effect: %s\n", 参数小组[0]);
 
-    /* 理解 main 的参数 */ {
-        int idx = 0;
+    int idx = 0;
 
-        参数小组[0] = const_cast<char*>("Cat");
-        while (idx < 参数数量) {
-            踢(参数小组[idx + 1], 参数小组[idx], "右");
-            idx = idx + 1;
-        }
+    参数小组[0] = const_cast<char*>("Cat");
+    while (idx < 参数数量) {
+        踢(参数小组[idx + 1], 参数小组[idx], "右");
+        idx = idx + 1;
     }
 
     /* 体验类型的威力 */

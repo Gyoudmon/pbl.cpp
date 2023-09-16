@@ -1,28 +1,43 @@
 #include <iostream>
+#include <vector>
 
-// 场景：胡克定律
+double hookes_fit(std::vector<std::vector<double>>& data) {
+    size_t N = data.size() + 1;
+    double Σx, Σy, Σxy, Σx²;
 
-// 实验得出关系表达式：Δl = 0.16m
-double Δl1(double m) {
-    return 0.16 * m;
-}
+    Σx = Σy = Σxy = Σx² = 0.0;
 
-double Δl2(double m) {
-    return 0.20 * m;
-}
-
-double Δl3(double m) {
-    return 0.15 * m;
+    for (auto datum : data) {
+        double x = datum[0];
+        double y = datum[1];
+        
+        Σx += x;
+        Σy += y;
+        Σxy += (x * y);
+        Σx² += (x * x);
+    }
+    
+    double xbar = Σx / N;
+    double ybar = Σy / N;
+    double k = (Σxy - (N * xbar * ybar)) / (Σx² - (N * xbar * xbar));
+    // double b = ybar - (k * xbar);
+    
+    return k;
 }
 
 // 门槛不算高，但是极其折磨人
 int main(int 参数数量, char* 参数小组[]) {
-    printf("Hooke's Law: %s\n", 参数小组[0]);
+    printf("Hooke's Law Fit: %s\n", 参数小组[0]);
 
-    // 数学建模阶段    
-    printf("delta l1: %lf\n", Δl1(20.0));
-    printf("delta l2: %lf\n", Δl2(40.0));
-    printf("delta l3: %lf\n", Δl3(80.0));
+    std::vector<std::vector<double>> data = {
+        { 20.0, 3.0 },
+        { 40.0, 7.0 },
+        { 60.0, 10.0 },
+        { 80.0, 13.0 },
+        { 100.0, 16.0 }
+    };
+    
+    printf("k = %lf\n", hookes_fit(data));
 
     return 0;
 }

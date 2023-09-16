@@ -5,7 +5,7 @@
 // 定义函数:
 double l(double m, double 初始长度, double 限度) {
     if (m <= 限度) {
-        return 0.16 * m + 初始长度;
+        return 0.1614 * m + 初始长度;
     } else {
         printf("Ahhhhhhh, the spring is broken.\n");
         return 0.0;
@@ -21,9 +21,9 @@ int main(int 参数数量, char* 参数小组[]) {
     
     while (idx < 参数数量) {
         double mass = strtod(参数小组[idx], nullptr);
-        double length = l(mass, 5.0, 100.0);
+        double length = l(mass, 50.0, 100.0);
 
-        printf("mass = %lfg, length = %lfcm\n", mass, length);
+        printf("mass = %lfg, length = %lfmm\n", mass, length);
 
         idx = idx + 1;
     }

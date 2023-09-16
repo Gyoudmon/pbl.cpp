@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <string>
 
 /*************************************************************************************************/
 void wc_by_line(std::istream& src) {
