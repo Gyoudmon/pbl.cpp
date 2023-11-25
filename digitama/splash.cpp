@@ -42,7 +42,7 @@ namespace {
             this->load_tasks(width, height);
             this->tux = this->insert(new Tuxmon());
 
-            this->tooltip = this->insert(make_label_for_tooltip(GameFont::Tooltip(), GHOSTWHITE));
+            this->tooltip = this->insert(make_label_for_tooltip(GameFont::Tooltip()));
             this->set_tooltip_matter(this->tooltip);
 
             this->splash->create_logic_grid(28, 45);
@@ -89,8 +89,8 @@ namespace {
                 Coinlet* coin = dynamic_cast<Coinlet*>(m);
 
                 if (coin != nullptr) {
-                    if (coin->name.compare(unknown_plane_name) != 0) {
-                        this->target_plane = coin->idx;
+                    if (coin->in_playing()) {
+                        this->target_plane = coin->get_index();
                         this->agent->play("Hide", 1);
                     }
                 }
@@ -104,9 +104,7 @@ namespace {
             auto coin = dynamic_cast<Coinlet*>(m);
 
             if ((coin != nullptr) && !this->tooltip->visible()) {
-                this->tooltip->set_text((coin->name.compare(unknown_plane_name) == 0) ? BLACK : ROYALBLUE,
-                    " %s ", coin->name.c_str());
-                
+                this->tooltip->set_text(coin->in_playing() ? ROYALBLUE : BLACK, " %s ", coin->name());
                 updated = true;
             }
 

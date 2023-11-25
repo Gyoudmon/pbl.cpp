@@ -1,6 +1,7 @@
 #include "animal.hpp"
 
 #include <gydm_stem/datum/fixnum.hpp>
+#include <gydm_stem/graphics/brush.hpp>
 
 #include <sstream>
 
@@ -65,10 +66,10 @@ void WarGrey::STEM::IToroidalMovingAnimal::draw(SDL_Renderer* render, float x, f
     float breed_width = 1.0F - float(fxmax(this->countdown, 0)) / float(this->breeding_cycle);
 
     if (this->energy >= this->reproduce_energy) {
-        game_draw_rect(render, x, y, lifebar_width * width, lifebar_height, ROYALBLUE, lifebar_alpha);
-        game_draw_line(render, x, y + lifebar_height, x + breed_width * width, y + lifebar_height, ORANGE, lifebar_alpha);
+        Brush::draw_rect(render, x, y, lifebar_width * width, lifebar_height, ROYALBLUE, lifebar_alpha);
+        Brush::draw_line(render, x, y + lifebar_height, x + breed_width * width, y + lifebar_height, ORANGE, lifebar_alpha);
     } else {
-        game_draw_rect(render, x, y, lifebar_width * width, lifebar_height, CRIMSON, lifebar_alpha);
+        Brush::draw_rect(render, x, y, lifebar_width * width, lifebar_height, CRIMSON, lifebar_alpha);
     }
 }
 

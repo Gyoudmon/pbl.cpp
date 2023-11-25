@@ -1,7 +1,6 @@
 #pragma once // 确保只被 include 一次
 
 #include <gydm_stem/bang.hpp>
-#include <gydm_stem/matter/graphlet/historylet.hpp>
 
 #include "dewdney/steppe.hpp"
 #include "dewdney/animal.hpp"

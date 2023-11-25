@@ -27,5 +27,6 @@ namespace WarGrey::STEM {
             WarGrey::STEM::Bracer* partner;
             WarGrey::STEM::Sprite* beach;
             WarGrey::STEM::SpriteGridSheet* tent;
+            WarGrey::STEM::Tracklet* track;
     };
 }

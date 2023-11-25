@@ -9,8 +9,15 @@ static const double step_duration = 0.2;
 void WarGrey::STEM::DrunkardWalkWorld::load(float width, float height) {
     this->beach = this->insert(new Sprite(digimon_path("assets/beach", ".png")));
     this->tent = this->insert(new SpriteGridSheet(digimon_path("assets/tents", ".png"), 1, 4));
+    this->track = this->insert(new Tracklet(width, height));
     this->drunkard = this->insert(new Agate());
     this->partner = this->insert(new Tita());
+
+    this->bind_canvas(this->drunkard, this->track);
+    this->bind_canvas(this->partner, this->track);
+
+    this->set_pen_color(this->drunkard, FIREBRICK);
+    this->set_pen_color(this->partner, DODGERBLUE);
 
     TheBigBang::load(width, height);
 }
@@ -18,6 +25,7 @@ void WarGrey::STEM::DrunkardWalkWorld::load(float width, float height) {
 void WarGrey::STEM::DrunkardWalkWorld::reflow(float width, float height) {
     this->move_to(this->beach, width * 0.5F, height, MatterAnchor::CB);
     this->move_to(this->tent, 0.0F, height, MatterAnchor::LB);
+    this->move_to(this->track, width * 0.5F, height * 0.5F, MatterAnchor::CB);
     
     TheBigBang::reflow(width, height);
 }
@@ -50,7 +58,9 @@ void WarGrey::STEM::DrunkardWalkWorld::random_walk(Bracer* who) {
     int dx = (random_uniform(-1, 1)); // 左右移动或不动
     int dy = (random_uniform(-1, 1)); // 上下移动或不动
 
+    this->pen_down(who);
     this->glide(step_duration, who, dx * step_size, dy * step_size);
+    this->pen_up(who);
 }
 
 void WarGrey::STEM::DrunkardWalkWorld::drunkard_walk(Bracer* who) {
@@ -71,5 +81,7 @@ void WarGrey::STEM::DrunkardWalkWorld::drunkard_walk(Bracer* who) {
         dy = -1.0F;
     }
 
+    this->pen_down(who);
     this->move(who, dx, dy);
+    this->pen_up(who);
 }

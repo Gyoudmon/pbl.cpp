@@ -3,29 +3,29 @@
     
     "configurations": [
         {
-            "name": "一键编译运行 C++ 程序",
+            "name": "一键编译/运行 main 函数",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${fileDirname}/compiled/native/${fileBasenameNoExtension}",
+            "program": "${fileDirname}/compiled/native/bin/${fileBasenameNoExtension}",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
             "environment": [],
             "internalConsoleOptions": "openOnSessionStart",
             "MIMode": "lldb",
-            "preLaunchTask": "快捷构建",
+            "preLaunchTask": "一键编译",
 
             "windows": {
-                "program": "${fileDirname}/compiled/native/${fileBasenameNoExtension}.exe",
+                "program": "${fileDirname}/compiled/native/bin/${fileBasenameNoExtension}.exe",
                 "type": "cppvsdbg"
             }
         },
-        
+
         {
             "name": "宇宙大爆炸",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/compiled/native/BigBang",
+            "program": "${workspaceFolder}/compiled/native/bin/BigBang",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -34,7 +34,7 @@
             "preLaunchTask": "宇宙大爆炸[Release]",
 
             "windows": {
-                "program": "${workspaceFolder}/compiled/native/BigBang.exe",
+                "program": "${workspaceFolder}/compiled/native/bin/BigBang.exe",
                 "type": "cppvsdbg"
             }
         },
@@ -43,7 +43,7 @@
             "name": "DBG宇宙大爆炸",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/compiled/native/debug/BigBang",
+            "program": "${workspaceFolder}/compiled/native/debug/bin/BigBang",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
@@ -52,7 +52,7 @@
             "preLaunchTask": "宇宙大爆炸[Debug]",
 
             "windows": {
-                "program": "${workspaceFolder}/compiled/native/debug/BigBang.exe",
+                "program": "${workspaceFolder}/compiled/native/debug/bin/BigBang.exe",
                 "type": "cppvsdbg"
             }
         }

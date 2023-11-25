@@ -1,4 +1,4 @@
-// shape.cpp 文件
+// digitama/basis/shape.cpp 文件
 #include "shape.hpp"           // 导入本模块自己的头文件
 
 using namespace WarGrey::STEM; // 声明本模块的类和函数默认以 WarGrey::STEM 的名义使用

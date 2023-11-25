@@ -51,10 +51,12 @@ void WarGrey::STEM::ColorMixtureWorld::reflow(float width, float height) {
 
 void WarGrey::STEM::ColorMixtureWorld::after_select(IMatter* m, bool yes) {
     if (!yes) {
-        auto rgb = dynamic_cast<Circlet*>(m);
+        if (!this->is_colliding_with_mouse(m)) {
+            auto rgb = dynamic_cast<Circlet*>(m);
 
-        if (rgb != nullptr) {
-            this->glide_to_mouse(gliding_duration, rgb, MatterAnchor::CC);
+            if (rgb != nullptr) {
+                this->glide_to_mouse(gliding_duration, rgb, MatterAnchor::CC);
+            }
         }
     }
 }
