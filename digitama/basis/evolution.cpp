@@ -72,8 +72,8 @@ void WarGrey::STEM::EvolutionWorld::on_mission_start(float width, float height) 
 void WarGrey::STEM::EvolutionWorld::update(uint64_t count, uint32_t interval, uint64_t uptime) {
     if (this->animals.empty()) {
         this->world_info->set_text_color(FIREBRICK);
-        this->phistory->set_color(CRIMSON);
-        this->ehistory->set_color(CRIMSON);
+        this->phistory->set_pen_color(CRIMSON);
+        this->ehistory->set_pen_color(CRIMSON);
     } else {
         std::vector<Animal*> offsprings;
         float tile_width, tile_height, bottom_overlay;
@@ -182,8 +182,8 @@ void WarGrey::STEM::EvolutionWorld::after_select(IMatter* m, bool yes) {
 void WarGrey::STEM::EvolutionWorld::reset_world() {
     this->steppe->reset();
     this->world_info->set_text_color(FORESTGREEN);
-    this->phistory->set_color(ROYALBLUE);
-    this->ehistory->set_color(ORANGE);
+    this->phistory->set_pen_color(ROYALBLUE);
+    this->ehistory->set_pen_color(ORANGE);
     this->update_world_info();
 }
 

@@ -22,7 +22,7 @@ static const std::vector<std::pair<int, int>> tux_spots = {
 
 static const std::vector<std::vector<std::pair<int, int>>> task_info = {
     { /* { row, col } */ },
-    { { 11, 15 }, { 11, 18 }, { 9, 21 } },
+    { { 11, 15 }, { 10, 18 }, { 12, 18 } },
     { { 16, 23 }, { 16, 25 }, { 16, 27 }, { 16, 29 }, { 18, 24 } },
     { { 21, 34 }, { 20, 37 }, { 22, 37 }, { 19, 40 } }
 };

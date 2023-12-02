@@ -10,15 +10,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define sdl2-config
   '((config SDL2)
-    (lib gydm_stem pltmos)
-    (include [windows "C:\\opt\\GYDMstem\\include"]
-             [macosx "/opt/GYDMstem/include"])
-    (libpath [windows "C:\\opt\\GYDMstem\\lib"]
-             [macosx "/opt/GYDMstem/lib"])))
+    (lib gydm_stem pltmos scsmos)
+    (include "C:\\opt\\GYDMstem\\include")
+    (libpath "C:\\opt\\GYDMstem\\lib")))
 
 (define native-compiled-subpath '())
 (define native-compiled-bindir '("bin"))
-(define native-compiled-incdir '())
 (define native-compiled-libdir '())
 (define native-compiled-release '())
 (define native-compiled-debug '("debug"))
