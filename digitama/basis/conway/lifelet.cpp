@@ -53,18 +53,16 @@ void WarGrey::STEM::GameOfLifelet::feed_extent(float x, float y, float* width, f
 }
 
 void WarGrey::STEM::GameOfLifelet::draw(SDL_Renderer* renderer, float x, float y, float Width, float Height) {
-    RGB_SetRenderDrawColor(renderer, this->color);
-
     Brush::draw_rect(renderer, x, y, Width, Height, this->color);
 
     // 绘制舞台的网格
     if (!this->hide_grid) {
-        Brush::draw_grid(renderer, this->row, this->col, this->gridsize, this->gridsize, x, y);
+        Brush::draw_grid(renderer, this->row, this->col, this->gridsize, this->gridsize, this->color, x, y);
     }
 
     // 绘制生命状态
-    Brush::fill_grid(renderer, this->world, this->row, this->col, this->gridsize, this->gridsize, x, y);
-}        
+    Brush::fill_grid(renderer, this->world, this->row, this->col, this->gridsize, this->gridsize, this->color, x, y);
+}
 
 void WarGrey::STEM::GameOfLifelet::toggle_life_at_location(float x, float y) {
     int c = fl2fxi(flfloor(x / this->gridsize));

@@ -50,7 +50,7 @@ void WarGrey::STEM::PaddleBallWorld::update(uint64_t count, uint32_t interval, u
             this->ball->motion_bounce(false, true); // 正常，反弹球
         }
     } else {
-        this->ball->set_fill_color(FIREBRICK);
+        this->ball->set_brush_color(FIREBRICK);
     }
 }
 

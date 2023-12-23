@@ -69,8 +69,8 @@ void WarGrey::STEM::GameOfLifeWorld::reflow(float width, float height) {
     this->move_to(this->instructions[ordered_keys[0]], 0.0F, height, MatterAnchor::LB);
     for (int idx = 1; idx < sizeof(ordered_keys) / sizeof(char); idx ++) {
         this->move_to(this->instructions[ordered_keys[idx]],
-                    this->instructions[ordered_keys[idx - 1]], MatterAnchor::RB,
-                    MatterAnchor::LB, 16.0F);
+                        this->instructions[ordered_keys[idx - 1]], MatterAnchor::RB,
+                        MatterAnchor::LB, 16.0F);
     }
 }
 
@@ -92,7 +92,7 @@ bool WarGrey::STEM::GameOfLifeWorld::can_select(IMatter* m) {
         || ((this->state == GameState::Edit)
             && (m == this->gameboard))
         || ((menu != nullptr)
-            && (menu->get_text_color() == GREEN));
+            && (menu->get_foreground_color() == GREEN));
 }
 
 void WarGrey::STEM::GameOfLifeWorld::on_tap(IMatter* matter, float x, float y) {
@@ -113,7 +113,7 @@ void WarGrey::STEM::GameOfLifeWorld::on_tap(IMatter* matter, float x, float y) {
 void WarGrey::STEM::GameOfLifeWorld::on_char(char key, uint16_t modifiers, uint8_t repeats, bool pressed) {
     if (!pressed) {
         if (this->instructions.find(key) != this->instructions.end()) {
-            if (this->instructions[key]->get_text_color() == GREEN) {
+            if (this->instructions[key]->get_foreground_color() == GREEN) {
                 switch(key) {
                 case AUTO_KEY: this->switch_game_state(GameState::Auto); break;
                 case STOP_KEY: this->switch_game_state(GameState::Stop); break;

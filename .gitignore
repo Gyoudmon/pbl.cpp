@@ -76,3 +76,7 @@ obj/
 
 # Python
 __pycache__
+
+# database
+*.db
+

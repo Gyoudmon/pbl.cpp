@@ -31,7 +31,7 @@ void WarGrey::STEM::ColorWheelWorld::reflow(float width, float height) {
     float x, y;
 
     for (auto c : this->hues) {
-        circle_point(wheel_radius, float(c->get_fill_hue()) - 90.0F, &x, &y, false);
+        circle_point(wheel_radius, float(c->get_brush_color().hue()) - 90.0F, &x, &y, false);
         this->move_to(c, cx + x, cy + y, MatterAnchor::CC);
     }
 
@@ -45,7 +45,7 @@ void WarGrey::STEM::ColorWheelWorld::after_select(IMatter* m, bool yes) {
         auto com = dynamic_cast<Circlet*>(m);
 
         if (com != nullptr) {
-            this->primaries[this->selection_seq]->set_fill_color(com->get_fill_color());
+            this->primaries[this->selection_seq]->set_brush_color(com->get_brush_color());
             this->selection_seq = (this->selection_seq + 1) % this->primaries.size();
         }
     }
@@ -57,11 +57,13 @@ bool WarGrey::STEM::ColorWheelWorld::update_tooltip(IMatter* m, float x, float y
     auto cc = dynamic_cast<Ellipselet*>(m);
 
     if (com != nullptr) {
-        this->tooltip->set_text(" #%06X [Hue: %.2f] ", com->get_fill_color(), com->get_fill_hue());
+        RGBA brush = com->get_brush_color();
+
+        this->tooltip->set_text(" #%06X [Hue: %.2f] ", brush.rgb(), brush.hue());
         this->no_selected();
         updated = true;
     } else if (cc != nullptr) {
-        uint32_t hex = 0U;
+        RGBA c = 0U;
 
         for (size_t idx = 0; idx < this->primaries.size(); idx ++) {
             float cx, cy;
@@ -69,11 +71,11 @@ bool WarGrey::STEM::ColorWheelWorld::update_tooltip(IMatter* m, float x, float y
             this->feed_matter_location(this->primaries[idx], &cx, &cy, MatterAnchor::CC);
 
             if (point_distance(gx, gy, cx, cy) <= primary_radius) {
-                hex = RGB_Add(hex, this->primaries[idx]->get_fill_color());
+                c = c + this->primaries[idx]->get_brush_color();
             }
         }
 
-        this->tooltip->set_text(" #%06X ", hex);
+        this->tooltip->set_text(c.hexstring(false));
         updated = true;
     }
 
@@ -86,7 +88,7 @@ void WarGrey::STEM::ColorWheelWorld::load_hues() {
     float deg = 0.0F;
 
     while (deg < 360.0F) {
-        this->hues.push_back(this->insert(new Circlet(hue_radius, Hexadecimal_From_HSV(deg, 1.0, 1.0))));
+        this->hues.push_back(this->insert(new Circlet(hue_radius, RGBA::HSV(deg))));
         deg += delta_deg;
     }
 }
