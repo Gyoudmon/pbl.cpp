@@ -1,6 +1,7 @@
 #include "lifelet.hpp"
 
-using namespace WarGrey::STEM;
+using namespace GYDM;
+using namespace Linguisteen;
 
 /*************************************************************************************************/
 static inline int count_in_neighbor(int* world[], int row, int col, int r, int c) {
@@ -22,7 +23,7 @@ static inline int count_neighbors(int *world[], int row, int col, int r, int c) 
 }
 
 /*************************************************************************************************/
-WarGrey::STEM::GameOfLifelet::~GameOfLifelet() {
+Linguisteen::GameOfLifelet::~GameOfLifelet() {
     if (this->world != nullptr) {
         for (int r = 0; r < this->row; r ++) {
             delete [] this->world[r];
@@ -36,7 +37,7 @@ WarGrey::STEM::GameOfLifelet::~GameOfLifelet() {
     }
 }
 
-void WarGrey::STEM::GameOfLifelet::construct(SDL_Renderer* renderer) {
+void Linguisteen::GameOfLifelet::construct(SDL_Renderer* renderer) {
     IGraphlet::construct(renderer);
 
     this->shadow = new int[this->row * this->col];
@@ -47,12 +48,12 @@ void WarGrey::STEM::GameOfLifelet::construct(SDL_Renderer* renderer) {
     }
 }
 
-void WarGrey::STEM::GameOfLifelet::feed_extent(float x, float y, float* width, float* height) {
-    SET_BOX(width, this->gridsize * float(this->col) + 1.0F);
-    SET_BOX(height, this->gridsize * float(this->row) + 1.0F);
+Box Linguisteen::GameOfLifelet::get_bounding_box() {
+    return { this->gridsize * float(this->col) + 1.0F,
+             this->gridsize * float(this->row) + 1.0F };
 }
 
-void WarGrey::STEM::GameOfLifelet::draw(SDL_Renderer* renderer, float x, float y, float Width, float Height) {
+void Linguisteen::GameOfLifelet::draw(SDL_Renderer* renderer, float x, float y, float Width, float Height) {
     Brush::draw_rect(renderer, x, y, Width, Height, this->color);
 
     // 绘制舞台的网格
@@ -64,7 +65,7 @@ void WarGrey::STEM::GameOfLifelet::draw(SDL_Renderer* renderer, float x, float y
     Brush::fill_grid(renderer, this->world, this->row, this->col, this->gridsize, this->gridsize, this->color, x, y);
 }
 
-void WarGrey::STEM::GameOfLifelet::toggle_life_at_location(float x, float y) {
+void Linguisteen::GameOfLifelet::toggle_life_at_location(float x, float y) {
     int c = fl2fxi(flfloor(x / this->gridsize));
     int r = fl2fxi(flfloor(y / this->gridsize));
 
@@ -72,21 +73,21 @@ void WarGrey::STEM::GameOfLifelet::toggle_life_at_location(float x, float y) {
     this->notify_updated();
 }
 
-void WarGrey::STEM::GameOfLifelet::show_grid(bool yes) {
+void Linguisteen::GameOfLifelet::show_grid(bool yes) {
     if (this->hide_grid == yes) {
         this->hide_grid = !yes;
         this->notify_updated();
     }
 }
 
-void WarGrey::STEM::GameOfLifelet::set_color(uint32_t hex) {
+void Linguisteen::GameOfLifelet::set_color(uint32_t hex) {
     if (this->color != hex) {
         this->color = hex;
         this->notify_updated();
     }
 }
 
-bool WarGrey::STEM::GameOfLifelet::pace_forward() {
+bool Linguisteen::GameOfLifelet::pace_forward() {
     bool evolved = false;
 
     // 应用演化规则
@@ -111,7 +112,7 @@ bool WarGrey::STEM::GameOfLifelet::pace_forward() {
     return evolved;
 }
 
-void WarGrey::STEM::GameOfLifelet::reset() {
+void Linguisteen::GameOfLifelet::reset() {
     this->generation = 0;
 
     for (int r = 0; r < this->row; r ++) {
@@ -121,7 +122,7 @@ void WarGrey::STEM::GameOfLifelet::reset() {
     }
 }
 
-void WarGrey::STEM::GameOfLifelet::construct_random_world() {
+void Linguisteen::GameOfLifelet::construct_random_world() {
     for (int r = 0; r < this->row; r++) {
         for (int c = 0; c < this->col; c++) {
             this->world[r][c] = ((random_raw() % 2 == 0) ? 1 : 0);
@@ -131,7 +132,7 @@ void WarGrey::STEM::GameOfLifelet::construct_random_world() {
     this->generation = 0;
 }
 
-void WarGrey::STEM::GameOfLifelet::load(const std::string& life_world, std::ifstream& golin) {
+void Linguisteen::GameOfLifelet::load(const std::string& life_world, std::ifstream& golin) {
     std::string rowline;
     int r = 0;
 
@@ -146,7 +147,7 @@ void WarGrey::STEM::GameOfLifelet::load(const std::string& life_world, std::ifst
     }
 }
 
-void WarGrey::STEM::GameOfLifelet::save(const std::string& life_world, std::ofstream& golout) {
+void Linguisteen::GameOfLifelet::save(const std::string& life_world, std::ofstream& golout) {
     if (world != nullptr) {
         for (int r = 0; r < this->row; r++) {
             for (int c = 0; c < this->col; c++) {
@@ -159,7 +160,7 @@ void WarGrey::STEM::GameOfLifelet::save(const std::string& life_world, std::ofst
 }
 
 /*************************************************************************************************/
-void WarGrey::STEM::ConwayLifelet::evolve(int** world, int* shadow, int row, int col) {
+void Linguisteen::ConwayLifelet::evolve(int** world, int* shadow, int row, int col) {
     for (int r = 0; r < row; r ++) {
         for (int c = 0; c < col; c ++) {
             int n = count_neighbors(world, row, col, r, c);
@@ -178,7 +179,7 @@ void WarGrey::STEM::ConwayLifelet::evolve(int** world, int* shadow, int row, int
     }
 }
 
-void WarGrey::STEM::HighLifelet::evolve(int** world, int* shadow, int row, int col) {
+void Linguisteen::HighLifelet::evolve(int** world, int* shadow, int row, int col) {
     for (int r = 0; r < row; r ++) {
         for (int c = 0; c < col; c ++) {
             int n = count_neighbors(world, row, col, r, c);

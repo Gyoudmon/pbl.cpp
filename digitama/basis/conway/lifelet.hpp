@@ -1,12 +1,12 @@
 #pragma once // 确保只被 include 一次
 
-#include <gydm_stem/bang.hpp>
+#include <gydm/bang.hpp>
 
 #include <map>
 
-namespace WarGrey::STEM {
+namespace Linguisteen {
     /** 声明游戏物体 **/
-    class GameOfLifelet : public WarGrey::STEM::IGraphlet {
+    class GameOfLifelet : public GYDM::IGraphlet {
     public:
         GameOfLifelet(int n, float gridsize) : GameOfLifelet(n, n, gridsize) {}
         GameOfLifelet(int row, int col, float gridsize) : row(row), col(col), gridsize(gridsize) {}
@@ -15,7 +15,7 @@ namespace WarGrey::STEM {
         void construct(SDL_Renderer* renderer) override;
 
     public:
-        void feed_extent(float x, float y, float* width = nullptr, float* height = nullptr) override;
+        GYDM::Box get_bounding_box() override;
         void draw(SDL_Renderer* renderer, float x, float y, float Width, float Height) override;
 
     public:
@@ -52,14 +52,14 @@ namespace WarGrey::STEM {
     };
 
     /*********************************************************************************************/
-    class ConwayLifelet : public WarGrey::STEM::GameOfLifelet {
+    class ConwayLifelet : public Linguisteen::GameOfLifelet {
         using GameOfLifelet::GameOfLifelet;
 
     protected:
         void evolve(int** world, int* shadow, int row, int col) override;
     };
 
-    class HighLifelet : public WarGrey::STEM::GameOfLifelet {
+    class HighLifelet : public Linguisteen::GameOfLifelet {
         using GameOfLifelet::GameOfLifelet;
 
     protected:

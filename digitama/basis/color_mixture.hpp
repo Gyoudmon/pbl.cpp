@@ -1,9 +1,9 @@
 #pragma once // 确保只被 include 一次
 
-#include <gydm_stem/bang.hpp>
+#include <gydm/bang.hpp>
 
-namespace WarGrey::STEM {
-    class ColorMixtureWorld : public WarGrey::STEM::TheBigBang {
+namespace Linguisteen {
+    class ColorMixtureWorld : public GYDM::TheBigBang {
     public:
         ColorMixtureWorld() : TheBigBang("混色模型", GHOSTWHITE) {}
         
@@ -12,21 +12,21 @@ namespace WarGrey::STEM {
         void reflow(float width, float height) override;
 
     public:
-        bool can_select(WarGrey::STEM::IMatter* m) override { return true; }
+        bool can_select(GYDM::IMatter* m) override { return true; }
 
     protected: // 覆盖鼠标事件处理方法
-        void after_select(WarGrey::STEM::IMatter* m, bool yes) override;
-        void on_tap_selected(WarGrey::STEM::IMatter* m, float x, float y) override { this->no_selected(); }
+        void after_select(GYDM::IMatter* m, bool yes) override;
+        void on_tap_selected(GYDM::IMatter* m, float x, float y) override { this->no_selected(); }
 
     private:
-        WarGrey::STEM::Circlet* red;
-        WarGrey::STEM::Circlet* green;
-        WarGrey::STEM::Circlet* blue;
+        GYDM::Circlet* red;
+        GYDM::Circlet* green;
+        GYDM::Circlet* blue;
 
     private:
-        WarGrey::STEM::Rectanglet* half_bg;
-        WarGrey::STEM::Circlet* cyan;
-        WarGrey::STEM::Circlet* yellow;
-        WarGrey::STEM::Circlet* magenta;
+        GYDM::Rectanglet* half_white;
+        GYDM::Circlet* cyan;
+        GYDM::Circlet* yellow;
+        GYDM::Circlet* magenta;
     };
 }

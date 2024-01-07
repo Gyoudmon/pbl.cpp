@@ -1,11 +1,12 @@
 #include "splash.hpp"
 
-#include <gydm_stem/bang.hpp>
+#include <gydm/bang.hpp>
 
-#include <gydm_stem/datum/string.hpp>
-#include <gydm_stem/datum/path.hpp>
+#include <gydm/datum/string.hpp>
+#include <gydm/datum/path.hpp>
 
-using namespace WarGrey::STEM;
+using namespace Linguisteen;
+using namespace GYDM;
 
 /*************************************************************************************************/
 static const float tux_speed_walk_x = 2.4F;
@@ -54,8 +55,8 @@ namespace {
         void reflow(float width, float height) override {
             TheBigBang::reflow(width, height);
 
-            this->move_to(this->title, this->agent, MatterAnchor::RB, MatterAnchor::LB);
-            this->move_to(this->splash, width * 0.5F, height * 0.5F, MatterAnchor::CC);
+            this->move_to(this->title, { this->agent, MatterAnchor::RB }, MatterAnchor::LB);
+            this->move_to(this->splash, { width * 0.5F, height * 0.5F }, MatterAnchor::CC);
             
             this->reflow_tasks(width, height);
             this->tux_home();
@@ -146,8 +147,6 @@ namespace {
         }
 
         void reflow_tasks(float width, float height) {
-            float dx, dy;
-
             for (int seg = 0; seg < task_info.size(); seg ++) {
                 auto subinfos = task_info[seg];
                 auto subcoins = this->coins[seg];
@@ -155,16 +154,15 @@ namespace {
                 for (int idx = 0; idx < subinfos.size(); idx ++) {
                     auto pos = subinfos[idx];
 
-                    this->splash->feed_logic_tile_location(pos.first, pos.second, &dx, &dy, MatterAnchor::CC, false);
-                    this->move_to(subcoins[idx], dx, dy, MatterAnchor::CC);
+                    this->splash->move_to_logic_tile(subcoins[idx], pos.first, pos.second, MatterAnchor::CC, MatterAnchor::CC);
                 }
             }
 
             for (size_t idx = this->bonus_coins.size(); idx > 0; idx --) {
                 if (idx == this->bonus_coins.size()) {
-                    this->move_to(this->bonus_coins[idx - 1], this->splash, MatterAnchor::LB, MatterAnchor::LB);
+                    this->move_to(this->bonus_coins[idx - 1], { this->splash, MatterAnchor::LB }, MatterAnchor::LB);
                 } else {
-                    this->move_to(this->bonus_coins[idx - 1], this->bonus_coins[idx], MatterAnchor::RC, MatterAnchor::LC);
+                    this->move_to(this->bonus_coins[idx - 1], { this->bonus_coins[idx], MatterAnchor::RC }, MatterAnchor::LC);
                 }
             }
         }
@@ -173,10 +171,8 @@ namespace {
         void tux_home() {
             int row = tux_spots[0].first;
             int col = tux_spots[0].second;
-            float x0, y0;
             
-            this->splash->feed_logic_tile_location(row, col, &x0, &y0, MatterAnchor::LB, false);
-            this->move_to(this->tux, x0, y0, MatterAnchor::CB);
+            this->splash->move_to_logic_tile(this->tux, row, col, MatterAnchor::LB, MatterAnchor::CB);
             this->tux_walk_segment = 1;
             this->tux_start_walk();
         }
@@ -188,39 +184,34 @@ namespace {
         }
 
         void tux_step(uint64_t count, uint64_t interval, uint64_t uptime) {
-            float x0, y0, tx, ty, gx;
+            Dot tdot = this->get_matter_location(this->tux, MatterAnchor::RB);
+            Dot dot0 = this->get_matter_location(this->splash, MatterAnchor::LT);
             
-            this->feed_matter_location(this->tux, &tx, &ty, MatterAnchor::RB);
-            this->feed_matter_location(this->splash, &x0, &y0, MatterAnchor::LT);
-            
-            tx -= x0;
-            ty -= y0;
+            tdot -= dot0;
 
             if (this->tux_target_y == 0.0F) {
-                this->feed_splash_location(this->tux_walk_segment, &gx, nullptr);
+                float gx = this->get_splash_location(this->tux_walk_segment).x;
 
-                if (tx >= gx) {
+                if (tdot.x >= gx) {
                     this->tux_walk_segment += 1;
                     
                     if (this->tux_walk_segment < tux_spots.size()) {
-                        this->feed_splash_location(this->tux_walk_segment, nullptr, &this->tux_target_y);
+                        this->tux_target_y = this->get_splash_location(this->tux_walk_segment).y;
                         this->tux->set_speed(tux_speed_jump_x, tux_speed_jump_y);
                         this->tux->set_delta_speed(0.0F, tux_speed_dy);
                     } else {
                         this->tux_home();
                     }
                 }
-            } else if (ty >= this->tux_target_y) {
+            } else if (tdot.y >= this->tux_target_y) {
                 this->tux_start_walk();
             }
         }
 
-        void feed_splash_location(size_t idx, float* x, float* y) {
-            this->splash->feed_logic_tile_location(
-                tux_spots[idx].first,
-                tux_spots[idx].second,
-                x, y,
-                MatterAnchor::LB);
+        Dot get_splash_location(size_t idx) {
+            return this->splash->get_logic_tile_location(
+                        tux_spots[idx].first, tux_spots[idx].second,
+                        MatterAnchor::LB);
         }
 
     private:
@@ -241,11 +232,11 @@ namespace {
 }
 
 /*************************************************************************************************/
-WarGrey::STEM::TheCosmos::~TheCosmos() {
+Linguisteen::TheCosmos::~TheCosmos() {
     imgdb_teardown();
 }
 
-void WarGrey::STEM::TheCosmos::construct(int argc, char* argv[]) {
+void Linguisteen::TheCosmos::construct(int argc, char* argv[]) {
     GameFont::fontsize(21);
     
     enter_digimon_zone(argv[0]);
@@ -265,12 +256,12 @@ void WarGrey::STEM::TheCosmos::construct(int argc, char* argv[]) {
     this->splash = this->push_plane(new SplashPlane(this));
 }
 
-void WarGrey::STEM::TheCosmos::update(uint64_t count, uint32_t interval, uint64_t uptime) {
+void Linguisteen::TheCosmos::update(uint64_t count, uint32_t interval, uint64_t uptime) {
     if (this->has_current_mission_completed()) {
         this->transfer_to_plane(0);
     }
 }
 
-bool WarGrey::STEM::TheCosmos::can_exit() {
+bool Linguisteen::TheCosmos::can_exit() {
     return this->splash->has_mission_completed();
 }

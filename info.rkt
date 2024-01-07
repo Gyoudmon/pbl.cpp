@@ -10,7 +10,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define sdl2-config
   '((config SDL2)
-    (lib gydm_stem pltmos scsmos)
+    (lib gydm pltmos stemos)
     (include "C:\\opt\\GYDMstem\\include")
     (libpath "C:\\opt\\GYDMstem\\lib")))
 

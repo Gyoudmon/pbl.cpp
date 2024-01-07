@@ -1,10 +1,10 @@
 #include "game_of_life.hpp"
 
-#include <gydm_stem/graphics/text.hpp>
-
+#include <gydm/graphics/text.hpp>
 #include <filesystem>
 
-using namespace WarGrey::STEM;
+using namespace GYDM;
+using namespace Linguisteen;
 using namespace std::filesystem;
 
 /*************************************************************************************************/
@@ -29,7 +29,7 @@ static const uint32_t colors_for_stop[]  = { GREEN, GRAY, GREEN, GREEN, GRAY, GR
 static const uint32_t colors_for_edit[] = { GREEN, GRAY, GREEN, GRAY, GREEN, GREEN, GREEN, GREEN };
 
 /*************************************************************************************************/
-void WarGrey::STEM::GameOfLifeWorld::load(float width, float height) {
+void Linguisteen::GameOfLifeWorld::load(float width, float height) {
     TheBigBang::load(width, height);
 
     this->load_gameboard(width, height);
@@ -39,7 +39,7 @@ void WarGrey::STEM::GameOfLifeWorld::load(float width, float height) {
     this->load_conway_demo();
 }
 
-void WarGrey::STEM::GameOfLifeWorld::load_gameboard(float width, float height) {
+void Linguisteen::GameOfLifeWorld::load_gameboard(float width, float height) {
     float board_height = height - this->get_titlebar_height() * 2.0F;
     float board_width = width - this->get_titlebar_height();
     int col = fl2fxi(board_width / this->gridsize) - 1;
@@ -49,7 +49,7 @@ void WarGrey::STEM::GameOfLifeWorld::load_gameboard(float width, float height) {
     this->generation = this->insert(new Labellet(GameFont::math(), GREEN, generation_fmt, this->gameboard->get_generation()));
 }
 
-void WarGrey::STEM::GameOfLifeWorld::load_instructions(float width, float height) {
+void Linguisteen::GameOfLifeWorld::load_instructions(float width, float height) {
     this->instructions[AUTO_KEY] = this->insert(new Labellet(GameFont::monospace(), "%c. 自行演化", AUTO_KEY));
     this->instructions[STOP_KEY] = this->insert(new Labellet(GameFont::monospace(), "%c. 停止演化", STOP_KEY));
     this->instructions[EDIT_KEY] = this->insert(new Labellet(GameFont::monospace(), "%c. 手动编辑", EDIT_KEY));
@@ -60,32 +60,32 @@ void WarGrey::STEM::GameOfLifeWorld::load_instructions(float width, float height
     this->instructions[WRTE_KEY] = this->insert(new Labellet(GameFont::monospace(), "%c. 保存范例", WRTE_KEY));
 }
 
-void WarGrey::STEM::GameOfLifeWorld::reflow(float width, float height) {
+void Linguisteen::GameOfLifeWorld::reflow(float width, float height) {
     TheBigBang::reflow(width, height);
 
-    this->move_to(this->gameboard, width * 0.5F, (height + this->get_titlebar_height()) * 0.5F, MatterAnchor::CC);
-    this->move_to(this->generation, this->gameboard, MatterAnchor::RT, MatterAnchor::RB);
+    this->move_to(this->gameboard, { width * 0.5F, (height + this->get_titlebar_height()) * 0.5F }, MatterAnchor::CC);
+    this->move_to(this->generation, { this->gameboard, MatterAnchor::RT }, MatterAnchor::RB);
 
-    this->move_to(this->instructions[ordered_keys[0]], 0.0F, height, MatterAnchor::LB);
+    this->move_to(this->instructions[ordered_keys[0]], { 0.0F, height }, MatterAnchor::LB);
     for (int idx = 1; idx < sizeof(ordered_keys) / sizeof(char); idx ++) {
         this->move_to(this->instructions[ordered_keys[idx]],
-                        this->instructions[ordered_keys[idx - 1]], MatterAnchor::RB,
-                        MatterAnchor::LB, 16.0F);
+                        { this->instructions[ordered_keys[idx - 1]], MatterAnchor::RB },
+                        MatterAnchor::LB, { 16.0F, 0.0F });
     }
 }
 
-void WarGrey::STEM::GameOfLifeWorld::on_mission_start(float width, float height) {
+void Linguisteen::GameOfLifeWorld::on_mission_start(float width, float height) {
     this->switch_game_state(GameState::Stop);
 }
 
-void WarGrey::STEM::GameOfLifeWorld::update(uint64_t count, uint32_t interval, uint64_t uptime) {
+void Linguisteen::GameOfLifeWorld::update(uint64_t count, uint32_t interval, uint64_t uptime) {
     if (this->state == GameState::Auto) {
         this->pace_forward();
     }
 }
 
 /*************************************************************************************************/
-bool WarGrey::STEM::GameOfLifeWorld::can_select(IMatter* m) {
+bool Linguisteen::GameOfLifeWorld::can_select(IMatter* m) {
     Labellet* menu = dynamic_cast<Labellet*>(m);
 
     return m == this->agent
@@ -95,7 +95,7 @@ bool WarGrey::STEM::GameOfLifeWorld::can_select(IMatter* m) {
             && (menu->get_foreground_color() == GREEN));
 }
 
-void WarGrey::STEM::GameOfLifeWorld::on_tap(IMatter* matter, float x, float y) {
+void Linguisteen::GameOfLifeWorld::on_tap(IMatter* matter, float x, float y) {
     if (isinstance(matter, GameOfLifelet)) {
         this->gameboard->toggle_life_at_location(x, y);
         this->instructions[WRTE_KEY]->set_text_color(GREEN);
@@ -110,7 +110,7 @@ void WarGrey::STEM::GameOfLifeWorld::on_tap(IMatter* matter, float x, float y) {
     }
 }
 
-void WarGrey::STEM::GameOfLifeWorld::on_char(char key, uint16_t modifiers, uint8_t repeats, bool pressed) {
+void Linguisteen::GameOfLifeWorld::on_char(char key, uint16_t modifiers, uint8_t repeats, bool pressed) {
     if (!pressed) {
         if (this->instructions.find(key) != this->instructions.end()) {
             if (this->instructions[key]->get_foreground_color() == GREEN) {
@@ -133,12 +133,12 @@ void WarGrey::STEM::GameOfLifeWorld::on_char(char key, uint16_t modifiers, uint8
     }
 }
 
-void WarGrey::STEM::GameOfLifeWorld::on_save(const std::string& life_world, std::ofstream& golout) {
+void Linguisteen::GameOfLifeWorld::on_save(const std::string& life_world, std::ofstream& golout) {
     this->gameboard->save(life_world, golout);
 }
 
 /*************************************************************************************************/
-void WarGrey::STEM::GameOfLifeWorld::pace_forward() {
+void Linguisteen::GameOfLifeWorld::pace_forward() {
     if (this->gameboard->pace_forward()) {
         this->generation->set_text_color(GREEN);
         this->generation->set_text(MatterAnchor::RB, generation_fmt, this->gameboard->get_generation());
@@ -152,7 +152,7 @@ void WarGrey::STEM::GameOfLifeWorld::pace_forward() {
     }
 }
 
-void WarGrey::STEM::GameOfLifeWorld::load_conway_demo() {
+void Linguisteen::GameOfLifeWorld::load_conway_demo() {
     if (!exists(this->demo_path)) {
         this->demo_path = DEFAULT_CONWAY_DEMO;
     }
@@ -170,7 +170,7 @@ void WarGrey::STEM::GameOfLifeWorld::load_conway_demo() {
     }
 }
 
-void WarGrey::STEM::GameOfLifeWorld::save_conway_demo() {
+void Linguisteen::GameOfLifeWorld::save_conway_demo() {
     if (!exists(this->demo_path)) {
         this->demo_path = DEFAULT_CONWAY_DEMO;
     }
@@ -190,7 +190,7 @@ void WarGrey::STEM::GameOfLifeWorld::save_conway_demo() {
 }
 
 /*************************************************************************************************/
-void WarGrey::STEM::GameOfLifeWorld::switch_game_state(GameState new_state) {
+void Linguisteen::GameOfLifeWorld::switch_game_state(GameState new_state) {
     if (this->state != new_state) {
         switch (new_state) {
         case GameState::Auto: {
@@ -218,7 +218,7 @@ void WarGrey::STEM::GameOfLifeWorld::switch_game_state(GameState new_state) {
     }
 }
 
-void WarGrey::STEM::GameOfLifeWorld::update_instructions_state(const uint32_t* colors) {
+void Linguisteen::GameOfLifeWorld::update_instructions_state(const uint32_t* colors) {
     for (size_t idx = 0; idx < sizeof(ordered_keys) / sizeof(char);  idx ++) {
         this->instructions[ordered_keys[idx]]->set_text_color(colors[idx]);
     }

@@ -1,6 +1,7 @@
 #include "self_avoiding_walk.hpp"
 
-using namespace WarGrey::STEM;
+using namespace GYDM;
+using namespace Linguisteen;
 
 /*************************************************************************************************/
 static const double pace_duration = 0.5;
@@ -40,7 +41,7 @@ static void backtracking_pace(bool maze[MAZE_SIZE][MAZE_SIZE], int& row, int& co
 }
 
 /*************************************************************************************************/
-void WarGrey::STEM::SelfAvoidingWalkWorld::load(float width, float height) {
+void Linguisteen::SelfAvoidingWalkWorld::load(float width, float height) {
     float cx = width * 0.5F;
     float cy = height * 0.5F;
 
@@ -62,47 +63,45 @@ void WarGrey::STEM::SelfAvoidingWalkWorld::load(float width, float height) {
     this->walkers[7] = this->insert(new Zin());
 
     /* locating */ {
-        float t, r, b, l;
+        Margin margin = this->tiles[0][0]->get_map_overlay();
 
-        this->tiles[0][0]->feed_extent(0.0F, 0.0F, &this->cell_width, &this->cell_height);
-        this->tiles[0][0]->feed_map_overlay(&t, &r, &b, &l);
-
-        this->cell_width -= (l + r);
-        this->cell_height -= (t + b);
+        this->cell_region = this->tiles[0][0]->get_bounding_box();
+        this->cell_region.rbdot.x -= margin.horizon();
+        this->cell_region.rbdot.y -= margin.vertical();
     }
 
     TheBigBang::load(width, height);
 }
 
-void WarGrey::STEM::SelfAvoidingWalkWorld::reflow(float width, float height) {
+void Linguisteen::SelfAvoidingWalkWorld::reflow(float width, float height) {
     size_t walker_count = sizeof(this->walkers) / sizeof(Bracer*);
     float y0 = this->get_titlebar_height();
     float maze_x, maze_y;
 
     TheBigBang::reflow(width, height);
-    this->create_grid(int(walker_count), 1, 16.0F, y0, 64.0F, float(MAZE_SIZE) * this->cell_height);
+    this->create_grid(int(walker_count), 1, 16.0F, y0, 64.0F, float(MAZE_SIZE) * this->cell_region.height());
 
     // 确保游戏世界被绘制在屏幕中心
-    maze_x = flround((width - float(MAZE_SIZE) * this->cell_width) * 0.5F);
-    maze_y = flround(((height - y0) - float(MAZE_SIZE) * this->cell_height) * 0.5F + y0);
+    maze_x = flround((width - float(MAZE_SIZE) * this->cell_region.width()) * 0.5F);
+    maze_y = flround(((height - y0) - float(MAZE_SIZE) * this->cell_region.height()) * 0.5F + y0);
 
     for (int row = 0; row < MAZE_SIZE; row ++) {
         for (int col = 0; col < MAZE_SIZE; col ++) {
-            float dx = maze_x + float(col + 1) * this->cell_width;
-            float dy = maze_y + float(row + 1) * this->cell_height;
+            float dx = maze_x + float(col + 1) * this->cell_region.width();
+            float dy = maze_y + float(row + 1) * this->cell_region.height();
 
-            this->glide_to(pace_duration, this->tiles[row][col], dx, dy, MatterAnchor::RB);
+            this->glide_to(pace_duration, this->tiles[row][col], { dx, dy }, MatterAnchor::RB);
         }
     }
 }
 
-void WarGrey::STEM::SelfAvoidingWalkWorld::on_mission_start(float width, float height) {
+void Linguisteen::SelfAvoidingWalkWorld::on_mission_start(float width, float height) {
     this->reset_walkers(false);
     this->reset_maze();
     this->row = -1;
 }
 
-void WarGrey::STEM::SelfAvoidingWalkWorld::update(uint64_t count, uint32_t interval, uint64_t uptime) {
+void Linguisteen::SelfAvoidingWalkWorld::update(uint64_t count, uint32_t interval, uint64_t uptime) {
     if (this->row >= 0) {
         if (this->walker->current_mode() == BracerMode::Run) {
             if (this->walker->motion_stopped()) {
@@ -115,8 +114,8 @@ void WarGrey::STEM::SelfAvoidingWalkWorld::update(uint64_t count, uint32_t inter
                         backtracking_pace(this->maze, this->row, this->col);
                         this->maze[this->row][this->col] = true;
                         this->glide(pace_duration, this->walker,
-                                        float(this->col - cur_c) * this->cell_width,
-                                        float(this->row - cur_r) * this->cell_height);
+                                        { float(this->col - cur_c) * this->cell_region.width(),
+                                          float(this->row - cur_r) * this->cell_region.height() });
                     } else {
                         this->walker->switch_mode(BracerMode::Lose);                        
                     }
@@ -135,16 +134,16 @@ void WarGrey::STEM::SelfAvoidingWalkWorld::update(uint64_t count, uint32_t inter
 }
 
 /**************************************************************************************************/
-bool WarGrey::STEM::SelfAvoidingWalkWorld::can_select(IMatter* m) {
+bool Linguisteen::SelfAvoidingWalkWorld::can_select(IMatter* m) {
     return (this->row < 0) || (m == this->agent);
 }
 
-void WarGrey::STEM::SelfAvoidingWalkWorld::after_select(IMatter* m, bool yes) {
+void Linguisteen::SelfAvoidingWalkWorld::after_select(IMatter* m, bool yes) {
     if (yes) {
         Bracer* bracer = dynamic_cast<Bracer*>(m);
 
         if (bracer != nullptr) {
-            float bottom_overlay;
+            Margin margin;
 
             this->row = MAZE_SIZE / 2;
             this->col = MAZE_SIZE / 2;
@@ -153,9 +152,9 @@ void WarGrey::STEM::SelfAvoidingWalkWorld::after_select(IMatter* m, bool yes) {
             this->walker->switch_mode(BracerMode::Run);
             this->reset_maze();
 
-            this->tiles[this->row][this->col]->feed_map_overlay(nullptr, nullptr, &bottom_overlay);
-            this->move_to(this->walker, this->tiles[this->row][this->col], MatterAnchor::CC,
-                            MatterAnchor::CC, 0.0F, -bottom_overlay);
+            margin = this->tiles[this->row][this->col]->get_map_overlay();
+            this->move_to(this->walker, { this->tiles[this->row][this->col], MatterAnchor::CC },
+                            MatterAnchor::CC, { 0.0F, -margin.bottom });
             
             this->tiles[this->row][this->col]->set_type(jungle_tile_type);
             this->maze[this->row][this->col] = true;
@@ -165,7 +164,7 @@ void WarGrey::STEM::SelfAvoidingWalkWorld::after_select(IMatter* m, bool yes) {
     }
 }
 
-void WarGrey::STEM::SelfAvoidingWalkWorld::reset_walkers(bool keep_mode) {
+void Linguisteen::SelfAvoidingWalkWorld::reset_walkers(bool keep_mode) {
     int walker_count = int(sizeof(this->walkers) / sizeof(Bracer*));
     
     for (int idx = 0; idx < walker_count; idx++) {
@@ -178,7 +177,7 @@ void WarGrey::STEM::SelfAvoidingWalkWorld::reset_walkers(bool keep_mode) {
     }
 }
 
-void WarGrey::STEM::SelfAvoidingWalkWorld::reset_maze() {
+void Linguisteen::SelfAvoidingWalkWorld::reset_maze() {
     for (int row = 0; row < MAZE_SIZE; row++) {
         for (int col = 0; col < MAZE_SIZE; col++) {
             this->maze[row][col] = false;
@@ -193,7 +192,7 @@ void WarGrey::STEM::SelfAvoidingWalkWorld::reset_maze() {
 }
 
 /**************************************************************************************************/
-bool WarGrey::STEM::SelfAvoidingWalkWorld::update_tooltip(IMatter* m, float lx, float ly, float gx, float gy) {
+bool Linguisteen::SelfAvoidingWalkWorld::update_tooltip(IMatter* m, float lx, float ly, float gx, float gy) {
     bool updated = false;
     auto bracer = dynamic_cast<Bracer*>(m);
 

@@ -3,7 +3,7 @@
 #include "../splash.hpp"
 
 /*************************************************************************************************/
-namespace WarGrey::STEM {
+namespace Linguisteen {
     enum class CmdlineOps { GameOfLifeDemo, StreamFile, _ };
 
     /* 定义本地宇宙类，并命名为 BigBangCosmos，继承自 TheCosmos 类 */

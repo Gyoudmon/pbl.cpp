@@ -1,14 +1,13 @@
 #pragma once // 确保只被 include 一次
 
-#include <gydm_stem/bang.hpp>
-
+#include <gydm/bang.hpp>
 #include <vector>
 
-namespace WarGrey::STEM {
+namespace Linguisteen {
     static const int MOVING_WAYS = 8;
 
     /*********************************************************************************************/
-    class IToroidalMovingAnimal : public WarGrey::STEM::IMatterMetadata {
+    class IToroidalMovingAnimal : public GYDM::IMatterMetadata {
     public:
         IToroidalMovingAnimal(int row, int col, const int gene[MOVING_WAYS], double duration, int cycle, int energy);
         virtual ~IToroidalMovingAnimal() {}
@@ -60,10 +59,10 @@ namespace WarGrey::STEM {
     };
 
     /*********************************************************************************************/
-    class TMRooster : public WarGrey::STEM::Rooster {
+    class TMRooster : public GYDM::Rooster {
     public:
         TMRooster(int row, int col, int cycle = 30, int energy = 300);
-        TMRooster(WarGrey::STEM::IToroidalMovingAnimal* self);
+        TMRooster(IToroidalMovingAnimal* self);
         virtual ~TMRooster() {}
 
         const char* name() override { return "公鸡"; }
@@ -75,10 +74,10 @@ namespace WarGrey::STEM {
         Animal* asexually_reproduce() override;
     };
 
-    class TMPigeon : public WarGrey::STEM::Pigeon {
+    class TMPigeon : public GYDM::Pigeon {
     public:
         TMPigeon(int row, int col, int cycle = 30, int energy = 300);
-        TMPigeon(WarGrey::STEM::IToroidalMovingAnimal* self);
+        TMPigeon(IToroidalMovingAnimal* self);
         virtual ~TMPigeon() {}
 
         const char* name() override { return "鸽子"; }
@@ -90,10 +89,10 @@ namespace WarGrey::STEM {
         Animal* asexually_reproduce() override;
     };
 
-    class TMCow : public WarGrey::STEM::Cow {
+    class TMCow : public GYDM::Cow {
     public:
         TMCow(int row, int col, int cycle = 365, int energy = 600);
-        TMCow(WarGrey::STEM::IToroidalMovingAnimal* self);
+        TMCow(IToroidalMovingAnimal* self);
         virtual ~TMCow() {}
 
         const char* name() override { return "奶牛"; }
@@ -105,10 +104,10 @@ namespace WarGrey::STEM {
         Animal* asexually_reproduce() override;
     };
 
-    class TMCat : public WarGrey::STEM::Cat {
+    class TMCat : public GYDM::Cat {
     public:
         TMCat(int row, int col, int cycle = 58, int energy = 1000);
-        TMCat(WarGrey::STEM::IToroidalMovingAnimal* self);
+        TMCat(IToroidalMovingAnimal* self);
         virtual ~TMCat() {}
 
         const char* name() override { return "食草猫"; }

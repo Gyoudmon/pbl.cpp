@@ -1,16 +1,16 @@
 #pragma once // 确保只被 include 一次
 
-#include <gydm_stem/bang.hpp>
+#include <gydm/bang.hpp>
 
 #include "conway/lifelet.hpp"
 
 #include <map>
 
-namespace WarGrey::STEM {
+namespace Linguisteen {
     enum class GameState { Auto, Stop, Edit, _ };
 
     /** 声明游戏宇宙 **/
-    class GameOfLifeWorld : public WarGrey::STEM::TheBigBang {
+    class GameOfLifeWorld : public GYDM::TheBigBang {
     public:
         GameOfLifeWorld(float gridsize = 8.0F) : GameOfLifeWorld("", gridsize) {}
         GameOfLifeWorld(const std::string& life_demo, float gridsize = 8.0F)
@@ -24,11 +24,11 @@ namespace WarGrey::STEM {
         void on_mission_start(float width, float height) override;
 
     public:
-        bool can_select(WarGrey::STEM::IMatter* m) override;
+        bool can_select(GYDM::IMatter* m) override;
             
     protected: // 覆盖输入事件处理方法
         void on_char(char key, uint16_t modifiers, uint8_t repeats, bool pressed) override; // 处理键盘事件
-        void on_tap(WarGrey::STEM::IMatter* m, float x, float y) override;                  // 处理鼠标事件
+        void on_tap(GYDM::IMatter* m, float x, float y) override;                  // 处理鼠标事件
 
     protected: // 处理保存事件
         const char* usrdata_extension() override { return ".gol"; }
@@ -37,19 +37,19 @@ namespace WarGrey::STEM {
     private:
         void load_gameboard(float width, float height);
         void load_instructions(float width, float height);
-        void switch_game_state(WarGrey::STEM::GameState new_state);
+        void switch_game_state(Linguisteen::GameState new_state);
         void update_instructions_state(const uint32_t* colors);
         void pace_forward();
         void load_conway_demo();
         void save_conway_demo();
             
     private: // 游戏物体
-        WarGrey::STEM::Labellet* generation;
-        WarGrey::STEM::GameOfLifelet* gameboard;
-        std::map<char, WarGrey::STEM::Labellet*> instructions;
+        GYDM::Labellet* generation;
+        Linguisteen::GameOfLifelet* gameboard;
+        std::map<char, GYDM::Labellet*> instructions;
 
     private: // 游戏状态
-        WarGrey::STEM::GameState state = GameState::_;
+        Linguisteen::GameState state = GameState::_;
 
     private:
         std::string demo_path;

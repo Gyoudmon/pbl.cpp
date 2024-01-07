@@ -1,9 +1,9 @@
-#include <gydm_stem/game.hpp>
+#include <gydm/game.hpp>
 
-namespace WarGrey::STEM {
-    class TheCosmos : public WarGrey::STEM::Cosmos {
+namespace Linguisteen {
+    class TheCosmos : public GYDM::Cosmos {
     public:
-        TheCosmos(int fps) : WarGrey::STEM::Cosmos(fps) {}
+        TheCosmos(int fps) : GYDM::Cosmos(fps) {}
         virtual ~TheCosmos();
 
     public:  // 覆盖游戏基本方法
@@ -17,6 +17,6 @@ namespace WarGrey::STEM {
         virtual void parse_cmdline_options(int argc, char* argv[]) {}
 
     private:
-        WarGrey::STEM::IPlane* splash;
+        GYDM::IPlane* splash;
     };
 }

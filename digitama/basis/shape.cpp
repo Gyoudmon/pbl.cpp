@@ -1,11 +1,11 @@
-// digitama/basis/shape.cpp 文件
 #include "shape.hpp"           // 导入本模块自己的头文件
 
-using namespace WarGrey::STEM; // 声明本模块的类和函数默认以 WarGrey::STEM 的名义使用
+using namespace GYDM;        // 声明本模块的类和函数默认以 GYDM 的名义使用，或者
+using namespace Linguisteen; //                     以 Linguisteen 的名义使用
 
 /*************************************************************************************************/
 // 实现 ShapeWorld::load 方法，在舞台上加入基础几何图形的实例，注意添加顺序
-void WarGrey::STEM::ShapeWorld::load(float width, float height) {
+void Linguisteen::ShapeWorld::load(float width, float height) {
     // 调用父类的同名方法加载标题和小猫助手
     TheBigBang::load(width, height);
 
@@ -21,17 +21,17 @@ void WarGrey::STEM::ShapeWorld::load(float width, float height) {
 }
 
 // 实现 ShapeWorld::reflow 方法，重新排列几何图形在舞台上的位置
-void WarGrey::STEM::ShapeWorld::reflow(float width, float height) {
+void Linguisteen::ShapeWorld::reflow(float width, float height) {
     // 调用父类的同名方法排列标题和小猫助手
     TheBigBang::reflow(width, height);
 
     // 排列基本图形以组装房屋
-    this->move_to(this->roof, width * 0.50F, height * 0.50F, MatterAnchor::CB);
-    this->move_to(this->wall, this->roof, MatterAnchor::CB, MatterAnchor::CT);
-    this->move_to(this->door, this->wall, MatterAnchor::RB, MatterAnchor::RB, -24.0F);
-    this->move_to(this->lock, this->door, MatterAnchor::RC, MatterAnchor::RC, -4.0F);
-    this->move_to(this->window, this->wall, MatterAnchor::CC, MatterAnchor::RC);
+    this->move_to(this->roof, Position(width * 0.50F, height * 0.50F), MatterAnchor::CB);
+    this->move_to(this->wall, Position(this->roof, MatterAnchor::CB), MatterAnchor::CT);
+    this->move_to(this->door, Position(this->wall, MatterAnchor::RB), MatterAnchor::RB, Vector(-24.0F, 0.0F));
+    this->move_to(this->lock, Position(this->door, MatterAnchor::RC), MatterAnchor::RC, Vector(-4.0F, 0.0F));
+    this->move_to(this->window, Position(this->wall, MatterAnchor::CC), MatterAnchor::RC);
 
     // 排列院子
-    this->move_to(this->garden, this->wall, MatterAnchor::CC, MatterAnchor::CT);
+    this->move_to(this->garden, Position(this->wall, MatterAnchor::CC), MatterAnchor::CT);
 }

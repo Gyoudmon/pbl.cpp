@@ -1,6 +1,6 @@
 #include "digitama/basis/cosmos.hpp"  // 导入语言基础课的 Cosmos
 
-using namespace WarGrey::STEM;
+using namespace Linguisteen;
 
 /*************************************************************************************************/
 int main(int argc, char* args[]) {

@@ -1,15 +1,15 @@
 #pragma once // 确保只被 include 一次
 
-#include <gydm_stem/bang.hpp>
+#include <gydm/bang.hpp>
 
 #include "dewdney/steppe.hpp"
 #include "dewdney/animal.hpp"
 
 #include <vector>
 
-namespace WarGrey::STEM {
+namespace Linguisteen {
     /*********************************************************************************************/
-    class EvolutionWorld : public WarGrey::STEM::TheBigBang {
+    class EvolutionWorld : public GYDM::TheBigBang {
     public:
         EvolutionWorld(float size_hint = 32.0F) : TheBigBang("演化游戏"), size_hint(size_hint) {}
         virtual ~EvolutionWorld() {}
@@ -21,16 +21,16 @@ namespace WarGrey::STEM {
         void on_mission_start(float width, float height) override;
 
     public:
-        bool can_select(WarGrey::STEM::IMatter* m) override;
+        bool can_select(GYDM::IMatter* m) override;
 
     protected:
-        void after_select(WarGrey::STEM::IMatter* m, bool yes) override;
-        bool update_tooltip(WarGrey::STEM::IMatter* m, float lx, float ly, float gx, float gy) override;
+        void after_select(GYDM::IMatter* m, bool yes) override;
+        bool update_tooltip(GYDM::IMatter* m, float lx, float ly, float gx, float gy) override;
 
     private:
-        void animal_try_eat(Animal* animal, IToroidalMovingAnimal* self);
-        void animal_try_reproduce(Animal* animal, IToroidalMovingAnimal* self, std::vector<Animal*>& offsprings, float dx, float dy);
-        void animal_move(Animal* animal, IToroidalMovingAnimal* self, float tile_width, float tile_height);
+        void animal_try_eat(GYDM::Animal* animal, IToroidalMovingAnimal* self);
+        void animal_try_reproduce(GYDM::Animal* animal, IToroidalMovingAnimal* self, std::vector<GYDM::Animal*>& offsprings, float dx, float dy);
+        void animal_move(GYDM::Animal* animal, IToroidalMovingAnimal* self, float tile_width, float tile_height);
         void clear_dead_animals();
 
     private:
@@ -38,11 +38,11 @@ namespace WarGrey::STEM {
         void update_world_info();
             
     private: /* 本世界中的物体 */
-        WarGrey::STEM::SteppeAtlas* steppe;
-        std::vector<WarGrey::STEM::Animal*> animals;
-        WarGrey::STEM::Historylet* phistory;
-        WarGrey::STEM::Historylet* ehistory;
-        WarGrey::STEM::Labellet* world_info;
+        Linguisteen::SteppeAtlas* steppe;
+        std::vector<GYDM::Animal*> animals;
+        GYDM::Historylet* phistory;
+        GYDM::Historylet* ehistory;
+        GYDM::Labellet* world_info;
  
     private: /* 本世界的参数设定 */
         int row;

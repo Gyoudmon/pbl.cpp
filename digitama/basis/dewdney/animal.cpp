@@ -1,11 +1,12 @@
 #include "animal.hpp"
 
-#include <gydm_stem/datum/fixnum.hpp>
-#include <gydm_stem/graphics/brush.hpp>
+#include <gydm/datum/fixnum.hpp>
+#include <gydm/graphics/brush.hpp>
 
 #include <sstream>
 
-using namespace WarGrey::STEM;
+using namespace GYDM;
+using namespace Linguisteen;
 
 /*************************************************************************************************/
 static const float lifebar_height = 2.0F;
@@ -24,7 +25,7 @@ static inline void gene_mutate(int gene[MOVING_WAYS]) {
 }
 
 /*************************************************************************************************/
-WarGrey::STEM::IToroidalMovingAnimal::IToroidalMovingAnimal(int row, int col, const int gene[MOVING_WAYS], double duration, int cycle, int energy)
+Linguisteen::IToroidalMovingAnimal::IToroidalMovingAnimal(int row, int col, const int gene[MOVING_WAYS], double duration, int cycle, int energy)
         : duration(duration), breeding_cycle(cycle), row(row), col(col), energy(energy) {
     this->direction = random_uniform(0, MOVING_WAYS - 1);
     this->r = row >> 1;
@@ -45,7 +46,7 @@ WarGrey::STEM::IToroidalMovingAnimal::IToroidalMovingAnimal(int row, int col, co
     }
 }
 
-std::string WarGrey::STEM::IToroidalMovingAnimal::description() {
+std::string Linguisteen::IToroidalMovingAnimal::description() {
     std::stringstream s;
 
     s << "子代: " << this->generation << ";";
@@ -61,7 +62,7 @@ std::string WarGrey::STEM::IToroidalMovingAnimal::description() {
     return s.str();
 }
 
-void WarGrey::STEM::IToroidalMovingAnimal::draw(SDL_Renderer* render, float x, float y, float width, float height) {
+void Linguisteen::IToroidalMovingAnimal::draw(SDL_Renderer* render, float x, float y, float width, float height) {
     float lifebar_width = float(this->energy) / float(this->full_energy);
     float breed_width = 1.0F - float(fxmax(this->countdown, 0)) / float(this->breeding_cycle);
 
@@ -73,7 +74,7 @@ void WarGrey::STEM::IToroidalMovingAnimal::draw(SDL_Renderer* render, float x, f
     }
 }
 
-void WarGrey::STEM::IToroidalMovingAnimal::turn() {
+void Linguisteen::IToroidalMovingAnimal::turn() {
     int sum = 0, rnd;
 
     for (int idx = 0; idx < MOVING_WAYS; idx ++) {
@@ -84,7 +85,7 @@ void WarGrey::STEM::IToroidalMovingAnimal::turn() {
     this->direction = (this->direction + this->angle(0, rnd)) % MOVING_WAYS;
 }
 
-int WarGrey::STEM::IToroidalMovingAnimal::angle(int idx0, int rnd) {
+int Linguisteen::IToroidalMovingAnimal::angle(int idx0, int rnd) {
     int next = rnd - this->gene[idx0];
 
     if (next < 0) {
@@ -94,7 +95,7 @@ int WarGrey::STEM::IToroidalMovingAnimal::angle(int idx0, int rnd) {
     }
 }
 
-void WarGrey::STEM::IToroidalMovingAnimal::move(int* delta_row, int* delta_col) {
+void Linguisteen::IToroidalMovingAnimal::move(int* delta_row, int* delta_col) {
     int orow = this->r;
     int ocol = this->c;
     int dr = 0;
@@ -119,13 +120,13 @@ void WarGrey::STEM::IToroidalMovingAnimal::move(int* delta_row, int* delta_col) 
     SET_BOX(delta_col, this->c - ocol);
 }
 
-void WarGrey::STEM::IToroidalMovingAnimal::eat(int food_energy) {
+void Linguisteen::IToroidalMovingAnimal::eat(int food_energy) {
     int gain_energy = food_energy * random_uniform(10, 20) / 100;
 
     this->energy = fxmin(this->full_energy, this->energy + gain_energy);
 }
 
-void WarGrey::STEM::IToroidalMovingAnimal::on_time_fly(int day) {
+void Linguisteen::IToroidalMovingAnimal::on_time_fly(int day) {
     if (this->bio_clock != day) {
         if (day > this->bio_clock) {
             int diff = (day - this->bio_clock);
@@ -141,7 +142,7 @@ void WarGrey::STEM::IToroidalMovingAnimal::on_time_fly(int day) {
     }
 }
 
-IToroidalMovingAnimal* WarGrey::STEM::IToroidalMovingAnimal::asexually_reproduce() {
+IToroidalMovingAnimal* Linguisteen::IToroidalMovingAnimal::asexually_reproduce() {
     auto offspring = new IToroidalMovingAnimal(this->row, this->col, this->gene, this->duration, this->breeding_cycle, this->full_energy);
 
     gene_mutate(offspring->gene);
@@ -157,73 +158,73 @@ IToroidalMovingAnimal* WarGrey::STEM::IToroidalMovingAnimal::asexually_reproduce
 }
 
 /*************************************************************************************************/
-WarGrey::STEM::TMRooster::TMRooster(int row, int col, int direction, int energy) {
+Linguisteen::TMRooster::TMRooster(int row, int col, int direction, int energy) {
     this->attach_metadata(new IToroidalMovingAnimal(row, col, nullptr, 0.5, direction, energy));
 }
 
-WarGrey::STEM::TMRooster::TMRooster(IToroidalMovingAnimal* self) {
+Linguisteen::TMRooster::TMRooster(IToroidalMovingAnimal* self) {
     this->attach_metadata(self);
 }
 
-void WarGrey::STEM::TMRooster::draw(SDL_Renderer* render, float x, float y, float width, float height) {
+void Linguisteen::TMRooster::draw(SDL_Renderer* render, float x, float y, float width, float height) {
     Rooster::draw(render, x, y, width, height);
     this->unsafe_metadata<IToroidalMovingAnimal>()->draw(render, x, y, width, height);
 }
 
-Animal* WarGrey::STEM::TMRooster::asexually_reproduce() {
+Animal* Linguisteen::TMRooster::asexually_reproduce() {
     return new TMRooster(this->unsafe_metadata<IToroidalMovingAnimal>()->asexually_reproduce());
 }
 
 /*************************************************************************************************/
-WarGrey::STEM::TMCow::TMCow(int row, int col, int direction, int energy) {
+Linguisteen::TMCow::TMCow(int row, int col, int direction, int energy) {
     this->attach_metadata(new IToroidalMovingAnimal(row, col, nullptr, 2.0, direction, energy));
 }
 
-WarGrey::STEM::TMCow::TMCow(IToroidalMovingAnimal* self) {
+Linguisteen::TMCow::TMCow(IToroidalMovingAnimal* self) {
     this->attach_metadata(self);
 }
 
-void WarGrey::STEM::TMCow::draw(SDL_Renderer* render, float x, float y, float width, float height) {
+void Linguisteen::TMCow::draw(SDL_Renderer* render, float x, float y, float width, float height) {
     Cow::draw(render, x, y, width, height);
     this->unsafe_metadata<IToroidalMovingAnimal>()->draw(render, x, y, width, height);
 }
 
-Animal* WarGrey::STEM::TMCow::asexually_reproduce() {
+Animal* Linguisteen::TMCow::asexually_reproduce() {
     return new TMCow(this->unsafe_metadata<IToroidalMovingAnimal>()->asexually_reproduce());
 }
 
 /*************************************************************************************************/
-WarGrey::STEM::TMCat::TMCat(int row, int col, int direction, int energy) {
+Linguisteen::TMCat::TMCat(int row, int col, int direction, int energy) {
     this->attach_metadata(new IToroidalMovingAnimal(row, col, nullptr, 0.4, direction, energy));
 }
 
-WarGrey::STEM::TMCat::TMCat(IToroidalMovingAnimal* self) {
+Linguisteen::TMCat::TMCat(IToroidalMovingAnimal* self) {
     this->attach_metadata(self);
 }
 
-void WarGrey::STEM::TMCat::draw(SDL_Renderer* render, float x, float y, float width, float height) {
+void Linguisteen::TMCat::draw(SDL_Renderer* render, float x, float y, float width, float height) {
     Cat::draw(render, x, y, width, height);
     this->unsafe_metadata<IToroidalMovingAnimal>()->draw(render, x, y, width, height);
 }
 
-Animal* WarGrey::STEM::TMCat::asexually_reproduce() {
+Animal* Linguisteen::TMCat::asexually_reproduce() {
     return new TMCat(this->unsafe_metadata<IToroidalMovingAnimal>()->asexually_reproduce());
 }
 
 /*************************************************************************************************/
-WarGrey::STEM::TMPigeon::TMPigeon(int row, int col, int direction, int energy) {
+Linguisteen::TMPigeon::TMPigeon(int row, int col, int direction, int energy) {
     this->attach_metadata(new IToroidalMovingAnimal(row, col, nullptr, 0.3, direction, energy));
 }
 
-WarGrey::STEM::TMPigeon::TMPigeon(IToroidalMovingAnimal* self) {
+Linguisteen::TMPigeon::TMPigeon(IToroidalMovingAnimal* self) {
     this->attach_metadata(self);
 }
 
-void WarGrey::STEM::TMPigeon::draw(SDL_Renderer* render, float x, float y, float width, float height) {
+void Linguisteen::TMPigeon::draw(SDL_Renderer* render, float x, float y, float width, float height) {
     Pigeon::draw(render, x, y, width, height);
     this->unsafe_metadata<IToroidalMovingAnimal>()->draw(render, x, y, width, height);
 }
 
-Animal* WarGrey::STEM::TMPigeon::asexually_reproduce() {
+Animal* Linguisteen::TMPigeon::asexually_reproduce() {
     return new TMPigeon(this->unsafe_metadata<IToroidalMovingAnimal>()->asexually_reproduce());
 }
