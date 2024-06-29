@@ -12,11 +12,11 @@ namespace Linguisteen {
         GameOfLifelet(int row, int col, float gridsize) : row(row), col(col), gridsize(gridsize) {}
         virtual ~GameOfLifelet();
 
-        void construct(SDL_Renderer* renderer) override;
+        void construct(GYDM::dc_t* dc) override;
 
     public:
         GYDM::Box get_bounding_box() override;
-        void draw(SDL_Renderer* renderer, float x, float y, float Width, float Height) override;
+        void draw(GYDM::dc_t* dc, float x, float y, float Width, float Height) override;
 
     public:
         void show_grid(bool yes);

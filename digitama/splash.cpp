@@ -55,8 +55,8 @@ namespace {
         void reflow(float width, float height) override {
             TheBigBang::reflow(width, height);
 
-            this->move_to(this->title, { this->agent, MatterAnchor::RB }, MatterAnchor::LB);
-            this->move_to(this->splash, { width * 0.5F, height * 0.5F }, MatterAnchor::CC);
+            this->move_to(this->title, { this->agent, MatterPort::RB }, MatterPort::LB);
+            this->move_to(this->splash, { width * 0.5F, height * 0.5F }, MatterPort::CC);
             
             this->reflow_tasks(width, height);
             this->tux_home();
@@ -154,15 +154,15 @@ namespace {
                 for (int idx = 0; idx < subinfos.size(); idx ++) {
                     auto pos = subinfos[idx];
 
-                    this->splash->move_to_logic_tile(subcoins[idx], pos.first, pos.second, MatterAnchor::CC, MatterAnchor::CC);
+                    this->splash->move_to_logic_tile(subcoins[idx], pos.first, pos.second, MatterPort::CC, MatterPort::CC);
                 }
             }
 
             for (size_t idx = this->bonus_coins.size(); idx > 0; idx --) {
                 if (idx == this->bonus_coins.size()) {
-                    this->move_to(this->bonus_coins[idx - 1], { this->splash, MatterAnchor::LB }, MatterAnchor::LB);
+                    this->move_to(this->bonus_coins[idx - 1], { this->splash, MatterPort::LB }, MatterPort::LB);
                 } else {
-                    this->move_to(this->bonus_coins[idx - 1], { this->bonus_coins[idx], MatterAnchor::RC }, MatterAnchor::LC);
+                    this->move_to(this->bonus_coins[idx - 1], { this->bonus_coins[idx], MatterPort::RC }, MatterPort::LC);
                 }
             }
         }
@@ -172,7 +172,7 @@ namespace {
             int row = tux_spots[0].first;
             int col = tux_spots[0].second;
             
-            this->splash->move_to_logic_tile(this->tux, row, col, MatterAnchor::LB, MatterAnchor::CB);
+            this->splash->move_to_logic_tile(this->tux, row, col, MatterPort::LB, MatterPort::CB);
             this->tux_walk_segment = 1;
             this->tux_start_walk();
         }
@@ -184,8 +184,8 @@ namespace {
         }
 
         void tux_step(uint64_t count, uint64_t interval, uint64_t uptime) {
-            Dot tdot = this->get_matter_location(this->tux, MatterAnchor::RB);
-            Dot dot0 = this->get_matter_location(this->splash, MatterAnchor::LT);
+            Dot tdot = this->get_matter_location(this->tux, MatterPort::RB);
+            Dot dot0 = this->get_matter_location(this->splash, MatterPort::LT);
             
             tdot -= dot0;
 
@@ -211,7 +211,7 @@ namespace {
         Dot get_splash_location(size_t idx) {
             return this->splash->get_logic_tile_location(
                         tux_spots[idx].first, tux_spots[idx].second,
-                        MatterAnchor::LB);
+                        MatterPort::LB);
         }
 
     private:

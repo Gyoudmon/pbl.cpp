@@ -40,10 +40,10 @@ void Linguisteen::EvolutionWorld::reflow(float width, float height) {
     float cy = (height + this->get_titlebar_height()) * 0.5F;
     Margin overlay = this->steppe->get_map_overlay();
     
-    this->move_to(this->steppe, { cx, cy }, MatterAnchor::CC);
-    this->move_to(this->world_info, { this->steppe, MatterAnchor::RT }, MatterAnchor::RB, { 0.0F, overlay.top * 0.5F });
-    this->move_to(this->ehistory, { this->world_info, MatterAnchor::RT }, MatterAnchor::RB);
-    this->move_to(this->phistory, { this->ehistory, MatterAnchor::LC }, MatterAnchor::RC, { -overlay.top, 0.0F });
+    this->move_to(this->steppe, { cx, cy }, MatterPort::CC);
+    this->move_to(this->world_info, { this->steppe, MatterPort::RT }, MatterPort::RB, { 0.0F, overlay.top * 0.5F });
+    this->move_to(this->ehistory, { this->world_info, MatterPort::RT }, MatterPort::RB);
+    this->move_to(this->phistory, { this->ehistory, MatterPort::LC }, MatterPort::RC, { -overlay.top, 0.0F });
 }
 
 void Linguisteen::EvolutionWorld::on_mission_start(float width, float height) {
@@ -58,8 +58,8 @@ void Linguisteen::EvolutionWorld::on_mission_start(float width, float height) {
         auto self = animal->unsafe_metadata<IToroidalMovingAnimal>();
 
         this->steppe->glide_to_logic_tile(self->pace_duration(), animal,
-            self->current_row(), self->current_col(), MatterAnchor::CC,
-            MatterAnchor::CB, { 0.0F, overlay.bottom });
+            self->current_row(), self->current_col(), MatterPort::CC,
+            MatterPort::CB, { 0.0F, overlay.bottom });
     }
 }
 
@@ -125,8 +125,8 @@ void Linguisteen::EvolutionWorld::animal_try_reproduce(Animal* animal, IToroidal
 
         offsprings.push_back(this->insert(offspring));
         this->steppe->move_to_logic_tile(offspring,
-                    offself->current_row(), offself->current_col(), MatterAnchor::CC,
-                    MatterAnchor::CB, { dx, dy });
+                    offself->current_row(), offself->current_col(), MatterPort::CC,
+                    MatterPort::CB, { dx, dy });
     }
 }
 
@@ -199,7 +199,7 @@ void Linguisteen::EvolutionWorld::update_world_info() {
     int n = int(this->animals.size());
     int e = this->steppe->get_total_energy();
     
-    this->world_info->set_text(MatterAnchor::RB, matrics_fmt, day, n, e);
+    this->world_info->set_text(MatterPort::RB, matrics_fmt, day, n, e);
     this->phistory->push_back_datum(float(day), float(n));
     this->ehistory->push_back_datum(float(day), float(e));
 }

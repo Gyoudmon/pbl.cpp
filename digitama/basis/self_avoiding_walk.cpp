@@ -48,7 +48,7 @@ void Linguisteen::SelfAvoidingWalkWorld::load(float width, float height) {
     // 初始化世界
     for (int row = 0; row < MAZE_SIZE; row ++) {
         for (int col = 0; col < MAZE_SIZE; col ++) {
-            this->tiles[row][col] = this->insert(new PlanetCuteTile(steppe_tile_type), cx, cy, MatterAnchor::CC);
+            this->tiles[row][col] = this->insert(new PlanetCuteTile(steppe_tile_type), cx, cy, MatterPort::CC);
         }
     }
 
@@ -90,7 +90,7 @@ void Linguisteen::SelfAvoidingWalkWorld::reflow(float width, float height) {
             float dx = maze_x + float(col + 1) * this->cell_region.width();
             float dy = maze_y + float(row + 1) * this->cell_region.height();
 
-            this->glide_to(pace_duration, this->tiles[row][col], { dx, dy }, MatterAnchor::RB);
+            this->glide_to(pace_duration, this->tiles[row][col], { dx, dy }, MatterPort::RB);
         }
     }
 }
@@ -122,7 +122,7 @@ void Linguisteen::SelfAvoidingWalkWorld::update(uint64_t count, uint32_t interva
                 } else {
                     this->walker->switch_mode(BracerMode::Win, 1);
                 }
-            } else if (this->is_colliding(this->walker, this->tiles[this->row][this->col], MatterAnchor::CC)) {
+            } else if (this->is_colliding(this->walker, this->tiles[this->row][this->col], MatterPort::CC)) {
                 if (is_inside_maze(this->row, this->col)) {
                     this->tiles[this->row][this->col]->set_type(jungle_tile_type);
                 }
@@ -153,8 +153,8 @@ void Linguisteen::SelfAvoidingWalkWorld::after_select(IMatter* m, bool yes) {
             this->reset_maze();
 
             margin = this->tiles[this->row][this->col]->get_map_overlay();
-            this->move_to(this->walker, { this->tiles[this->row][this->col], MatterAnchor::CC },
-                            MatterAnchor::CC, { 0.0F, -margin.bottom });
+            this->move_to(this->walker, { this->tiles[this->row][this->col], MatterPort::CC },
+                            MatterPort::CC, { 0.0F, -margin.bottom });
             
             this->tiles[this->row][this->col]->set_type(jungle_tile_type);
             this->maze[this->row][this->col] = true;
@@ -168,7 +168,7 @@ void Linguisteen::SelfAvoidingWalkWorld::reset_walkers(bool keep_mode) {
     int walker_count = int(sizeof(this->walkers) / sizeof(Bracer*));
     
     for (int idx = 0; idx < walker_count; idx++) {
-        this->move_to_grid(this->walkers[idx], idx, 0, MatterAnchor::CB);
+        this->move_to_grid(this->walkers[idx], idx, 0, MatterPort::CB);
         this->walkers[idx]->set_heading(90.0);
 
         if (!keep_mode) {

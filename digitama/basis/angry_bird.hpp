@@ -23,5 +23,7 @@ namespace Linguisteen {
     private:   // 本游戏世界中的物体
         GYDM::Sprite* catapult;
         GYDM::MarioGroundAtlas* ground;
+        GYDM::SpriteGridSheet* angry_bird;
+        GYDM::SpriteGridSheet* king_pig;
     };
 }

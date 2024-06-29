@@ -15,7 +15,7 @@ namespace Linguisteen {
         std::string description();
 
     public:
-        void draw(SDL_Renderer* renderer, float x, float y, float width, float height);
+        void draw(GYDM::dc_t* dc, float x, float y, float width, float height);
 
     public:
         void turn();
@@ -68,7 +68,7 @@ namespace Linguisteen {
         const char* name() override { return "公鸡"; }
 
     public:
-        void draw(SDL_Renderer* renderer, float x, float y, float width, float height) override;
+        void draw(GYDM::dc_t* dc, float x, float y, float width, float height) override;
 
     public:
         Animal* asexually_reproduce() override;
@@ -83,7 +83,7 @@ namespace Linguisteen {
         const char* name() override { return "鸽子"; }
 
     public:
-        void draw(SDL_Renderer* renderer, float x, float y, float width, float height) override;
+        void draw(GYDM::dc_t* dc, float x, float y, float width, float height) override;
 
     public:
         Animal* asexually_reproduce() override;
@@ -98,7 +98,7 @@ namespace Linguisteen {
         const char* name() override { return "奶牛"; }
 
     public:
-        void draw(SDL_Renderer* renderer, float x, float y, float width, float height) override;
+        void draw(GYDM::dc_t* dc, float x, float y, float width, float height) override;
 
     public:
         Animal* asexually_reproduce() override;
@@ -113,7 +113,7 @@ namespace Linguisteen {
         const char* name() override { return "食草猫"; }
 
     public:
-        void draw(SDL_Renderer* renderer, float x, float y, float width, float height) override;
+        void draw(GYDM::dc_t* dc, float x, float y, float width, float height) override;
 
     public:
         Animal* asexually_reproduce() override;

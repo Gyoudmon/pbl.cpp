@@ -14,8 +14,8 @@ void Linguisteen::DrunkardWalkWorld::load(float width, float height) {
     this->drunkard = this->insert(new Agate());
     this->partner = this->insert(new Tita());
 
-    this->bind_canvas(this->drunkard, this->track, MatterAnchor::CB);
-    this->bind_canvas(this->partner, this->track, MatterAnchor::CB);
+    this->bind_canvas(this->drunkard, this->track, MatterPort::CB);
+    this->bind_canvas(this->partner, this->track, MatterPort::CB);
 
     this->set_pen_color(this->drunkard, FIREBRICK);
     this->set_pen_color(this->partner, DODGERBLUE);
@@ -24,9 +24,9 @@ void Linguisteen::DrunkardWalkWorld::load(float width, float height) {
 }
 
 void Linguisteen::DrunkardWalkWorld::reflow(float width, float height) {
-    this->move_to(this->beach, { width * 0.5F, height }, MatterAnchor::CB);
-    this->move_to(this->tent, { 0.0F, height }, MatterAnchor::LB);
-    this->move_to(this->track, { width * 0.5F, height * 0.5F }, MatterAnchor::CC);
+    this->move_to(this->beach, { width * 0.5F, height }, MatterPort::CB);
+    this->move_to(this->tent, { 0.0F, height }, MatterPort::LB);
+    this->move_to(this->track, { width * 0.5F, height * 0.5F }, MatterPort::CC);
     
     TheBigBang::reflow(width, height);
 }
@@ -35,8 +35,8 @@ void Linguisteen::DrunkardWalkWorld::on_mission_start(float width, float height)
     this->drunkard->switch_mode(BracerMode::Walk);
     this->drunkard->set_heading(-180.0);
 
-    this->move_to(this->drunkard, { width * 0.95F, height * 0.9F }, MatterAnchor::CC);
-    this->move_to(this->partner, { width * 0.24F, height * 0.9F }, MatterAnchor::CC);
+    this->move_to(this->drunkard, { width * 0.95F, height * 0.9F }, MatterPort::CC);
+    this->move_to(this->partner, { width * 0.24F, height * 0.9F }, MatterPort::CC);
 }
 
 void Linguisteen::DrunkardWalkWorld::update(uint64_t interval, uint32_t count, uint64_t uptime) {

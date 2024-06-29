@@ -37,8 +37,8 @@ Linguisteen::GameOfLifelet::~GameOfLifelet() {
     }
 }
 
-void Linguisteen::GameOfLifelet::construct(SDL_Renderer* renderer) {
-    IGraphlet::construct(renderer);
+void Linguisteen::GameOfLifelet::construct(GYDM::dc_t* dc) {
+    IGraphlet::construct(dc);
 
     this->shadow = new int[this->row * this->col];
     this->world = new int*[this->row];
@@ -53,16 +53,16 @@ Box Linguisteen::GameOfLifelet::get_bounding_box() {
              this->gridsize * float(this->row) + 1.0F };
 }
 
-void Linguisteen::GameOfLifelet::draw(SDL_Renderer* renderer, float x, float y, float Width, float Height) {
-    Brush::draw_rect(renderer, x, y, Width, Height, this->color);
+void Linguisteen::GameOfLifelet::draw(GYDM::dc_t* dc, float x, float y, float Width, float Height) {
+    dc->draw_rect(x, y, Width, Height, this->color);
 
     // 绘制舞台的网格
     if (!this->hide_grid) {
-        Brush::draw_grid(renderer, this->row, this->col, this->gridsize, this->gridsize, this->color, x, y);
+        dc->draw_grid(this->row, this->col, this->gridsize, this->gridsize, this->color, x, y);
     }
 
     // 绘制生命状态
-    Brush::fill_grid(renderer, this->world, this->row, this->col, this->gridsize, this->gridsize, this->color, x, y);
+    dc->fill_grid(this->world, this->row, this->col, this->gridsize, this->gridsize, this->color, x, y);
 }
 
 void Linguisteen::GameOfLifelet::toggle_life_at_location(float x, float y) {

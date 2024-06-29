@@ -33,7 +33,7 @@ void Linguisteen::ColorWheelWorld::reflow(float width, float height) {
 
     for (auto c : this->hues) {
         circle_point(wheel_radius, float(c->get_brush_color().hue()) - 90.0F, &x, &y, false);
-        this->move_to(c, { cx + x, cy + y }, MatterAnchor::CC);
+        this->move_to(c, { cx + x, cy + y }, MatterPort::CC);
     }
 
     this->reflow_primaries(cx, cy);
@@ -67,7 +67,7 @@ bool Linguisteen::ColorWheelWorld::update_tooltip(IMatter* m, float x, float y, 
         RGBA c = 0U;
 
         for (size_t idx = 0; idx < this->primaries.size(); idx ++) {
-            Dot dot = this->get_matter_location(this->primaries[idx], MatterAnchor::CC);
+            Dot dot = this->get_matter_location(this->primaries[idx], MatterPort::CC);
 
             if (point_distance(gx, gy, dot.x, dot.y) <= primary_radius) {
                 c = c + this->primaries[idx]->get_brush_color();
@@ -95,7 +95,7 @@ void Linguisteen::ColorWheelWorld::load_hues() {
 void Linguisteen::ColorWheelWorld::reflow_primaries(float x, float y) {
     float cc_off = primary_radius * 0.5F;
     
-    this->move_to(this->primaries[0], { x, y }, MatterAnchor::CB, { 0.0F, cc_off });
-    this->move_to(this->primaries[1], { this->primaries[0], MatterAnchor::CB }, MatterAnchor::RC, { cc_off, 0.0F });
-    this->move_to(this->primaries[2], { this->primaries[1], MatterAnchor::CC }, MatterAnchor::LC);
+    this->move_to(this->primaries[0], { x, y }, MatterPort::CB, { 0.0F, cc_off });
+    this->move_to(this->primaries[1], { this->primaries[0], MatterPort::CB }, MatterPort::RC, { cc_off, 0.0F });
+    this->move_to(this->primaries[2], { this->primaries[1], MatterPort::CC }, MatterPort::LC);
 }

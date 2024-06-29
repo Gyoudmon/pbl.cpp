@@ -3,9 +3,6 @@
 using namespace GYDM;
 using namespace Linguisteen;
 
-const float ball_speed = 6.0F;
-const float paddle_speed = ball_speed * 1.5F;
-
 /*************************************************************************************************/
 // 实现 AngryBirdWorld::load 方法，加载场景和角色
 void Linguisteen::AngryBirdWorld::load(float width, float height) {
@@ -16,13 +13,21 @@ void Linguisteen::AngryBirdWorld::load(float width, float height) {
     this->ground = this->insert(new MarioGroundAtlas(0U, 3, 75));
     this->catapult = this->insert(new Sprite(digimon_path("assets/catapult", ".png")));
 
+    this->angry_bird = this->insert(new SpriteGridSheet(digimon_path("assets/AngryBirds", ".png"), 1, 5));
+    this->king_pig = this->insert(new SpriteGridSheet(digimon_path("assets/Pigs", ".png"), 1, 9));
+    
     this->catapult->scale(0.20F);
+    this->king_pig->scale(0.40F);
+    this->king_pig->switch_to_random_costume();
 }
 
 // 实现 AngryBirdWorld::reflow 方法，布置场景
 void Linguisteen::AngryBirdWorld::reflow(float width, float height) {
-    this->move_to(this->ground, { width * 0.5F, height }, MatterAnchor::CB);
-    this->move_to(this->catapult, { this->ground, { 0.12F, 0.01F }}, MatterAnchor::LB);
+    this->move_to(this->ground, { width * 0.5F, height }, MatterPort::CB);
+    this->move_to(this->catapult, { this->ground, { 0.12F, 0.01F }}, MatterPort::LB);
+
+    this->move_to(this->angry_bird, { this->catapult, { 0.5F, 0.25F }}, MatterPort::CC);
+    this->move_to(this->king_pig, { width * 0.618F, height * 0.5F }, MatterPort::CC);
 }
 
 // 实现 AngryBirdWorld::update 方法，根据球和桨的当前位置判断是否有碰撞，无需考虑运动细节

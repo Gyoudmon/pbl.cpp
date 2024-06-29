@@ -1,7 +1,6 @@
 #include "animal.hpp"
 
 #include <gydm/datum/fixnum.hpp>
-#include <gydm/graphics/brush.hpp>
 
 #include <sstream>
 
@@ -62,15 +61,15 @@ std::string Linguisteen::IToroidalMovingAnimal::description() {
     return s.str();
 }
 
-void Linguisteen::IToroidalMovingAnimal::draw(SDL_Renderer* render, float x, float y, float width, float height) {
+void Linguisteen::IToroidalMovingAnimal::draw(dc_t* dc, float x, float y, float width, float height) {
     float lifebar_width = float(this->energy) / float(this->full_energy);
     float breed_width = 1.0F - float(fxmax(this->countdown, 0)) / float(this->breeding_cycle);
 
     if (this->energy >= this->reproduce_energy) {
-        Brush::draw_rect(render, x, y, lifebar_width * width, lifebar_height, RGBA(ROYALBLUE, lifebar_alpha));
-        Brush::draw_line(render, x, y + lifebar_height, x + breed_width * width, y + lifebar_height, RGBA(ORANGE, lifebar_alpha));
+        dc->draw_rect(x, y, lifebar_width * width, lifebar_height, RGBA(ROYALBLUE, lifebar_alpha));
+        dc->draw_line(x, y + lifebar_height, x + breed_width * width, y + lifebar_height, RGBA(ORANGE, lifebar_alpha));
     } else {
-        Brush::draw_rect(render, x, y, lifebar_width * width, lifebar_height, RGBA(CRIMSON, lifebar_alpha));
+        dc->draw_rect(x, y, lifebar_width * width, lifebar_height, RGBA(CRIMSON, lifebar_alpha));
     }
 }
 
@@ -166,9 +165,9 @@ Linguisteen::TMRooster::TMRooster(IToroidalMovingAnimal* self) {
     this->attach_metadata(self);
 }
 
-void Linguisteen::TMRooster::draw(SDL_Renderer* render, float x, float y, float width, float height) {
-    Rooster::draw(render, x, y, width, height);
-    this->unsafe_metadata<IToroidalMovingAnimal>()->draw(render, x, y, width, height);
+void Linguisteen::TMRooster::draw(dc_t* dc, float x, float y, float width, float height) {
+    Rooster::draw(dc, x, y, width, height);
+    this->unsafe_metadata<IToroidalMovingAnimal>()->draw(dc, x, y, width, height);
 }
 
 Animal* Linguisteen::TMRooster::asexually_reproduce() {
@@ -184,9 +183,9 @@ Linguisteen::TMCow::TMCow(IToroidalMovingAnimal* self) {
     this->attach_metadata(self);
 }
 
-void Linguisteen::TMCow::draw(SDL_Renderer* render, float x, float y, float width, float height) {
-    Cow::draw(render, x, y, width, height);
-    this->unsafe_metadata<IToroidalMovingAnimal>()->draw(render, x, y, width, height);
+void Linguisteen::TMCow::draw(dc_t* dc, float x, float y, float width, float height) {
+    Cow::draw(dc, x, y, width, height);
+    this->unsafe_metadata<IToroidalMovingAnimal>()->draw(dc, x, y, width, height);
 }
 
 Animal* Linguisteen::TMCow::asexually_reproduce() {
@@ -202,9 +201,9 @@ Linguisteen::TMCat::TMCat(IToroidalMovingAnimal* self) {
     this->attach_metadata(self);
 }
 
-void Linguisteen::TMCat::draw(SDL_Renderer* render, float x, float y, float width, float height) {
-    Cat::draw(render, x, y, width, height);
-    this->unsafe_metadata<IToroidalMovingAnimal>()->draw(render, x, y, width, height);
+void Linguisteen::TMCat::draw(dc_t* dc, float x, float y, float width, float height) {
+    Cat::draw(dc, x, y, width, height);
+    this->unsafe_metadata<IToroidalMovingAnimal>()->draw(dc, x, y, width, height);
 }
 
 Animal* Linguisteen::TMCat::asexually_reproduce() {
@@ -220,9 +219,9 @@ Linguisteen::TMPigeon::TMPigeon(IToroidalMovingAnimal* self) {
     this->attach_metadata(self);
 }
 
-void Linguisteen::TMPigeon::draw(SDL_Renderer* render, float x, float y, float width, float height) {
-    Pigeon::draw(render, x, y, width, height);
-    this->unsafe_metadata<IToroidalMovingAnimal>()->draw(render, x, y, width, height);
+void Linguisteen::TMPigeon::draw(dc_t* dc, float x, float y, float width, float height) {
+    Pigeon::draw(dc, x, y, width, height);
+    this->unsafe_metadata<IToroidalMovingAnimal>()->draw(dc, x, y, width, height);
 }
 
 Animal* Linguisteen::TMPigeon::asexually_reproduce() {

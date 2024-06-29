@@ -1,6 +1,5 @@
 #include "game_of_life.hpp"
 
-#include <gydm/graphics/text.hpp>
 #include <filesystem>
 
 using namespace GYDM;
@@ -63,14 +62,14 @@ void Linguisteen::GameOfLifeWorld::load_instructions(float width, float height) 
 void Linguisteen::GameOfLifeWorld::reflow(float width, float height) {
     TheBigBang::reflow(width, height);
 
-    this->move_to(this->gameboard, { width * 0.5F, (height + this->get_titlebar_height()) * 0.5F }, MatterAnchor::CC);
-    this->move_to(this->generation, { this->gameboard, MatterAnchor::RT }, MatterAnchor::RB);
+    this->move_to(this->gameboard, { width * 0.5F, (height + this->get_titlebar_height()) * 0.5F }, MatterPort::CC);
+    this->move_to(this->generation, { this->gameboard, MatterPort::RT }, MatterPort::RB);
 
-    this->move_to(this->instructions[ordered_keys[0]], { 0.0F, height }, MatterAnchor::LB);
+    this->move_to(this->instructions[ordered_keys[0]], { 0.0F, height }, MatterPort::LB);
     for (int idx = 1; idx < sizeof(ordered_keys) / sizeof(char); idx ++) {
         this->move_to(this->instructions[ordered_keys[idx]],
-                        { this->instructions[ordered_keys[idx - 1]], MatterAnchor::RB },
-                        MatterAnchor::LB, { 16.0F, 0.0F });
+                        { this->instructions[ordered_keys[idx - 1]], MatterPort::RB },
+                        MatterPort::LB, { 16.0F, 0.0F });
     }
 }
 
@@ -141,10 +140,10 @@ void Linguisteen::GameOfLifeWorld::on_save(const std::string& life_world, std::o
 void Linguisteen::GameOfLifeWorld::pace_forward() {
     if (this->gameboard->pace_forward()) {
         this->generation->set_text_color(GREEN);
-        this->generation->set_text(MatterAnchor::RB, generation_fmt, this->gameboard->get_generation());
+        this->generation->set_text(MatterPort::RB, generation_fmt, this->gameboard->get_generation());
     } else {
         this->generation->set_text_color(ORANGE);
-        this->generation->set_text(MatterAnchor::RB, generation_fmt, this->gameboard->get_generation());
+        this->generation->set_text(MatterPort::RB, generation_fmt, this->gameboard->get_generation());
         
         if (this->state == GameState::Auto) {
             this->switch_game_state(GameState::Stop);

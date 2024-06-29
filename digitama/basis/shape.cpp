@@ -1,4 +1,4 @@
-#include "shape.hpp"           // 导入本模块自己的头文件
+#include "shape.hpp"         // 导入本模块自己的头文件
 
 using namespace GYDM;        // 声明本模块的类和函数默认以 GYDM 的名义使用，或者
 using namespace Linguisteen; //                     以 Linguisteen 的名义使用
@@ -26,12 +26,12 @@ void Linguisteen::ShapeWorld::reflow(float width, float height) {
     TheBigBang::reflow(width, height);
 
     // 排列基本图形以组装房屋
-    this->move_to(this->roof, Position(width * 0.50F, height * 0.50F), MatterAnchor::CB);
-    this->move_to(this->wall, Position(this->roof, MatterAnchor::CB), MatterAnchor::CT);
-    this->move_to(this->door, Position(this->wall, MatterAnchor::RB), MatterAnchor::RB, Vector(-24.0F, 0.0F));
-    this->move_to(this->lock, Position(this->door, MatterAnchor::RC), MatterAnchor::RC, Vector(-4.0F, 0.0F));
-    this->move_to(this->window, Position(this->wall, MatterAnchor::CC), MatterAnchor::RC);
+    this->move_to(this->roof, Position(width * 0.50F, height * 0.50F), MatterPort::CB);
+    this->move_to(this->wall, Position(this->roof, MatterPort::CB), MatterPort::CT);
+    this->move_to(this->door, Position(this->wall, MatterPort::RB), MatterPort::RB, Vector(-24.0F, 0.0F));
+    this->move_to(this->lock, Position(this->door, MatterPort::RC), MatterPort::RC, Vector(-4.0F, 0.0F));
+    this->move_to(this->window, Position(this->wall, MatterPort::CC), MatterPort::RC);
 
     // 排列院子
-    this->move_to(this->garden, Position(this->wall, MatterAnchor::CC), MatterAnchor::CT);
+    this->move_to(this->garden, Position(this->wall, MatterPort::CC), MatterPort::CT);
 }
