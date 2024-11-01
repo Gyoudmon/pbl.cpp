@@ -1,22 +1,22 @@
 #pragma once // 确保只被 include 一次
 
-#include <gydm/bang.hpp>
+#include <plteen/bang.hpp>
 
 #include <map>
 
 namespace Linguisteen {
     /** 声明游戏物体 **/
-    class GameOfLifelet : public GYDM::IGraphlet {
+    class GameOfLifelet : public Plteen::IGraphlet {
     public:
         GameOfLifelet(int n, float gridsize) : GameOfLifelet(n, n, gridsize) {}
         GameOfLifelet(int row, int col, float gridsize) : row(row), col(col), gridsize(gridsize) {}
         virtual ~GameOfLifelet();
 
-        void construct(GYDM::dc_t* dc) override;
+        void construct(Plteen::dc_t* dc) override;
 
     public:
-        GYDM::Box get_bounding_box() override;
-        void draw(GYDM::dc_t* dc, float x, float y, float Width, float Height) override;
+        Plteen::Box get_bounding_box() override;
+        void draw(Plteen::dc_t* dc, float x, float y, float Width, float Height) override;
 
     public:
         void show_grid(bool yes);

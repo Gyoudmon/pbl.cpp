@@ -1,8 +1,8 @@
 #include "steppe.hpp"
 
-#include <gydm/datum/fixnum.hpp>
+#include <plteen/datum/fixnum.hpp>
 
-using namespace GYDM;
+using namespace Plteen;
 using namespace Linguisteen;
 
 /*************************************************************************************************/

@@ -1,10 +1,10 @@
 #pragma once // 确保只被 include 一次
 
-#include <gydm/bang.hpp>
+#include <plteen/bang.hpp>
 
 namespace Linguisteen {
     /*********************************************************************************************/
-    class SteppeAtlas : public GYDM::PlanetCuteAtlas {
+    class SteppeAtlas : public Plteen::PlanetCuteAtlas {
     public:
         SteppeAtlas(int row, int col);
         virtual ~SteppeAtlas() noexcept;
@@ -25,7 +25,7 @@ namespace Linguisteen {
         int current_day() { return this->day; }
 
     protected:
-        void on_tilemap_load(GYDM::shared_texture_t atlas) override;
+        void on_tilemap_load(Plteen::shared_texture_t atlas) override;
 
     private:
         void random_plant(int r0, int c0, int row_size, int col_size);

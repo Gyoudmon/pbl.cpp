@@ -1,13 +1,13 @@
 #pragma once // 确保只被 include 一次
 
-#include <gydm/bang.hpp>
+#include <plteen/bang.hpp>
 #include <vector>
 
 namespace Linguisteen {
     static const int MOVING_WAYS = 8;
 
     /*********************************************************************************************/
-    class IToroidalMovingAnimal : public GYDM::IMatterMetadata {
+    class IToroidalMovingAnimal : public Plteen::IMatterMetadata {
     public:
         IToroidalMovingAnimal(int row, int col, const int gene[MOVING_WAYS], double duration, int cycle, int energy);
         virtual ~IToroidalMovingAnimal() {}
@@ -15,7 +15,7 @@ namespace Linguisteen {
         std::string description();
 
     public:
-        void draw(GYDM::dc_t* dc, float x, float y, float width, float height);
+        void draw(Plteen::dc_t* dc, float x, float y, float width, float height);
 
     public:
         void turn();
@@ -59,7 +59,7 @@ namespace Linguisteen {
     };
 
     /*********************************************************************************************/
-    class TMRooster : public GYDM::Rooster {
+    class TMRooster : public Plteen::Rooster {
     public:
         TMRooster(int row, int col, int cycle = 30, int energy = 300);
         TMRooster(IToroidalMovingAnimal* self);
@@ -68,13 +68,13 @@ namespace Linguisteen {
         const char* name() override { return "公鸡"; }
 
     public:
-        void draw(GYDM::dc_t* dc, float x, float y, float width, float height) override;
+        void draw(Plteen::dc_t* dc, float x, float y, float width, float height) override;
 
     public:
         Animal* asexually_reproduce() override;
     };
 
-    class TMPigeon : public GYDM::Pigeon {
+    class TMPigeon : public Plteen::Pigeon {
     public:
         TMPigeon(int row, int col, int cycle = 30, int energy = 300);
         TMPigeon(IToroidalMovingAnimal* self);
@@ -83,13 +83,13 @@ namespace Linguisteen {
         const char* name() override { return "鸽子"; }
 
     public:
-        void draw(GYDM::dc_t* dc, float x, float y, float width, float height) override;
+        void draw(Plteen::dc_t* dc, float x, float y, float width, float height) override;
 
     public:
         Animal* asexually_reproduce() override;
     };
 
-    class TMCow : public GYDM::Cow {
+    class TMCow : public Plteen::Cow {
     public:
         TMCow(int row, int col, int cycle = 365, int energy = 600);
         TMCow(IToroidalMovingAnimal* self);
@@ -98,13 +98,13 @@ namespace Linguisteen {
         const char* name() override { return "奶牛"; }
 
     public:
-        void draw(GYDM::dc_t* dc, float x, float y, float width, float height) override;
+        void draw(Plteen::dc_t* dc, float x, float y, float width, float height) override;
 
     public:
         Animal* asexually_reproduce() override;
     };
 
-    class TMCat : public GYDM::Cat {
+    class TMCat : public Plteen::Cat {
     public:
         TMCat(int row, int col, int cycle = 58, int energy = 1000);
         TMCat(IToroidalMovingAnimal* self);
@@ -113,7 +113,7 @@ namespace Linguisteen {
         const char* name() override { return "食草猫"; }
 
     public:
-        void draw(GYDM::dc_t* dc, float x, float y, float width, float height) override;
+        void draw(Plteen::dc_t* dc, float x, float y, float width, float height) override;
 
     public:
         Animal* asexually_reproduce() override;

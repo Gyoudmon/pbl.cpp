@@ -1,0 +1,53 @@
+/* CMD-SHIFT-V for preview */
+/* CMD-K Shift-V for realtime preview */
+
+digraph SelfAvoidingWalk {
+    /* graph attributes */
+    bgcolor = transparent;
+
+    /* ghost nodes */
+    node [ shape = point, width = 0, height = 0 ];
+
+    /* special nodes */
+    node [ shape = box, width = 1, height = 0.5 ];
+    Start [ style = rounded, label = "SelfAvoidingWalkWorld::Update()" ];
+
+    /* conditional nodes */
+    node [ shape = diamond, width = 1.618, color = purple, fontcolor = violet ];
+    playing [ label = "游戏中？" ];
+    running [ label = "【跑动】？", fontcolor = orange ];
+    moving [ label = "滑移中？", fontcolor = orange ];
+    colliding [ label = "碰撞？" ];
+    
+    node [ shape = diamond, width = 1.618, color = purple, fontcolor = indigo ];
+    inside [ label = "在迷宫内？" ];
+    dead_end [ label = "死胡同？" ];
+    
+    /* processing nodes */
+    node [ shape = rect, color = royalblue, fontcolor = royalblue ];
+    update_tile [ label = "按需更新目标瓷砖", fontcolor = forestgreen ];
+    pace [ label = "决策下一步" ];
+    mark [ label = "更新迷宫状态" ];
+    glide [ label = "滑移到目标位置", fontcolor = orange ];
+    win [ label = "切换角色状态【成功】", fontcolor = orange ];
+    lose [ label = "切换角色状态【失败】", fontcolor = orange ];
+    over [ label = "清除“游戏中”状态" ];
+    
+    /* edges */
+    subgraph main {
+        Start -> playing -> running -> moving [ label = "Yes" ];
+        running -> over [ label = "No" ];
+
+        moving -> colliding [ label = "Yes" ];
+        colliding -> update_tile [ label = "Yes" ];
+        
+        moving -> inside [ label = "No" ];
+        inside -> dead_end [ label = "Yes" ];
+
+        dead_end -> lose [label = "Yes" ];
+        inside -> win [ label = "No" ];
+
+        dead_end -> pace [label = "No" ];
+        pace -> mark -> glide;
+    }
+}

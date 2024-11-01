@@ -1,6 +1,6 @@
 #include "lifelet.hpp"
 
-using namespace GYDM;
+using namespace Plteen;
 using namespace Linguisteen;
 
 /*************************************************************************************************/
@@ -37,7 +37,7 @@ Linguisteen::GameOfLifelet::~GameOfLifelet() {
     }
 }
 
-void Linguisteen::GameOfLifelet::construct(GYDM::dc_t* dc) {
+void Linguisteen::GameOfLifelet::construct(Plteen::dc_t* dc) {
     IGraphlet::construct(dc);
 
     this->shadow = new int[this->row * this->col];
@@ -53,7 +53,7 @@ Box Linguisteen::GameOfLifelet::get_bounding_box() {
              this->gridsize * float(this->row) + 1.0F };
 }
 
-void Linguisteen::GameOfLifelet::draw(GYDM::dc_t* dc, float x, float y, float Width, float Height) {
+void Linguisteen::GameOfLifelet::draw(Plteen::dc_t* dc, float x, float y, float Width, float Height) {
     dc->draw_rect(x, y, Width, Height, this->color);
 
     // 绘制舞台的网格

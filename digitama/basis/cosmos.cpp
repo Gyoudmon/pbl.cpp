@@ -17,7 +17,7 @@
 #include <pltmos/stream.hpp>
 #include <stemos/schematics/optics/chromaticity.hpp>
 
-using namespace GYDM;
+using namespace Plteen;
 using namespace Linguisteen;
 
 using namespace WarGrey::STEM;

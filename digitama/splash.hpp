@@ -1,9 +1,9 @@
-#include <gydm/game.hpp>
+#include <plteen/game.hpp>
 
 namespace Linguisteen {
-    class TheCosmos : public GYDM::Cosmos {
+    class TheCosmos : public Plteen::Cosmos {
     public:
-        TheCosmos(int fps) : GYDM::Cosmos(fps) {}
+        TheCosmos(int fps) : Plteen::Cosmos(fps) {}
         virtual ~TheCosmos();
 
     public:  // 覆盖游戏基本方法
@@ -17,6 +17,6 @@ namespace Linguisteen {
         virtual void parse_cmdline_options(int argc, char* argv[]) {}
 
     private:
-        GYDM::IPlane* splash;
+        Plteen::IPlane* splash;
     };
 }

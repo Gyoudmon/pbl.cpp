@@ -1,6 +1,6 @@
 #pragma once // 确保只被 include 一次
 
-#include <gydm/bang.hpp>
+#include <plteen/bang.hpp>
 
 #include "conway/lifelet.hpp"
 
@@ -10,7 +10,7 @@ namespace Linguisteen {
     enum class GameState { Auto, Stop, Edit, _ };
 
     /** 声明游戏宇宙 **/
-    class GameOfLifeWorld : public GYDM::TheBigBang {
+    class GameOfLifeWorld : public Plteen::TheBigBang {
     public:
         GameOfLifeWorld(float gridsize = 8.0F) : GameOfLifeWorld("", gridsize) {}
         GameOfLifeWorld(const std::string& life_demo, float gridsize = 8.0F)
@@ -24,11 +24,11 @@ namespace Linguisteen {
         void on_mission_start(float width, float height) override;
 
     public:
-        bool can_select(GYDM::IMatter* m) override;
+        bool can_select(Plteen::IMatter* m) override;
             
     protected: // 覆盖输入事件处理方法
         void on_char(char key, uint16_t modifiers, uint8_t repeats, bool pressed) override; // 处理键盘事件
-        void on_tap(GYDM::IMatter* m, float x, float y) override;                  // 处理鼠标事件
+        void on_tap(Plteen::IMatter* m, float x, float y) override;                  // 处理鼠标事件
 
     protected: // 处理保存事件
         const char* usrdata_extension() override { return ".gol"; }
@@ -44,9 +44,9 @@ namespace Linguisteen {
         void save_conway_demo();
             
     private: // 游戏物体
-        GYDM::Labellet* generation;
+        Plteen::Labellet* generation;
         Linguisteen::GameOfLifelet* gameboard;
-        std::map<char, GYDM::Labellet*> instructions;
+        std::map<char, Plteen::Labellet*> instructions;
 
     private: // 游戏状态
         Linguisteen::GameState state = GameState::_;

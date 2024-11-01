@@ -10,9 +10,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (define sdl2-config
   '((config SDL2)
-    (lib gydm pltmos stemos)
-    (include "C:\\opt\\GYDMstem\\include")
-    (libpath "C:\\opt\\GYDMstem\\lib")))
+    (lib plteen pltmos stemos)
+    (include "C:\\opt\\JrPLT\\include")
+    (libpath "C:\\opt\\JrPLT\\lib")))
 
 (define native-compiled-subpath '())
 (define native-compiled-bindir '("bin"))
@@ -21,4 +21,7 @@
 (define native-compiled-debug '("debug"))
 
 (define native-launcher-names
-  `(["BigBang.cpp" console ,@sdl2-config]))
+  `(["BigBang.cpp" console ,@sdl2-config]
+    ["FontBrowser.cpp" console ,@sdl2-config]
+    ["village/procedural/shape.cpp" console ,@sdl2-config]
+    ["village/procedural/paddleball.cpp" console ,@sdl2-config]))

@@ -1,9 +1,9 @@
 #pragma once // 确保只被 include 一次
 
-#include <gydm/bang.hpp>
+#include <plteen/bang.hpp>
 
 namespace Linguisteen {
-    class ColorMixtureWorld : public GYDM::TheBigBang {
+    class ColorMixtureWorld : public Plteen::TheBigBang {
     public:
         ColorMixtureWorld() : TheBigBang("混色模型", GHOSTWHITE) {}
         
@@ -12,21 +12,21 @@ namespace Linguisteen {
         void reflow(float width, float height) override;
 
     public:
-        bool can_select(GYDM::IMatter* m) override { return true; }
+        bool can_select(Plteen::IMatter* m) override { return true; }
 
     protected: // 覆盖鼠标事件处理方法
-        void after_select(GYDM::IMatter* m, bool yes) override;
-        void on_tap_selected(GYDM::IMatter* m, float x, float y) override { this->no_selected(); }
+        void after_select(Plteen::IMatter* m, bool yes) override;
+        void on_tap_selected(Plteen::IMatter* m, float x, float y) override { this->no_selected(); }
 
     private:
-        GYDM::Circlet* red;
-        GYDM::Circlet* green;
-        GYDM::Circlet* blue;
+        Plteen::Circlet* red;
+        Plteen::Circlet* green;
+        Plteen::Circlet* blue;
 
     private:
-        GYDM::Rectanglet* half_white;
-        GYDM::Circlet* cyan;
-        GYDM::Circlet* yellow;
-        GYDM::Circlet* magenta;
+        Plteen::Rectanglet* half_white;
+        Plteen::Circlet* cyan;
+        Plteen::Circlet* yellow;
+        Plteen::Circlet* magenta;
     };
 }

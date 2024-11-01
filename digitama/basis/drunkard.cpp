@@ -1,6 +1,6 @@
 #include "drunkard.hpp"
 
-using namespace GYDM;
+using namespace Plteen;
 using namespace Linguisteen;
 
 static const float step_size = 2.0F;

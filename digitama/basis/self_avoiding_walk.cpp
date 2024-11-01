@@ -1,6 +1,6 @@
 #include "self_avoiding_walk.hpp"
 
-using namespace GYDM;
+using namespace Plteen;
 using namespace Linguisteen;
 
 /*************************************************************************************************/

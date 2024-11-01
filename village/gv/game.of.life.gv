@@ -1,0 +1,90 @@
+/* CMD-SHIFT-V for preview */
+/* CMD-K Shift-V for realtime preview */
+
+digraph GameOfLifeStateChart {
+    /* graph attributes */
+    bgcolor = transparent;
+    splines = false;
+
+    /* ghost nodes */
+    node [ shape = point, width = 0, height = 0 ];
+    back_to_loop;
+    return_to_loop;
+    false_return;
+    over_return;
+    lonely_return;
+    reproduction_return;
+    living_return;
+    true_return;
+
+    /* special nodes */
+    node [ shape = box, width = 0.2, height = 0.2 ];
+    Start [ style = rounded, label = "evolve()" ];
+
+    /* conditional nodes */
+    node [ shape = diamond, width = 3.0 ];
+    for_in [ label = "遍历完成？" ];
+    over [ label = "n > 3", fontcolor = crimson ];
+    lonely [ label = "n < 2", fontcolor = crimson ];
+    reproduction [ label = "n = 3", fontcolor = forestgreen ];
+    living [ label = "n = 2", fontcolor = seagreen ];
+    
+    /* processing nodes */
+    node [ shape = box ];
+    CountNeighbors [ label = "计点当前元胞邻居数量 n" ];
+
+    node [ width = 2.0 ];
+    OverDeath [ label = "内卷死【过度竞争】", color = crimson, fontcolor = crimson ];
+    LonelyDeath [ label = "孤独死【离群索居】", color = crimson, fontcolor = crimson ];
+    Reproduction [ label = "无性繁殖", color = forestgreen, fontcolor = forestgreen ]
+    Living [ label = "安居乐业", color = seagreen, fontcolor = seagreen ];
+    
+    /* edges */
+    subgraph {
+        rank = same;
+        back_to_loop -> for_in [ minlen = 1.0 ];
+    }
+
+    subgraph {
+        rank = same;
+        return_to_loop -> false_return [ arrowhead = No, minlen = 4 ];
+        false_return -> true_return [ arrowhead = No, minlen = 9 ];
+    }
+
+    subgraph {
+        back_to_loop -> return_to_loop [ arrowhead = No ];
+        living -> false_return [ arrowhead = No, label = "No" ];
+        over_return -> lonely_return -> reproduction_return -> living_return -> true_return [ arrowhead = No ];
+    }
+    
+    subgraph main {
+        Start -> for_in;
+        for_in -> CountNeighbors [ label = "No" ];
+        CountNeighbors -> over;
+        over -> lonely -> reproduction -> living [ label = "No" ];
+        
+        subgraph {
+            rank = same;
+            over -> OverDeath [ label = "Yes" ];
+            OverDeath -> over_return [ arrowhead = No ];
+        }
+
+        subgraph {
+            rank = same;
+            lonely -> LonelyDeath [ label = "Yes" ];
+            LonelyDeath -> lonely_return [ arrowhead = No ];
+        }
+
+        subgraph {
+            rank = same;
+            reproduction -> Reproduction [ label = "Yes" ];
+            Reproduction -> reproduction_return [ arrowhead = No ];
+        }
+
+        subgraph {
+            rank = same;
+            living -> Living [ label = "Yes" ];
+            Living -> living_return [ arrowhead = No ];
+        }
+    }
+}

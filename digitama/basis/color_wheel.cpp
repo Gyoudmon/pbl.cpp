@@ -1,6 +1,6 @@
 #include "color_wheel.hpp"
 
-using namespace GYDM;
+using namespace Plteen;
 using namespace Linguisteen;
 
 /*************************************************************************************************/

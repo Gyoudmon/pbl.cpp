@@ -1,6 +1,6 @@
 #include "paddleball.hpp"
 
-using namespace GYDM;
+using namespace Plteen;
 using namespace Linguisteen;
 
 const float ball_radius = 8.0F;

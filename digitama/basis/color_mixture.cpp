@@ -1,6 +1,6 @@
 #include "color_mixture.hpp"
 
-using namespace GYDM;
+using namespace Plteen;
 using namespace Linguisteen;
 
 /*************************************************************************************************/

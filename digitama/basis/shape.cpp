@@ -1,6 +1,6 @@
 #include "shape.hpp"         // 导入本模块自己的头文件
 
-using namespace GYDM;        // 声明本模块的类和函数默认以 GYDM 的名义使用，或者
+using namespace Plteen;        // 声明本模块的类和函数默认以 Plteen 的名义使用，或者
 using namespace Linguisteen; //                     以 Linguisteen 的名义使用
 
 /*************************************************************************************************/
