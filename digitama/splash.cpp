@@ -184,31 +184,31 @@ namespace {
         }
 
         void tux_step(uint64_t count, uint64_t interval, uint64_t uptime) {
-            Dot tdot = this->get_matter_location(this->tux, MatterPort::RB);
-            Dot dot0 = this->get_matter_location(this->splash, MatterPort::LT);
+            Point<float> tdot = this->get_matter_location(this->tux, MatterPort::RB);
+            Point<float> dot0 = this->get_matter_location(this->splash, MatterPort::LT);
             
             tdot -= dot0;
 
             if (this->tux_target_y == 0.0F) {
-                float gx = this->get_splash_location(this->tux_walk_segment).x;
+                float gx = this->get_splash_location(this->tux_walk_segment).real();
 
-                if (tdot.x >= gx) {
+                if (tdot.real() >= gx) {
                     this->tux_walk_segment += 1;
                     
                     if (this->tux_walk_segment < tux_spots.size()) {
-                        this->tux_target_y = this->get_splash_location(this->tux_walk_segment).y;
+                        this->tux_target_y = this->get_splash_location(this->tux_walk_segment).imag();
                         this->tux->set_speed(tux_speed_jump_x, tux_speed_jump_y);
                         this->tux->set_delta_speed(0.0F, tux_speed_dy);
                     } else {
                         this->tux_home();
                     }
                 }
-            } else if (tdot.y >= this->tux_target_y) {
+            } else if (tdot.imag() >= this->tux_target_y) {
                 this->tux_start_walk();
             }
         }
 
-        Dot get_splash_location(size_t idx) {
+        Point<float> get_splash_location(size_t idx) {
             return this->splash->get_logic_tile_location(
                         tux_spots[idx].first, tux_spots[idx].second,
                         MatterPort::LB);

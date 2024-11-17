@@ -28,8 +28,8 @@ void Linguisteen::ShapeWorld::reflow(float width, float height) {
     // 排列基本图形以组装房屋
     this->move_to(this->roof, Position(width * 0.50F, height * 0.50F), MatterPort::CB);
     this->move_to(this->wall, Position(this->roof, MatterPort::CB), MatterPort::CT);
-    this->move_to(this->door, Position(this->wall, MatterPort::RB), MatterPort::RB, Vector(-24.0F, 0.0F));
-    this->move_to(this->lock, Position(this->door, MatterPort::RC), MatterPort::RC, Vector(-4.0F, 0.0F));
+    this->move_to(this->door, Position(this->wall, MatterPort::RB), MatterPort::RB, { -24.0F, 0.0F });
+    this->move_to(this->lock, Position(this->door, MatterPort::RC), MatterPort::RC, { -4.0F,  0.0F });
     this->move_to(this->window, Position(this->wall, MatterPort::CC), MatterPort::RC);
 
     // 排列院子

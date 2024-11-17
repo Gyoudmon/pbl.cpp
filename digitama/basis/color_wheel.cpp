@@ -67,9 +67,9 @@ bool Linguisteen::ColorWheelWorld::update_tooltip(IMatter* m, float x, float y, 
         RGBA c = 0U;
 
         for (size_t idx = 0; idx < this->primaries.size(); idx ++) {
-            Dot dot = this->get_matter_location(this->primaries[idx], MatterPort::CC);
+            Point<float> dot = this->get_matter_location(this->primaries[idx], MatterPort::CC);
 
-            if (point_distance(gx, gy, dot.x, dot.y) <= primary_radius) {
+            if (point_distance(gx, gy, dot.real(), dot.imag()) <= primary_radius) {
                 c = c + this->primaries[idx]->get_brush_color();
             }
         }

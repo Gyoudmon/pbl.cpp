@@ -55,35 +55,34 @@ void Linguisteen::DrunkardWalkWorld::update(uint64_t interval, uint32_t count, u
 
 /*************************************************************************************************/
 void Linguisteen::DrunkardWalkWorld::random_walk(Bracer* who) {
-    Dot dot;
-    
     // random_uniform(-1, 1) 产生一个位于区间 [-1, 1] 的随机整数
-    dot.x = (random_uniform(-1, 1)); // 左右移动或不动
-    dot.y = (random_uniform(-1, 1)); // 上下移动或不动
+    float x = random_uniform(-1, 1); // 左右移动或不动
+    float y = random_uniform(-1, 1); // 上下移动或不动
 
     this->pen_down(who);
-    this->glide(step_duration, who, dot * step_size);
+    this->glide(step_duration, who, Point<float>(x, y) * step_size);
     this->pen_up(who);
 }
 
 void Linguisteen::DrunkardWalkWorld::drunkard_walk(Bracer* who) {
     // 产生位于区间 [0, 100] 的随机整数
     int chance = random_uniform(0, 100);
-    Dot dot;
+    float x = 0.0F;
+    float y = 0.0F;
     
     if (chance < 10) {
         // no move
     } else if (chance < 58) {
-        dot.x = -1.0F;
+        x = -1.0F;
     } else if (chance < 60) {
-        dot.x = +1.0F;
+        x = +1.0F;
     } else if (chance < 80) {
-        dot.y = +1.0F;
+        y = +1.0F;
     } else {
-        dot.y = -1.0F;
+        y = -1.0F;
     }
 
     this->pen_down(who);
-    this->move(who, dot);
+    this->move(who, { x, y });
     this->pen_up(who);
 }
