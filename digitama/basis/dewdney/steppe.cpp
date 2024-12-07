@@ -74,15 +74,15 @@ void Linguisteen::SteppeAtlas::reset() {
 
 /*************************************************************************************************/
 int Linguisteen::SteppeAtlas::get_plant_energy(int r, int c) {
-    r = safe_index(r, this->map_row);
-    c = safe_index(c, this->map_col);
+    r = wrap_index(r, this->map_row);
+    c = wrap_index(c, this->map_col);
 
     return this->energies[r][c];
 }
 
 void Linguisteen::SteppeAtlas::plant_grow_at(int r, int c) {
-    r = safe_index(r, this->map_row);
-    c = safe_index(c, this->map_col);
+    r = wrap_index(r, this->map_row);
+    c = wrap_index(c, this->map_col);
     
     int origin_energy = this->energies[r][c];
 
@@ -92,8 +92,8 @@ void Linguisteen::SteppeAtlas::plant_grow_at(int r, int c) {
 }
 
 void Linguisteen::SteppeAtlas::plant_be_eaten_at(int r, int c) {
-    r = safe_index(r, this->map_row);
-    c = safe_index(c, this->map_col);
+    r = wrap_index(r, this->map_row);
+    c = wrap_index(c, this->map_col);
 
     this->total_energy -= this->energies[r][c];
     this->energies[r][c] = 0;
@@ -101,8 +101,8 @@ void Linguisteen::SteppeAtlas::plant_be_eaten_at(int r, int c) {
 }
 
 void Linguisteen::SteppeAtlas::animal_die_at(int r, int c) {
-    r = safe_index(r, this->map_row);
-    c = safe_index(c, this->map_col);
+    r = wrap_index(r, this->map_row);
+    c = wrap_index(c, this->map_col);
 
     /** TODO
      * How to calculate the energy produced by dead body?

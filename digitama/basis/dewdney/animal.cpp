@@ -112,8 +112,8 @@ void Linguisteen::IToroidalMovingAnimal::move(int* delta_row, int* delta_col) {
     default: /* deadcode */;
     }
 
-    this->r = safe_index(orow + dr, this->row);
-    this->c = safe_index(ocol + dc, this->col);
+    this->r = wrap_index(orow + dr, this->row);
+    this->c = wrap_index(ocol + dc, this->col);
 
     SET_BOX(delta_row, this->r - orow);
     SET_BOX(delta_col, this->c - ocol);

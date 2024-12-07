@@ -15,6 +15,7 @@
 
 // 导入教师演示程序
 #include <pltmos/stream.hpp>
+#include <pltmos/carry.hpp>
 #include <stemos/schematics/optics/chromaticity.hpp>
 
 using namespace Plteen;
@@ -36,6 +37,7 @@ void Linguisteen::BigBangCosmos::construct(int argc, char* argv[]) {
     this->push_plane(new AngryBirdWorld());
 
     // 第二阶段
+    this->push_plane(new DotAndCarryOnePlane());
     this->push_plane(new ColorMixtureWorld());
     this->push_plane(new ColorWheelWorld());
     this->push_plane(new TheBigBang());
