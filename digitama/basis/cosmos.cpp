@@ -37,7 +37,7 @@ void Linguisteen::BigBangCosmos::construct(int argc, char* argv[]) {
     this->push_plane(new AngryBirdWorld());
 
     // 第二阶段
-    this->push_plane(new DotAndCarryOnePlane());
+    this->push_plane(new DotAndCarryOnePlane(this->number));
     this->push_plane(new ColorMixtureWorld());
     this->push_plane(new ColorWheelWorld());
     this->push_plane(new TheBigBang());
@@ -64,11 +64,17 @@ void Linguisteen::BigBangCosmos::parse_cmdline_options(int argc, char* argv[]) {
             this->stream_source = argv[idx];
             opt = CmdlineOps::_;
         }; break;
+        case CmdlineOps::CarryNumber: {
+            this->number = std::strtoull(argv[idx], nullptr, 10);
+            opt = CmdlineOps::_;
+        }; break;
         default: {
             if (strncmp("--life", argv[idx], 7) == 0) {
                 opt = CmdlineOps::GameOfLifeDemo;
             } else if (strncmp("--pipe", argv[idx], 7) == 0) {
                 opt = CmdlineOps::StreamFile;
+            } else if (strncmp("--carry", argv[idx], 8) == 0) {
+                opt = CmdlineOps::CarryNumber;
             }
         }
         }

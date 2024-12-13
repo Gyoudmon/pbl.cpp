@@ -4,7 +4,7 @@
 
 /*************************************************************************************************/
 namespace Linguisteen {
-    enum class CmdlineOps { GameOfLifeDemo, StreamFile, _ };
+    enum class CmdlineOps { GameOfLifeDemo, StreamFile, CarryNumber, _ };
 
     /* 定义本地宇宙类，并命名为 BigBangCosmos，继承自 TheCosmos 类 */
     class BigBangCosmos : public TheCosmos {
@@ -22,5 +22,6 @@ namespace Linguisteen {
     private:
         std::string life_source;
         std::string stream_source;
+        size_t number = 0;
     };
 }
