@@ -190,20 +190,20 @@ namespace {
             tdot -= dot0;
 
             if (this->tux_target_y == 0.0F) {
-                float gx = this->get_splash_location(this->tux_walk_segment).real();
+                float gx = this->get_splash_location(this->tux_walk_segment).x;
 
-                if (tdot.real() >= gx) {
+                if (tdot.x >= gx) {
                     this->tux_walk_segment += 1;
                     
                     if (this->tux_walk_segment < tux_spots.size()) {
-                        this->tux_target_y = this->get_splash_location(this->tux_walk_segment).imag();
+                        this->tux_target_y = this->get_splash_location(this->tux_walk_segment).y;
                         this->tux->set_speed(tux_speed_jump_x, tux_speed_jump_y);
                         this->tux->set_delta_speed(0.0F, tux_speed_dy);
                     } else {
                         this->tux_home();
                     }
                 }
-            } else if (tdot.imag() >= this->tux_target_y) {
+            } else if (tdot.y >= this->tux_target_y) {
                 this->tux_start_walk();
             }
         }
