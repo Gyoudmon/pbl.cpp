@@ -21,8 +21,8 @@ void Linguisteen::EvolutionWorld::load(float width, float height) {
     // 初始化世界
     this->steppe = this->insert(new SteppeAtlas(this->row, this->col));
     this->world_info = this->insert(new Labellet(GameFont::serif(), BLACK, matrics_fmt, 0));
-    this->phistory = this->insert(new Historylet(200.0F, 100.0F, ROYALBLUE));
-    this->ehistory = this->insert(new Historylet(200.0F, 100.0F, ORANGE));
+    //this->phistory = this->insert(new Historylet(200.0F, 100.0F, ROYALBLUE));
+    //this->ehistory = this->insert(new Historylet(200.0F, 100.0F, ORANGE));
 
     this->animals.push_back(this->insert(new TMRooster(this->row, this->col)));
     this->animals.push_back(this->insert(new TMPigeon(this->row, this->col)));
@@ -42,16 +42,16 @@ void Linguisteen::EvolutionWorld::reflow(float width, float height) {
     
     this->move_to(this->steppe, { cx, cy }, MatterPort::CC);
     this->move_to(this->world_info, { this->steppe, MatterPort::RT }, MatterPort::RB, { 0.0F, overlay.top * 0.5F });
-    this->move_to(this->ehistory, { this->world_info, MatterPort::RT }, MatterPort::RB);
-    this->move_to(this->phistory, { this->ehistory, MatterPort::LC }, MatterPort::RC, { -overlay.top, 0.0F });
+    //this->move_to(this->ehistory, { this->world_info, MatterPort::RT }, MatterPort::RB);
+    //this->move_to(this->phistory, { this->ehistory, MatterPort::LC }, MatterPort::RC, { -overlay.top, 0.0F });
 }
 
 void Linguisteen::EvolutionWorld::on_mission_start(float width, float height) {
     Margin overlay = this->steppe->get_map_overlay();
     
     this->reset_world();
-    this->phistory->clear();
-    this->ehistory->clear();
+    //this->phistory->clear();
+    //this->ehistory->clear();
 
     // Animals remain the same to simulate the natural disaster
     for (auto animal : this->animals) {
@@ -66,8 +66,8 @@ void Linguisteen::EvolutionWorld::on_mission_start(float width, float height) {
 void Linguisteen::EvolutionWorld::update(uint64_t count, uint32_t interval, uint64_t uptime) {
     if (this->animals.empty()) {
         this->world_info->set_text_color(FIREBRICK);
-        this->phistory->set_pen_color(CRIMSON);
-        this->ehistory->set_pen_color(CRIMSON);
+        //this->phistory->set_pen_color(CRIMSON);
+        //this->ehistory->set_pen_color(CRIMSON);
     } else {
         std::vector<Animal*> offsprings;
         Margin overlay = this->steppe->get_map_overlay();
@@ -174,8 +174,8 @@ void Linguisteen::EvolutionWorld::after_select(IMatter* m, bool yes) {
 void Linguisteen::EvolutionWorld::reset_world() {
     this->steppe->reset();
     this->world_info->set_text_color(FORESTGREEN);
-    this->phistory->set_pen_color(ROYALBLUE);
-    this->ehistory->set_pen_color(ORANGE);
+    //this->phistory->set_pen_color(ROYALBLUE);
+    //this->ehistory->set_pen_color(ORANGE);
     this->update_world_info();
 }
 
@@ -200,6 +200,6 @@ void Linguisteen::EvolutionWorld::update_world_info() {
     int e = this->steppe->get_total_energy();
     
     this->world_info->set_text(MatterPort::RB, matrics_fmt, day, n, e);
-    this->phistory->push_back_datum(float(day), float(n));
-    this->ehistory->push_back_datum(float(day), float(e));
+    //this->phistory->push_back_datum(float(day), float(n));
+    //this->ehistory->push_back_datum(float(day), float(e));
 }

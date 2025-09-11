@@ -34,7 +34,7 @@ void Linguisteen::BigBangCosmos::construct(int argc, char* argv[]) {
     // 第一阶段
     this->push_plane(new ShapeWorld());
     this->push_plane(new PaddleBallWorld());
-    this->push_plane(new AngryBirdWorld());
+    this->push_plane(new TheBigBang());
 
     // 第二阶段
     this->push_plane(new DotAndCarryOnePlane(this->number));
@@ -47,7 +47,13 @@ void Linguisteen::BigBangCosmos::construct(int argc, char* argv[]) {
     // 第三阶段
     this->push_plane(new SelfAvoidingWalkWorld());
     this->push_plane(new GameOfLifeWorld(this->life_source));
+
+#ifdef __windows__
     this->push_plane(new TheBigBang());
+#else
+    this->push_plane(new EvolutionWorld());
+#endif
+
     this->push_plane(new StreamPlane(this->stream_source.c_str()));
 }
 

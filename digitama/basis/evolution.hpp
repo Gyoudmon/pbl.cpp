@@ -40,8 +40,8 @@ namespace Linguisteen {
     private: /* 本世界中的物体 */
         Linguisteen::SteppeAtlas* steppe;
         std::vector<Plteen::Animal*> animals;
-        Plteen::Historylet* phistory;
-        Plteen::Historylet* ehistory;
+        //Plteen::Historylet* phistory;
+        //Plteen::Historylet* ehistory;
         Plteen::Labellet* world_info;
  
     private: /* 本世界的参数设定 */
