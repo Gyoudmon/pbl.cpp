@@ -9,7 +9,7 @@ namespace Linguisteen {
     class ShapeWorld : public Plteen::TheBigBang {
     public:
         // 构造函数，默认什么都不做，除了通过父类构造函数设置窗口标题和帧频
-        ShapeWorld() : TheBigBang("图形宇宙(对象版)") {}
+        ShapeWorld() : TheBigBang("图形宇宙") {}
 
         // 析构函数，默认什么都不做
         virtual ~ShapeWorld() {}

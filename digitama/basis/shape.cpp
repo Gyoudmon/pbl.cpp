@@ -1,7 +1,7 @@
 #include "shape.hpp"         // 导入本模块自己的头文件
 
-using namespace Plteen;        // 声明本模块的类和函数默认以 Plteen 的名义使用，或者
-using namespace Linguisteen; //                     以 Linguisteen 的名义使用
+using namespace Plteen;      // 声明本模块的类和函数默认以 Plteen 的名义使用，或者
+using namespace Linguisteen; // 以 Linguisteen 的名义使用
 
 /*************************************************************************************************/
 // 实现 ShapeWorld::load 方法，在舞台上加入基础几何图形的实例，注意添加顺序

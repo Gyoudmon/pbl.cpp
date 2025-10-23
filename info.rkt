@@ -22,6 +22,7 @@
 
 (define native-launcher-names
   `(["BigBang.cpp" console ,@sdl2-config]
+    ["BigBangCosmos.cpp" console ,@sdl2-config]
     ["FontBrowser.cpp" console ,@sdl2-config]
     ["village/procedural/shape.cpp" console ,@sdl2-config]
     ["village/procedural/paddleball.cpp" console ,@sdl2-config]))
