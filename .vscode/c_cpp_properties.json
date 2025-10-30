@@ -4,7 +4,7 @@
             "name": "macOS",
             "includePath": [
                 "/usr/local/include",
-                "/opt/GYDMstem/include"
+                "/opt/JrPLT/include"
             ],
             "defines": [
                 "__macosx__",
@@ -27,7 +27,7 @@
         {
             "name": "win32",
             "includePath": [
-                "C:\\opt\\GYDMstem\\include"
+                "C:\\opt\\JrPLT\\include"
             ],
             "defines": [
                 "__windows__",

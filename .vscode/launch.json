@@ -3,7 +3,79 @@
     
     "configurations": [
         {
-            "name": "一键编译/运行 main 函数",
+            "name": "宇宙大爆炸[教师]",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/compiled/native/bin/BigBang",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "MIMode": "lldb",
+            "preLaunchTask": "宇宙大爆炸[教师]",
+
+            "windows": {
+                "program": "${workspaceFolder}/compiled/native/bin/BigBang.exe",
+                "type": "cppvsdbg"
+            }
+        },
+        
+        {
+            "name": "DBG宇宙大爆炸[教师]",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/compiled/native/debug/bin/BigBang",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [{ "name": "DYLD_FALLBACK_LIBRARY_PATH", "value": "/opt/JrPLT/lib" }],
+            "MIMode": "lldb",
+            "preLaunchTask": "宇宙大爆炸[Debug 教师]",
+
+            "windows": {
+                "program": "${workspaceFolder}/compiled/native/debug/bin/BigBang.exe",
+                "type": "cppvsdbg"
+            }
+        },
+
+        {
+            "name": "宇宙大爆炸",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/compiled/native/bin/BigBangCosmos",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "MIMode": "lldb",
+            "preLaunchTask": "宇宙大爆炸[Release]",
+
+            "windows": {
+                "program": "${workspaceFolder}/compiled/native/bin/BigBangCosmos.exe",
+                "type": "cppvsdbg"
+            }
+        },
+        
+        {
+            "name": "DBG宇宙大爆炸",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/compiled/native/debug/bin/BigBangCosmos",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [{ "name": "DYLD_FALLBACK_LIBRARY_PATH", "value": "/opt/JrPLT/lib" }],
+            "MIMode": "lldb",
+            "preLaunchTask": "宇宙大爆炸[Debug]",
+
+            "windows": {
+                "program": "${workspaceFolder}/compiled/native/debug/bin/BigBangCosmos.exe",
+                "type": "cppvsdbg"
+            }
+        },
+
+        {
+            "name": "一键编译/运行/测试 main 函数",
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/compiled/native/bin/${fileBasenameNoExtension}",
@@ -19,42 +91,6 @@
 
             "windows": {
                 "program": "${fileDirname}/compiled/native/bin/${fileBasenameNoExtension}.exe",
-                "type": "cppvsdbg"
-            }
-        },
-
-        {
-            "name": "宇宙大爆炸",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/compiled/native/bin/BigBang",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "MIMode": "lldb",
-            "preLaunchTask": "宇宙大爆炸[Release]",
-
-            "windows": {
-                "program": "${workspaceFolder}/compiled/native/bin/BigBang.exe",
-                "type": "cppvsdbg"
-            }
-        },
-        
-        {
-            "name": "DBG宇宙大爆炸",
-            "type": "cppdbg",
-            "request": "launch",
-            "program": "${workspaceFolder}/compiled/native/debug/bin/BigBang",
-            "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}",
-            "environment": [],
-            "MIMode": "lldb",
-            "preLaunchTask": "宇宙大爆炸[Debug]",
-
-            "windows": {
-                "program": "${workspaceFolder}/compiled/native/debug/bin/BigBang.exe",
                 "type": "cppvsdbg"
             }
         }

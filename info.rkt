@@ -1,7 +1,7 @@
 #lang info
 
 (define collection 'use-pkg-name)
-(define pkg-desc "Youth Language")
+(define pkg-desc "Some PBL projects for teenagers to learn computational thinking in C++")
 
 (define version "1.0")
 (define pkg-authors '(wargrey))
@@ -22,7 +22,7 @@
 
 (define native-launcher-names
   `(["BigBang.cpp" console ,@sdl2-config]
-    ["BigBangCosmos.cpp" console ,@sdl2-config]
+    ["BigBangCosmos.cpp" console optional ,@sdl2-config]
     ["FontBrowser.cpp" console ,@sdl2-config]
     ["village/procedural/shape.cpp" console ,@sdl2-config]
     ["village/procedural/paddleball.cpp" console ,@sdl2-config]))

@@ -12,24 +12,91 @@
     
     "tasks": [
         {
-            "label": "一键编译",
-            "detail": "构建当前活动文件",
+            "label": "测试驱动计算",
+            "detail": "一键编译、运行、测试当前活动文件",
+            "type": "process",
+
+            /**
+             * 本构建脚本负责整个编译、运行、测试流程，
+             * 但始终报告程序出错(如果测试全通过，报告 255，否则 报告 未通过测试的数量)。
+             * 【注意：正常程序没出错会报告0(就是 main 函数通常都会返回的那个 0)，请勿与这里的妥协技巧混淆】
+             *
+             * 这样，VSCode 就不会启动烦人的 debugger 了；
+             * 在 Windows 下，运行和测试结果也不会被启动 debugger 的终端遮挡。
+             *
+             * VSCode 的微软开发团队有时候是真的脑残。。。
+             * 显然没有考虑广大疲于刷题的学生的痛楚(在这点上，其他 IDE 也好不到哪去)。。。
+             *
+             * 根本问题在于，VSCode C++ 扩展没有“运行”模式，普通运行也冠以调试的名义。。。
+             * 而 Debug Console 会按照预期启动程序，但不给用户从键盘输入数据的机会(🤦‍♀️)，
+             * 于是，你的程序就一直在苦苦等待你给它喂数据。。。
+             * 多么直白又脑残的困局
+             *
+             * 欺骗它，让我们自己舒服点。
+             * 学有余力的学生应该趁早用熟 Shell，
+             * 领悟了直接在终端运行我的测试程序，
+             * 就能对所有 IDE 一通百通了。
+             *
+             * 调试任务还是像之前那样启动一个“外部终端”来运行程序。
+             * 有点脱了裤子那啥的意味(🤦‍♀️)。。。
+             */
+
             "command": "raco",
-            "type": "cppbuild",
-            "args": [ "wisemon", "-d", "cc", "${file}" ],
+            "args": [ "wizarmon", "-d", "--pretend", "255", "${file}",
+                        "--timeout", "4000", "--lines", "32", "--error-limit", "32",
+                        "--" ],
+            
             "problemMatcher": [ "$gcc" ],
             "group": { "kind": "build", "isDefault": true },
-            "options": { "cwd": "${fileDirname}" },
+            "options": { "cwd": "${fileDirname}" }
+        },
+
+        {
+            "label": "测试驱动计算[严格]",
+            "detail": "一键编译、运行、测试当前活动文件",
+            "type": "process",
+
+            "command": "raco",
+            "args": [ "wizarmon", "-d", "--pretend", "255", "${file}",
+                        "--timeout", "1000", "--strict", "--lines", "32", "--error-limit", "32",
+                        "--" ],
+            
+            "problemMatcher": [ "$gcc" ],
+            "group": { "kind": "build", "isDefault": true },
+            "options": { "cwd": "${fileDirname}" }
+        },
+
+        {
+            "label": "宇宙大爆炸[教师]",
+            "detail": "构建和运行 教师版 宇宙大爆炸",
+            "command": "raco",
+            "type": "cppbuild",
+            "problemMatcher": [ "$gcc" ],
+            "args": [ "wizarmon", "-d", "--pretend", "255", "${workspaceFolder}/BigBang.cpp" ],
+            "options": { "cwd": "${workspaceFolder}" },
+            "group": { "kind": "build", "isDefault": false },
+            "windows": { "problemMatcher": ["$msCompile"] }
+        },
+
+        {
+            "type": "cppbuild",
+            "label": "宇宙大爆炸[Debug 教师]",
+            "detail": "构建和调试 教师版 宇宙大爆炸",
+            "command": "raco",
+            "problemMatcher": [ "$gcc" ],
+            "args": [ "wisemon", "-v", "cc-dbg", "BigBang.cpp" ],
+            "options": { "cwd": "${workspaceFolder}" },
+            "group": { "kind": "build", "isDefault": false },
             "windows": { "problemMatcher": ["$msCompile"] }
         },
 
         {
             "label": "宇宙大爆炸[Release]",
-            "detail": "构建和运行 青少计算机科学：宇宙大爆炸",
+            "detail": "构建和运行 学生版 宇宙大爆炸",
             "command": "raco",
             "type": "cppbuild",
             "problemMatcher": [ "$gcc" ],
-            "args": [ "wisemon", "-d", "cc" ],
+            "args": [ "wizarmon", "-v", "--pretend", "255", "${workspaceFolder}/BigBangCosmos.cpp" ],
             "options": { "cwd": "${workspaceFolder}" },
             "group": { "kind": "build", "isDefault": false },
             "windows": { "problemMatcher": ["$msCompile"] }
@@ -38,10 +105,10 @@
         {
             "type": "cppbuild",
             "label": "宇宙大爆炸[Debug]",
-            "detail": "构建和调试 青少计算机科学：宇宙大爆炸",
+            "detail": "构建和调试 学生版 宇宙大爆炸",
             "command": "raco",
             "problemMatcher": [ "$gcc" ],
-            "args": [ "wisemon", "-d", "cc-dbg" ],
+            "args": [ "wisemon", "-v", "cc-dbg", "BigBangCosmos.cpp" ],
             "options": { "cwd": "${workspaceFolder}" },
             "group": { "kind": "build", "isDefault": false },
             "windows": { "problemMatcher": ["$msCompile"] }
