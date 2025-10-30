@@ -42,7 +42,7 @@
              */
 
             "command": "raco",
-            "args": [ "wizarmon", "-d", "--pretend", "255", "${file}",
+            "args": [ "wizarmon", "-v", "--pretend", "255", "${file}",
                         "--timeout", "4000", "--lines", "32", "--error-limit", "32",
                         "--" ],
             
@@ -57,7 +57,7 @@
             "type": "process",
 
             "command": "raco",
-            "args": [ "wizarmon", "-d", "--pretend", "255", "${file}",
+            "args": [ "wizarmon", "-v", "--pretend", "255", "${file}",
                         "--timeout", "1000", "--strict", "--lines", "32", "--error-limit", "32",
                         "--" ],
             
@@ -72,7 +72,7 @@
             "command": "raco",
             "type": "cppbuild",
             "problemMatcher": [ "$gcc" ],
-            "args": [ "wizarmon", "-d", "--pretend", "255", "${workspaceFolder}/BigBang.cpp" ],
+            "args": [ "wizarmon", "-v", "--pretend", "255", "${workspaceFolder}/BigBang.cpp" ],
             "options": { "cwd": "${workspaceFolder}" },
             "group": { "kind": "build", "isDefault": false },
             "windows": { "problemMatcher": ["$msCompile"] }
