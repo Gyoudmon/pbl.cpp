@@ -2,7 +2,7 @@
 
 #include <plteen/bang.hpp>
 
-namespace Linguisteen {
+namespace JrLab {
     class ColorMixtureWorld : public Plteen::TheBigBang {
     public:
         ColorMixtureWorld() : TheBigBang("混色模型", GHOSTWHITE) {}

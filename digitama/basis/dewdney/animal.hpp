@@ -3,7 +3,7 @@
 #include <plteen/bang.hpp>
 #include <vector>
 
-namespace Linguisteen {
+namespace JrLab {
     static const int MOVING_WAYS = 8;
 
     /*********************************************************************************************/

@@ -3,7 +3,7 @@
 #include <plteen/datum/fixnum.hpp>
 
 using namespace Plteen;
-using namespace Linguisteen;
+using namespace JrLab;
 
 /*************************************************************************************************/
 static const GroundBlockType seed_tile_type = GroundBlockType::Dirt;
@@ -15,7 +15,7 @@ static const int plant_energy = 120;
 static const int plant_max_energy = plant_energy * 4;
 
 /*************************************************************************************************/
-Linguisteen::SteppeAtlas::SteppeAtlas(int row, int col) : PlanetCuteAtlas(row, col, steppe_tile_type) {
+JrLab::SteppeAtlas::SteppeAtlas(int row, int col) : PlanetCuteAtlas(row, col, steppe_tile_type) {
     this->jungle_row = 8 + row % 2;
     this->jungle_col = 6 + col % 2;
 
@@ -23,7 +23,7 @@ Linguisteen::SteppeAtlas::SteppeAtlas(int row, int col) : PlanetCuteAtlas(row, c
     this->jungle_c = (col - this->jungle_col) / 2;
 }
 
-Linguisteen::SteppeAtlas::~SteppeAtlas() noexcept {
+JrLab::SteppeAtlas::~SteppeAtlas() noexcept {
     if (this->energies != nullptr) {
         for (int r = 0; r < this->map_row; r ++) {
             delete [] this->energies[r];
@@ -33,7 +33,7 @@ Linguisteen::SteppeAtlas::~SteppeAtlas() noexcept {
     }
 }
 
-int Linguisteen::SteppeAtlas::update(uint64_t count, uint32_t interval, uint64_t uptime) {
+int JrLab::SteppeAtlas::update(uint64_t count, uint32_t interval, uint64_t uptime) {
     this->random_plant(this->jungle_r, this->jungle_c, this->jungle_row, this->jungle_col);
     this->random_plant(0, 0, this->map_row, this->map_col);
 
@@ -42,14 +42,14 @@ int Linguisteen::SteppeAtlas::update(uint64_t count, uint32_t interval, uint64_t
     return 0;
 }
 
-void Linguisteen::SteppeAtlas::random_plant(int r0, int c0, int row_size, int col_size) {
+void JrLab::SteppeAtlas::random_plant(int r0, int c0, int row_size, int col_size) {
     int r = random_uniform(0, row_size - 1) + r0;
     int c = random_uniform(0, col_size - 1) + c0;
 
     this->plant_grow_at(r, c);
 }
 
-void Linguisteen::SteppeAtlas::on_tilemap_load(shared_texture_t atlas) {
+void JrLab::SteppeAtlas::on_tilemap_load(shared_texture_t atlas) {
     PlanetCuteAtlas::on_tilemap_load(atlas);
 
     this->energies = new int*[this->map_row];
@@ -60,7 +60,7 @@ void Linguisteen::SteppeAtlas::on_tilemap_load(shared_texture_t atlas) {
     this->reset();
 }
 
-void Linguisteen::SteppeAtlas::reset() {
+void JrLab::SteppeAtlas::reset() {
     for (int r = 0; r < this->map_row; r ++) {
         for (int c = 0; c < this->map_col; c ++) {
             this->set_tile_type(r, c, steppe_tile_type);
@@ -73,14 +73,14 @@ void Linguisteen::SteppeAtlas::reset() {
 }
 
 /*************************************************************************************************/
-int Linguisteen::SteppeAtlas::get_plant_energy(int r, int c) {
+int JrLab::SteppeAtlas::get_plant_energy(int r, int c) {
     r = wrap_index(r, this->map_row);
     c = wrap_index(c, this->map_col);
 
     return this->energies[r][c];
 }
 
-void Linguisteen::SteppeAtlas::plant_grow_at(int r, int c) {
+void JrLab::SteppeAtlas::plant_grow_at(int r, int c) {
     r = wrap_index(r, this->map_row);
     c = wrap_index(c, this->map_col);
     
@@ -91,7 +91,7 @@ void Linguisteen::SteppeAtlas::plant_grow_at(int r, int c) {
     this->set_tile_type(r, c, plant_tile_type);
 }
 
-void Linguisteen::SteppeAtlas::plant_be_eaten_at(int r, int c) {
+void JrLab::SteppeAtlas::plant_be_eaten_at(int r, int c) {
     r = wrap_index(r, this->map_row);
     c = wrap_index(c, this->map_col);
 
@@ -100,7 +100,7 @@ void Linguisteen::SteppeAtlas::plant_be_eaten_at(int r, int c) {
     this->set_tile_type(r, c, seed_tile_type);
 }
 
-void Linguisteen::SteppeAtlas::animal_die_at(int r, int c) {
+void JrLab::SteppeAtlas::animal_die_at(int r, int c) {
     r = wrap_index(r, this->map_row);
     c = wrap_index(c, this->map_col);
 

@@ -4,7 +4,7 @@
 
 #include <map>
 
-namespace Linguisteen {
+namespace JrLab {
     /** 声明游戏物体 **/
     class GameOfLifelet : public Plteen::IGraphlet {
     public:
@@ -52,14 +52,14 @@ namespace Linguisteen {
     };
 
     /*********************************************************************************************/
-    class ConwayLifelet : public Linguisteen::GameOfLifelet {
+    class ConwayLifelet : public JrLab::GameOfLifelet {
         using GameOfLifelet::GameOfLifelet;
 
     protected:
         void evolve(int** world, int* shadow, int row, int col) override;
     };
 
-    class HighLifelet : public Linguisteen::GameOfLifelet {
+    class HighLifelet : public JrLab::GameOfLifelet {
         using GameOfLifelet::GameOfLifelet;
 
     protected:

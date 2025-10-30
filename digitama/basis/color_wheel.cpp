@@ -1,7 +1,7 @@
 #include "color_wheel.hpp"
 
 using namespace Plteen;
-using namespace Linguisteen;
+using namespace JrLab;
 
 /*************************************************************************************************/
 static const size_t hue_count = 36U;
@@ -11,12 +11,12 @@ static const float wheel_radius = 360.0F;
 static const float primary_radius = 100.0F;
 
 /*************************************************************************************************/
-void Linguisteen::ColorWheelWorld::load(float width, float height) {
+void JrLab::ColorWheelWorld::load(float width, float height) {
     this->set_background(0x000000U);
 
-    this->primaries.push_back(this->insert(new Ellipselet(primary_radius, 0xFF0000U)));
-    this->primaries.push_back(this->insert(new Ellipselet(primary_radius, 0x00FF00U)));
-    this->primaries.push_back(this->insert(new Ellipselet(primary_radius, 0x0000FFU)));
+    this->primaries.push_back(this->spawn<Ellipselet>(primary_radius, 0xFF0000U));
+    this->primaries.push_back(this->spawn<Ellipselet>(primary_radius, 0x00FF00U));
+    this->primaries.push_back(this->spawn<Ellipselet>(primary_radius, 0x0000FFU));
 
     for (auto com : this->primaries) {
         com->set_color_mixture(ColorMixture::Add);
@@ -26,7 +26,7 @@ void Linguisteen::ColorWheelWorld::load(float width, float height) {
     TheBigBang::load(width, height);
 }
 
-void Linguisteen::ColorWheelWorld::reflow(float width, float height) {
+void JrLab::ColorWheelWorld::reflow(float width, float height) {
     float cx = width * 0.5F;
     float cy = height * 0.55F;
     float x, y;
@@ -41,7 +41,7 @@ void Linguisteen::ColorWheelWorld::reflow(float width, float height) {
     TheBigBang::reflow(width, height);
 }
 
-void Linguisteen::ColorWheelWorld::after_select(IMatter* m, bool yes) {
+void JrLab::ColorWheelWorld::after_select(IMatter* m, bool yes) {
     if (yes) {
         auto com = dynamic_cast<Circlet*>(m);
 
@@ -52,7 +52,7 @@ void Linguisteen::ColorWheelWorld::after_select(IMatter* m, bool yes) {
     }
 }
 
-bool Linguisteen::ColorWheelWorld::update_tooltip(IMatter* m, float x, float y, float gx, float gy) {
+bool JrLab::ColorWheelWorld::update_tooltip(IMatter* m, float x, float y, float gx, float gy) {
     bool updated = false;
     auto com = dynamic_cast<Circlet*>(m);
     auto cc = dynamic_cast<Ellipselet*>(m);
@@ -82,17 +82,17 @@ bool Linguisteen::ColorWheelWorld::update_tooltip(IMatter* m, float x, float y, 
 }
 
 /*************************************************************************************************/
-void Linguisteen::ColorWheelWorld::load_hues() {
+void JrLab::ColorWheelWorld::load_hues() {
     float delta_deg = 360.0F / float(hue_count);
     float deg = 0.0F;
 
     while (deg < 360.0F) {
-        this->hues.push_back(this->insert(new Circlet(hue_radius, RGBA::HSV(deg))));
+        this->hues.push_back(this->spawn<Circlet>(hue_radius, RGBA::HSV(deg)));
         deg += delta_deg;
     }
 }
 
-void Linguisteen::ColorWheelWorld::reflow_primaries(float x, float y) {
+void JrLab::ColorWheelWorld::reflow_primaries(float x, float y) {
     float cc_off = primary_radius * 0.5F;
     
     this->move_to(this->primaries[0], { x, y }, MatterPort::CB, { 0.0F, cc_off });

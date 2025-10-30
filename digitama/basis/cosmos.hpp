@@ -3,7 +3,7 @@
 #include "../splash.hpp"
 
 /*************************************************************************************************/
-namespace Linguisteen {
+namespace JrLab {
     enum class CmdlineOps { GameOfLifeDemo, StreamFile, CarryNumber, _ };
 
     /* 定义本地宇宙类，并命名为 BigBangCosmos，继承自 TheCosmos 类 */

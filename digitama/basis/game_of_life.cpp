@@ -3,7 +3,7 @@
 #include <filesystem>
 
 using namespace Plteen;
-using namespace Linguisteen;
+using namespace JrLab;
 using namespace std::filesystem;
 
 /*************************************************************************************************/
@@ -28,7 +28,7 @@ static const uint32_t colors_for_stop[]  = { GREEN, GRAY, GREEN, GREEN, GRAY, GR
 static const uint32_t colors_for_edit[] = { GREEN, GRAY, GREEN, GRAY, GREEN, GREEN, GREEN, GREEN };
 
 /*************************************************************************************************/
-void Linguisteen::GameOfLifeWorld::load(float width, float height) {
+void JrLab::GameOfLifeWorld::load(float width, float height) {
     TheBigBang::load(width, height);
 
     this->load_gameboard(width, height);
@@ -38,28 +38,28 @@ void Linguisteen::GameOfLifeWorld::load(float width, float height) {
     this->load_conway_demo();
 }
 
-void Linguisteen::GameOfLifeWorld::load_gameboard(float width, float height) {
+void JrLab::GameOfLifeWorld::load_gameboard(float width, float height) {
     float board_height = height - this->get_titlebar_height() * 2.0F;
     float board_width = width - this->get_titlebar_height();
     int col = fl2fxi(board_width / this->gridsize) - 1;
     int row = fl2fxi(board_height / this->gridsize) - 1;
 
-    this->gameboard = this->insert(new ConwayLifelet(row, col, this->gridsize));
-    this->generation = this->insert(new Labellet(GameFont::math(), GREEN, generation_fmt, this->gameboard->get_generation()));
+    this->gameboard = this->spawn<ConwayLifelet>(row, col, this->gridsize);
+    this->generation = this->spawn<Labellet>(GameFont::math(), GREEN, generation_fmt, this->gameboard->get_generation());
 }
 
-void Linguisteen::GameOfLifeWorld::load_instructions(float width, float height) {
-    this->instructions[AUTO_KEY] = this->insert(new Labellet(GameFont::monospace(), "%c. 自行演化", AUTO_KEY));
-    this->instructions[STOP_KEY] = this->insert(new Labellet(GameFont::monospace(), "%c. 停止演化", STOP_KEY));
-    this->instructions[EDIT_KEY] = this->insert(new Labellet(GameFont::monospace(), "%c. 手动编辑", EDIT_KEY));
-    this->instructions[RAND_KEY] = this->insert(new Labellet(GameFont::monospace(), "%c. 随机重建", RAND_KEY));
-    this->instructions[RSET_KEY] = this->insert(new Labellet(GameFont::monospace(), "%c. 世界归零", RSET_KEY));
-    this->instructions[PACE_KEY] = this->insert(new Labellet(GameFont::monospace(), "%c. 单步跟踪", PACE_KEY));
-    this->instructions[LOAD_KEY] = this->insert(new Labellet(GameFont::monospace(), "%c. 载入范例", LOAD_KEY));
-    this->instructions[WRTE_KEY] = this->insert(new Labellet(GameFont::monospace(), "%c. 保存范例", WRTE_KEY));
+void JrLab::GameOfLifeWorld::load_instructions(float width, float height) {
+    this->instructions[AUTO_KEY] = this->spawn<Labellet>(GameFont::monospace(), "%c. 自行演化", AUTO_KEY);
+    this->instructions[STOP_KEY] = this->spawn<Labellet>(GameFont::monospace(), "%c. 停止演化", STOP_KEY);
+    this->instructions[EDIT_KEY] = this->spawn<Labellet>(GameFont::monospace(), "%c. 手动编辑", EDIT_KEY);
+    this->instructions[RAND_KEY] = this->spawn<Labellet>(GameFont::monospace(), "%c. 随机重建", RAND_KEY);
+    this->instructions[RSET_KEY] = this->spawn<Labellet>(GameFont::monospace(), "%c. 世界归零", RSET_KEY);
+    this->instructions[PACE_KEY] = this->spawn<Labellet>(GameFont::monospace(), "%c. 单步跟踪", PACE_KEY);
+    this->instructions[LOAD_KEY] = this->spawn<Labellet>(GameFont::monospace(), "%c. 载入范例", LOAD_KEY);
+    this->instructions[WRTE_KEY] = this->spawn<Labellet>(GameFont::monospace(), "%c. 保存范例", WRTE_KEY);
 }
 
-void Linguisteen::GameOfLifeWorld::reflow(float width, float height) {
+void JrLab::GameOfLifeWorld::reflow(float width, float height) {
     TheBigBang::reflow(width, height);
 
     this->move_to(this->gameboard, { width * 0.5F, (height + this->get_titlebar_height()) * 0.5F }, MatterPort::CC);
@@ -73,18 +73,18 @@ void Linguisteen::GameOfLifeWorld::reflow(float width, float height) {
     }
 }
 
-void Linguisteen::GameOfLifeWorld::on_mission_start(float width, float height) {
+void JrLab::GameOfLifeWorld::on_mission_start(float width, float height) {
     this->switch_game_state(GameState::Stop);
 }
 
-void Linguisteen::GameOfLifeWorld::update(uint64_t count, uint32_t interval, uint64_t uptime) {
+void JrLab::GameOfLifeWorld::update(uint64_t count, uint32_t interval, uint64_t uptime) {
     if (this->state == GameState::Auto) {
         this->pace_forward();
     }
 }
 
 /*************************************************************************************************/
-bool Linguisteen::GameOfLifeWorld::can_select(IMatter* m) {
+bool JrLab::GameOfLifeWorld::can_select(IMatter* m) {
     Labellet* menu = dynamic_cast<Labellet*>(m);
 
     return m == this->agent
@@ -94,7 +94,7 @@ bool Linguisteen::GameOfLifeWorld::can_select(IMatter* m) {
             && (menu->get_foreground_color() == GREEN));
 }
 
-void Linguisteen::GameOfLifeWorld::on_tap(IMatter* matter, float x, float y) {
+void JrLab::GameOfLifeWorld::on_tap(IMatter* matter, float x, float y) {
     if (isinstance(matter, GameOfLifelet)) {
         this->gameboard->toggle_life_at_location(x, y);
         this->instructions[WRTE_KEY]->set_text_color(GREEN);
@@ -109,7 +109,7 @@ void Linguisteen::GameOfLifeWorld::on_tap(IMatter* matter, float x, float y) {
     }
 }
 
-void Linguisteen::GameOfLifeWorld::on_char(char key, uint16_t modifiers, uint8_t repeats, bool pressed) {
+void JrLab::GameOfLifeWorld::on_char(char key, uint16_t modifiers, uint8_t repeats, bool pressed) {
     if (!pressed) {
         if (this->instructions.find(key) != this->instructions.end()) {
             if (this->instructions[key]->get_foreground_color() == GREEN) {
@@ -132,12 +132,12 @@ void Linguisteen::GameOfLifeWorld::on_char(char key, uint16_t modifiers, uint8_t
     }
 }
 
-void Linguisteen::GameOfLifeWorld::on_save(const std::string& life_world, std::ofstream& golout) {
+void JrLab::GameOfLifeWorld::on_save(const std::string& life_world, std::ofstream& golout) {
     this->gameboard->save(life_world, golout);
 }
 
 /*************************************************************************************************/
-void Linguisteen::GameOfLifeWorld::pace_forward() {
+void JrLab::GameOfLifeWorld::pace_forward() {
     if (this->gameboard->pace_forward()) {
         this->generation->set_text_color(GREEN);
         this->generation->set_text(MatterPort::RB, generation_fmt, this->gameboard->get_generation());
@@ -151,7 +151,7 @@ void Linguisteen::GameOfLifeWorld::pace_forward() {
     }
 }
 
-void Linguisteen::GameOfLifeWorld::load_conway_demo() {
+void JrLab::GameOfLifeWorld::load_conway_demo() {
     if (!exists(this->demo_path)) {
         this->demo_path = DEFAULT_CONWAY_DEMO;
     }
@@ -169,7 +169,7 @@ void Linguisteen::GameOfLifeWorld::load_conway_demo() {
     }
 }
 
-void Linguisteen::GameOfLifeWorld::save_conway_demo() {
+void JrLab::GameOfLifeWorld::save_conway_demo() {
     if (!exists(this->demo_path)) {
         this->demo_path = DEFAULT_CONWAY_DEMO;
     }
@@ -189,7 +189,7 @@ void Linguisteen::GameOfLifeWorld::save_conway_demo() {
 }
 
 /*************************************************************************************************/
-void Linguisteen::GameOfLifeWorld::switch_game_state(GameState new_state) {
+void JrLab::GameOfLifeWorld::switch_game_state(GameState new_state) {
     if (this->state != new_state) {
         switch (new_state) {
         case GameState::Auto: {
@@ -217,7 +217,7 @@ void Linguisteen::GameOfLifeWorld::switch_game_state(GameState new_state) {
     }
 }
 
-void Linguisteen::GameOfLifeWorld::update_instructions_state(const uint32_t* colors) {
+void JrLab::GameOfLifeWorld::update_instructions_state(const uint32_t* colors) {
     for (size_t idx = 0; idx < sizeof(ordered_keys) / sizeof(char);  idx ++) {
         this->instructions[ordered_keys[idx]]->set_text_color(colors[idx]);
     }

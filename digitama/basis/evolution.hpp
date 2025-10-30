@@ -7,7 +7,7 @@
 
 #include <vector>
 
-namespace Linguisteen {
+namespace JrLab {
     /*********************************************************************************************/
     class EvolutionWorld : public Plteen::TheBigBang {
     public:
@@ -38,7 +38,7 @@ namespace Linguisteen {
         void update_world_info();
             
     private: /* 本世界中的物体 */
-        Linguisteen::SteppeAtlas* steppe;
+        JrLab::SteppeAtlas* steppe;
         std::vector<Plteen::Animal*> animals;
         //Plteen::Historylet* phistory;
         //Plteen::Historylet* ehistory;

@@ -2,7 +2,7 @@
 
 #include <plteen/bang.hpp>
 
-namespace Linguisteen {
+namespace JrLab {
     class DrunkardWalkWorld : public Plteen::TheBigBang {
     public:
         DrunkardWalkWorld() : TheBigBang("醉汉漫步") {}

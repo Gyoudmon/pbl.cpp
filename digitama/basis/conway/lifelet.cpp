@@ -1,7 +1,7 @@
 #include "lifelet.hpp"
 
 using namespace Plteen;
-using namespace Linguisteen;
+using namespace JrLab;
 
 /*************************************************************************************************/
 static inline int count_in_neighbor(int* world[], int row, int col, int r, int c) {
@@ -23,7 +23,7 @@ static inline int count_neighbors(int *world[], int row, int col, int r, int c) 
 }
 
 /*************************************************************************************************/
-Linguisteen::GameOfLifelet::~GameOfLifelet() {
+JrLab::GameOfLifelet::~GameOfLifelet() {
     if (this->world != nullptr) {
         for (int r = 0; r < this->row; r ++) {
             delete [] this->world[r];
@@ -37,7 +37,7 @@ Linguisteen::GameOfLifelet::~GameOfLifelet() {
     }
 }
 
-void Linguisteen::GameOfLifelet::construct(Plteen::dc_t* dc) {
+void JrLab::GameOfLifelet::construct(Plteen::dc_t* dc) {
     IGraphlet::construct(dc);
 
     this->shadow = new int[this->row * this->col];
@@ -48,12 +48,12 @@ void Linguisteen::GameOfLifelet::construct(Plteen::dc_t* dc) {
     }
 }
 
-Box Linguisteen::GameOfLifelet::get_bounding_box() {
+Box JrLab::GameOfLifelet::get_bounding_box() {
     return { this->gridsize * float(this->col) + 1.0F,
              this->gridsize * float(this->row) + 1.0F };
 }
 
-void Linguisteen::GameOfLifelet::draw(Plteen::dc_t* dc, float x, float y, float Width, float Height) {
+void JrLab::GameOfLifelet::draw(Plteen::dc_t* dc, float x, float y, float Width, float Height) {
     dc->draw_rect(x, y, Width, Height, this->color);
 
     // 绘制舞台的网格
@@ -65,7 +65,7 @@ void Linguisteen::GameOfLifelet::draw(Plteen::dc_t* dc, float x, float y, float 
     dc->fill_grid(this->world, this->row, this->col, this->gridsize, this->gridsize, this->color, x, y);
 }
 
-void Linguisteen::GameOfLifelet::toggle_life_at_location(float x, float y) {
+void JrLab::GameOfLifelet::toggle_life_at_location(float x, float y) {
     int c = fl2fxi(flfloor(x / this->gridsize));
     int r = fl2fxi(flfloor(y / this->gridsize));
 
@@ -73,21 +73,21 @@ void Linguisteen::GameOfLifelet::toggle_life_at_location(float x, float y) {
     this->notify_updated();
 }
 
-void Linguisteen::GameOfLifelet::show_grid(bool yes) {
+void JrLab::GameOfLifelet::show_grid(bool yes) {
     if (this->hide_grid == yes) {
         this->hide_grid = !yes;
         this->notify_updated();
     }
 }
 
-void Linguisteen::GameOfLifelet::set_color(uint32_t hex) {
+void JrLab::GameOfLifelet::set_color(uint32_t hex) {
     if (this->color != hex) {
         this->color = hex;
         this->notify_updated();
     }
 }
 
-bool Linguisteen::GameOfLifelet::pace_forward() {
+bool JrLab::GameOfLifelet::pace_forward() {
     bool evolved = false;
 
     // 应用演化规则
@@ -112,7 +112,7 @@ bool Linguisteen::GameOfLifelet::pace_forward() {
     return evolved;
 }
 
-void Linguisteen::GameOfLifelet::reset() {
+void JrLab::GameOfLifelet::reset() {
     this->generation = 0;
 
     for (int r = 0; r < this->row; r ++) {
@@ -122,7 +122,7 @@ void Linguisteen::GameOfLifelet::reset() {
     }
 }
 
-void Linguisteen::GameOfLifelet::construct_random_world() {
+void JrLab::GameOfLifelet::construct_random_world() {
     for (int r = 0; r < this->row; r++) {
         for (int c = 0; c < this->col; c++) {
             this->world[r][c] = ((random_raw() % 2 == 0) ? 1 : 0);
@@ -132,7 +132,7 @@ void Linguisteen::GameOfLifelet::construct_random_world() {
     this->generation = 0;
 }
 
-void Linguisteen::GameOfLifelet::load(const std::string& life_world, std::ifstream& golin) {
+void JrLab::GameOfLifelet::load(const std::string& life_world, std::ifstream& golin) {
     std::string rowline;
     int r = 0;
 
@@ -147,7 +147,7 @@ void Linguisteen::GameOfLifelet::load(const std::string& life_world, std::ifstre
     }
 }
 
-void Linguisteen::GameOfLifelet::save(const std::string& life_world, std::ofstream& golout) {
+void JrLab::GameOfLifelet::save(const std::string& life_world, std::ofstream& golout) {
     if (world != nullptr) {
         for (int r = 0; r < this->row; r++) {
             for (int c = 0; c < this->col; c++) {
@@ -160,7 +160,7 @@ void Linguisteen::GameOfLifelet::save(const std::string& life_world, std::ofstre
 }
 
 /*************************************************************************************************/
-void Linguisteen::ConwayLifelet::evolve(int** world, int* shadow, int row, int col) {
+void JrLab::ConwayLifelet::evolve(int** world, int* shadow, int row, int col) {
     for (int r = 0; r < row; r ++) {
         for (int c = 0; c < col; c ++) {
             int n = count_neighbors(world, row, col, r, c);
@@ -179,7 +179,7 @@ void Linguisteen::ConwayLifelet::evolve(int** world, int* shadow, int row, int c
     }
 }
 
-void Linguisteen::HighLifelet::evolve(int** world, int* shadow, int row, int col) {
+void JrLab::HighLifelet::evolve(int** world, int* shadow, int row, int col) {
     for (int r = 0; r < row; r ++) {
         for (int c = 0; c < col; c ++) {
             int n = count_neighbors(world, row, col, r, c);

@@ -2,7 +2,7 @@
 
 #include <plteen/bang.hpp>
 
-namespace Linguisteen {
+namespace JrLab {
     /*********************************************************************************************/
     class SteppeAtlas : public Plteen::PlanetCuteAtlas {
     public:

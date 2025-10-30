@@ -2,8 +2,8 @@
 
 #include <plteen/bang.hpp>
 
-// 以 Linguisteen 的名义提供
-namespace Linguisteen {
+// 以 JrLab 的名义提供
+namespace JrLab {
     // 创建自定义数据类型，并命名为 PaddleBallWorld, 继承自 TheBigBang
     class AngryBirdWorld : public Plteen::TheBigBang {
     public:

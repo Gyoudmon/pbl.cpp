@@ -19,45 +19,45 @@
 #include <stemos/schematics/optics/chromaticity.hpp>
 
 using namespace Plteen;
-using namespace Linguisteen;
+using namespace JrLab;
 
 using namespace WarGrey::STEM;
 using namespace WarGrey::PLT;
 
 /*************************************************************************************************/
 // 定义和实现 BigBangCosmos::construct 函数，构造本地宇宙，执行初始化，加载任务世界    
-void Linguisteen::BigBangCosmos::construct(int argc, char* argv[]) {
+void JrLab::BigBangCosmos::construct(int argc, char* argv[]) {
     TheCosmos::construct(argc, argv);
     this->set_window_size(1200, 0);
             
     // 按顺序加载各个任务世界
     // 第一阶段
-    this->push_plane(new ShapeWorld());
-    this->push_plane(new PaddleBallWorld());
-    this->push_plane(new TheBigBang());
+    this->spawn<ShapeWorld>();
+    this->spawn<PaddleBallWorld>();
+    this->spawn<TheBigBang>();
 
     // 第二阶段
-    this->push_plane(new DotAndCarryOnePlane(this->number));
-    this->push_plane(new ColorMixtureWorld());
-    this->push_plane(new ColorWheelWorld());
-    this->push_plane(new TheBigBang());
-    this->push_plane(new DrunkardWalkWorld());
-    this->push_plane(new ChromaticityDiagramPlane());
+    this->spawn<DotAndCarryOnePlane>(this->number);
+    this->spawn<ColorMixtureWorld>();
+    this->spawn<ColorWheelWorld>();
+    this->spawn<TheBigBang>();
+    this->spawn<DrunkardWalkWorld>();
+    this->spawn<ChromaticityDiagramPlane>();
             
     // 第三阶段
-    this->push_plane(new SelfAvoidingWalkWorld());
-    this->push_plane(new GameOfLifeWorld(this->life_source));
+    this->spawn<SelfAvoidingWalkWorld>();
+    this->spawn<GameOfLifeWorld>(this->life_source);
 
 #ifdef __windows__
-    this->push_plane(new TheBigBang());
+    this->spawn<TheBigBang>();
 #else
-    this->push_plane(new EvolutionWorld());
+    this->spawn<EvolutionWorld>();
 #endif
 
-    this->push_plane(new StreamPlane(this->stream_source.c_str()));
+    this->spawn<StreamPlane>(this->stream_source.c_str());
 }
 
-void Linguisteen::BigBangCosmos::parse_cmdline_options(int argc, char* argv[]) {
+void JrLab::BigBangCosmos::parse_cmdline_options(int argc, char* argv[]) {
     CmdlineOps opt = CmdlineOps::_;
             
     for (int idx = 1; idx < argc; idx ++) {

@@ -1,7 +1,7 @@
 #include "self_avoiding_walk.hpp"
 
 using namespace Plteen;
-using namespace Linguisteen;
+using namespace JrLab;
 
 /*************************************************************************************************/
 static const double pace_duration = 0.5;
@@ -41,7 +41,7 @@ static void backtracking_pace(bool maze[MAZE_SIZE][MAZE_SIZE], int& row, int& co
 }
 
 /*************************************************************************************************/
-void Linguisteen::SelfAvoidingWalkWorld::load(float width, float height) {
+void JrLab::SelfAvoidingWalkWorld::load(float width, float height) {
     float cx = width * 0.5F;
     float cy = height * 0.5F;
 
@@ -53,14 +53,14 @@ void Linguisteen::SelfAvoidingWalkWorld::load(float width, float height) {
     }
 
     // 添加漫步者
-    this->walkers[0] = this->insert(new Estelle());
-    this->walkers[1] = this->insert(new Joshua());
-    this->walkers[2] = this->insert(new Scherazard());
-    this->walkers[3] = this->insert(new Olivier());
-    this->walkers[4] = this->insert(new Agate());
-    this->walkers[5] = this->insert(new Klose());
-    this->walkers[6] = this->insert(new Tita());
-    this->walkers[7] = this->insert(new Zin());
+    this->walkers[0] = this->spawn<Estelle>();
+    this->walkers[1] = this->spawn<Joshua>();
+    this->walkers[2] = this->spawn<Scherazard>();
+    this->walkers[3] = this->spawn<Olivier>();
+    this->walkers[4] = this->spawn<Agate>();
+    this->walkers[5] = this->spawn<Klose>();
+    this->walkers[6] = this->spawn<Tita>();
+    this->walkers[7] = this->spawn<Zin>();
 
     /* locating */ {
         Margin margin = this->tiles[0][0]->get_map_overlay();
@@ -72,7 +72,7 @@ void Linguisteen::SelfAvoidingWalkWorld::load(float width, float height) {
     TheBigBang::load(width, height);
 }
 
-void Linguisteen::SelfAvoidingWalkWorld::reflow(float width, float height) {
+void JrLab::SelfAvoidingWalkWorld::reflow(float width, float height) {
     size_t walker_count = sizeof(this->walkers) / sizeof(Bracer*);
     float y0 = this->get_titlebar_height();
     float maze_x, maze_y;
@@ -94,13 +94,13 @@ void Linguisteen::SelfAvoidingWalkWorld::reflow(float width, float height) {
     }
 }
 
-void Linguisteen::SelfAvoidingWalkWorld::on_mission_start(float width, float height) {
+void JrLab::SelfAvoidingWalkWorld::on_mission_start(float width, float height) {
     this->reset_walkers(false);
     this->reset_maze();
     this->row = -1;
 }
 
-void Linguisteen::SelfAvoidingWalkWorld::update(uint64_t count, uint32_t interval, uint64_t uptime) {
+void JrLab::SelfAvoidingWalkWorld::update(uint64_t count, uint32_t interval, uint64_t uptime) {
     if (this->row >= 0) {
         if (this->walker->current_mode() == BracerMode::Run) {
             if (this->walker->motion_stopped()) {
@@ -133,11 +133,11 @@ void Linguisteen::SelfAvoidingWalkWorld::update(uint64_t count, uint32_t interva
 }
 
 /**************************************************************************************************/
-bool Linguisteen::SelfAvoidingWalkWorld::can_select(IMatter* m) {
+bool JrLab::SelfAvoidingWalkWorld::can_select(IMatter* m) {
     return (this->row < 0) || (m == this->agent);
 }
 
-void Linguisteen::SelfAvoidingWalkWorld::after_select(IMatter* m, bool yes) {
+void JrLab::SelfAvoidingWalkWorld::after_select(IMatter* m, bool yes) {
     if (yes) {
         Bracer* bracer = dynamic_cast<Bracer*>(m);
 
@@ -163,7 +163,7 @@ void Linguisteen::SelfAvoidingWalkWorld::after_select(IMatter* m, bool yes) {
     }
 }
 
-void Linguisteen::SelfAvoidingWalkWorld::reset_walkers(bool keep_mode) {
+void JrLab::SelfAvoidingWalkWorld::reset_walkers(bool keep_mode) {
     int walker_count = int(sizeof(this->walkers) / sizeof(Bracer*));
     
     for (int idx = 0; idx < walker_count; idx++) {
@@ -176,7 +176,7 @@ void Linguisteen::SelfAvoidingWalkWorld::reset_walkers(bool keep_mode) {
     }
 }
 
-void Linguisteen::SelfAvoidingWalkWorld::reset_maze() {
+void JrLab::SelfAvoidingWalkWorld::reset_maze() {
     for (int row = 0; row < MAZE_SIZE; row++) {
         for (int col = 0; col < MAZE_SIZE; col++) {
             this->maze[row][col] = false;
@@ -191,7 +191,7 @@ void Linguisteen::SelfAvoidingWalkWorld::reset_maze() {
 }
 
 /**************************************************************************************************/
-bool Linguisteen::SelfAvoidingWalkWorld::update_tooltip(IMatter* m, float lx, float ly, float gx, float gy) {
+bool JrLab::SelfAvoidingWalkWorld::update_tooltip(IMatter* m, float lx, float ly, float gx, float gy) {
     bool updated = false;
     auto bracer = dynamic_cast<Bracer*>(m);
 

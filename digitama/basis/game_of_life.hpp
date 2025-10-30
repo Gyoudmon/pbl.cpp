@@ -6,7 +6,7 @@
 
 #include <map>
 
-namespace Linguisteen {
+namespace JrLab {
     enum class GameState { Auto, Stop, Edit, _ };
 
     /** 声明游戏宇宙 **/
@@ -37,7 +37,7 @@ namespace Linguisteen {
     private:
         void load_gameboard(float width, float height);
         void load_instructions(float width, float height);
-        void switch_game_state(Linguisteen::GameState new_state);
+        void switch_game_state(JrLab::GameState new_state);
         void update_instructions_state(const uint32_t* colors);
         void pace_forward();
         void load_conway_demo();
@@ -45,11 +45,11 @@ namespace Linguisteen {
             
     private: // 游戏物体
         Plteen::Labellet* generation;
-        Linguisteen::GameOfLifelet* gameboard;
+        JrLab::GameOfLifelet* gameboard;
         std::map<char, Plteen::Labellet*> instructions;
 
     private: // 游戏状态
-        Linguisteen::GameState state = GameState::_;
+        JrLab::GameState state = GameState::_;
 
     private:
         std::string demo_path;

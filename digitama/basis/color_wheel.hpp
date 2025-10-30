@@ -4,7 +4,7 @@
 
 #include <vector>
 
-namespace Linguisteen {
+namespace JrLab {
     class ColorWheelWorld : public Plteen::TheBigBang {
     public:
         ColorWheelWorld() : TheBigBang("色相环", 0xFFFFFFU) {}

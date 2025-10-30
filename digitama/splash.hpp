@@ -1,6 +1,6 @@
 #include <plteen/game.hpp>
 
-namespace Linguisteen {
+namespace JrLab {
     class TheCosmos : public Plteen::Cosmos {
     public:
         TheCosmos(int fps) : Plteen::Cosmos(fps) {}

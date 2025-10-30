@@ -5,7 +5,7 @@
 #include <plteen/datum/string.hpp>
 #include <plteen/datum/path.hpp>
 
-using namespace Linguisteen;
+using namespace JrLab;
 using namespace Plteen;
 
 /*************************************************************************************************/
@@ -36,12 +36,12 @@ namespace {
 
     public:  // 覆盖游戏基本方法
         void load(float width, float height) override {
-            this->splash = this->insert(new GridAtlas("splash.png"));
+            this->splash = this->spawn<GridAtlas>("splash.png");
 
             TheBigBang::load(width, height);
             
             this->load_tasks(width, height);
-            this->tux = this->insert(new Tuxmon());
+            this->tux = this->spawn<Tuxmon>();
 
             this->tooltip = this->insert(make_label_for_tooltip(GameFont::Tooltip()));
             this->set_tooltip_matter(this->tooltip);
@@ -139,7 +139,7 @@ namespace {
         }
 
         void load_task(std::vector<Coinlet*>& subcoins, const char* tooltip, int task_idx) {
-            subcoins.push_back(this->insert(new Coinlet(tooltip, task_idx)));
+            subcoins.push_back(this->spawn<Coinlet>(tooltip, task_idx));
             
             if (strcmp(tooltip, unknown_plane_name) == 0) {
                 subcoins.back()->stop();
@@ -232,11 +232,11 @@ namespace {
 }
 
 /*************************************************************************************************/
-Linguisteen::TheCosmos::~TheCosmos() {
+JrLab::TheCosmos::~TheCosmos() {
     imgdb_teardown();
 }
 
-void Linguisteen::TheCosmos::construct(int argc, char* argv[]) {
+void JrLab::TheCosmos::construct(int argc, char* argv[]) {
     GameFont::fontsize(21);
     
     enter_digimon_zone(argv[0]);
@@ -256,12 +256,12 @@ void Linguisteen::TheCosmos::construct(int argc, char* argv[]) {
     this->splash = this->push_plane(new SplashPlane(this));
 }
 
-void Linguisteen::TheCosmos::update(uint64_t count, uint32_t interval, uint64_t uptime) {
+void JrLab::TheCosmos::update(uint64_t count, uint32_t interval, uint64_t uptime) {
     if (this->has_current_mission_completed()) {
         this->transfer_to_plane(0);
     }
 }
 
-bool Linguisteen::TheCosmos::can_exit() {
+bool JrLab::TheCosmos::can_exit() {
     return this->splash->has_mission_completed();
 }

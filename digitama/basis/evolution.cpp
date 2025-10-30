@@ -3,13 +3,13 @@
 #include <algorithm>
 
 using namespace Plteen;
-using namespace Linguisteen;
+using namespace JrLab;
 
 /*************************************************************************************************/
 static const char* matrics_fmt = "在线天数: %d    消费者总数: %d    生产者能量总和: %d";
 
 /*************************************************************************************************/
-void Linguisteen::EvolutionWorld::load(float width, float height) {
+void JrLab::EvolutionWorld::load(float width, float height) {
     TheBigBang::load(width, height);
     
     float world_width = width;
@@ -19,21 +19,21 @@ void Linguisteen::EvolutionWorld::load(float width, float height) {
     this->row = fl2fxi(world_height / this->size_hint) - 1;
 
     // 初始化世界
-    this->steppe = this->insert(new SteppeAtlas(this->row, this->col));
-    this->world_info = this->insert(new Labellet(GameFont::serif(), BLACK, matrics_fmt, 0));
-    //this->phistory = this->insert(new Historylet(200.0F, 100.0F, ROYALBLUE));
-    //this->ehistory = this->insert(new Historylet(200.0F, 100.0F, ORANGE));
+    this->steppe = this->spawn<SteppeAtlas>(this->row, this->col);
+    this->world_info = this->spawn<Labellet>(GameFont::serif(), BLACK, matrics_fmt, 0);
+    //this->phistory = this->spawn<Historylet>(200.0F, 100.0F, ROYALBLUE);
+    //this->ehistory = this->spawn<Historylet>(200.0F, 100.0F, ORANGE);
 
-    this->animals.push_back(this->insert(new TMRooster(this->row, this->col)));
-    this->animals.push_back(this->insert(new TMPigeon(this->row, this->col)));
-    this->animals.push_back(this->insert(new TMCow(this->row, this->col)));
-    this->animals.push_back(this->insert(new TMCat(this->row, this->col)));
+    this->animals.push_back(this->spawn<TMRooster>(this->row, this->col));
+    this->animals.push_back(this->spawn<TMPigeon>(this->row, this->col));
+    this->animals.push_back(this->spawn<TMCow>(this->row, this->col));
+    this->animals.push_back(this->spawn<TMCat>(this->row, this->col));
 
     /* 简单配置物体 */
     this->steppe->scale_to(this->size_hint / this->steppe->get_logic_tile_region().width());
 }
 
-void Linguisteen::EvolutionWorld::reflow(float width, float height) {
+void JrLab::EvolutionWorld::reflow(float width, float height) {
     TheBigBang::reflow(width, height);
 
     float cx = width * 0.5F;
@@ -46,7 +46,7 @@ void Linguisteen::EvolutionWorld::reflow(float width, float height) {
     //this->move_to(this->phistory, { this->ehistory, MatterPort::LC }, MatterPort::RC, { -overlay.top, 0.0F });
 }
 
-void Linguisteen::EvolutionWorld::on_mission_start(float width, float height) {
+void JrLab::EvolutionWorld::on_mission_start(float width, float height) {
     Margin overlay = this->steppe->get_map_overlay();
     
     this->reset_world();
@@ -63,7 +63,7 @@ void Linguisteen::EvolutionWorld::on_mission_start(float width, float height) {
     }
 }
 
-void Linguisteen::EvolutionWorld::update(uint64_t count, uint32_t interval, uint64_t uptime) {
+void JrLab::EvolutionWorld::update(uint64_t count, uint32_t interval, uint64_t uptime) {
     if (this->animals.empty()) {
         this->world_info->set_text_color(FIREBRICK);
         //this->phistory->set_pen_color(CRIMSON);
@@ -107,7 +107,7 @@ void Linguisteen::EvolutionWorld::update(uint64_t count, uint32_t interval, uint
     this->update_world_info();
 }
 
-void Linguisteen::EvolutionWorld::animal_try_eat(Animal* animal, IToroidalMovingAnimal* self) {
+void JrLab::EvolutionWorld::animal_try_eat(Animal* animal, IToroidalMovingAnimal* self) {
     int r = self->current_row();
     int c = self->current_col();
     int plant_energy = this->steppe->get_plant_energy(r, c);
@@ -118,7 +118,7 @@ void Linguisteen::EvolutionWorld::animal_try_eat(Animal* animal, IToroidalMoving
     }
 }
 
-void Linguisteen::EvolutionWorld::animal_try_reproduce(Animal* animal, IToroidalMovingAnimal* self, std::vector<Animal*>& offsprings, float dx, float dy) {
+void JrLab::EvolutionWorld::animal_try_reproduce(Animal* animal, IToroidalMovingAnimal* self, std::vector<Animal*>& offsprings, float dx, float dy) {
     if (self->can_reproduce()) {
         auto offspring = animal->asexually_reproduce();
         auto offself = offspring->unsafe_metadata<IToroidalMovingAnimal>();
@@ -130,7 +130,7 @@ void Linguisteen::EvolutionWorld::animal_try_reproduce(Animal* animal, IToroidal
     }
 }
 
-void Linguisteen::EvolutionWorld::animal_move(Animal* animal, IToroidalMovingAnimal* self, float tile_width, float tile_height) {
+void JrLab::EvolutionWorld::animal_move(Animal* animal, IToroidalMovingAnimal* self, float tile_width, float tile_height) {
     int dr, dc;
 
     self->turn();
@@ -143,7 +143,7 @@ void Linguisteen::EvolutionWorld::animal_move(Animal* animal, IToroidalMovingAni
     }
 }
 
-void Linguisteen::EvolutionWorld::clear_dead_animals() {
+void JrLab::EvolutionWorld::clear_dead_animals() {
     std::for_each(this->animals.begin(), this->animals.end(),
         [&, this](Animal*& animal) {
             auto self = animal->unsafe_metadata<IToroidalMovingAnimal>();
@@ -164,14 +164,14 @@ void Linguisteen::EvolutionWorld::clear_dead_animals() {
 }
 
 /**************************************************************************************************/
-bool Linguisteen::EvolutionWorld::can_select(IMatter* m) {
+bool JrLab::EvolutionWorld::can_select(IMatter* m) {
     return (m == this->agent);
 }
 
-void Linguisteen::EvolutionWorld::after_select(IMatter* m, bool yes) {
+void JrLab::EvolutionWorld::after_select(IMatter* m, bool yes) {
 }
 
-void Linguisteen::EvolutionWorld::reset_world() {
+void JrLab::EvolutionWorld::reset_world() {
     this->steppe->reset();
     this->world_info->set_text_color(FORESTGREEN);
     //this->phistory->set_pen_color(ROYALBLUE);
@@ -180,7 +180,7 @@ void Linguisteen::EvolutionWorld::reset_world() {
 }
 
 /**************************************************************************************************/
-bool Linguisteen::EvolutionWorld::update_tooltip(IMatter* m, float lx, float ly, float gx, float gy) {
+bool JrLab::EvolutionWorld::update_tooltip(IMatter* m, float lx, float ly, float gx, float gy) {
     bool updated = false;
     auto animal = dynamic_cast<Animal*>(m);
 
@@ -194,7 +194,7 @@ bool Linguisteen::EvolutionWorld::update_tooltip(IMatter* m, float lx, float ly,
     return updated;
 }
 
-void Linguisteen::EvolutionWorld::update_world_info() {
+void JrLab::EvolutionWorld::update_world_info() {
     int day = this->steppe->current_day();
     int n = int(this->animals.size());
     int e = this->steppe->get_total_energy();

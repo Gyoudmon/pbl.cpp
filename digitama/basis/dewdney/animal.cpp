@@ -5,7 +5,7 @@
 #include <sstream>
 
 using namespace Plteen;
-using namespace Linguisteen;
+using namespace JrLab;
 
 /*************************************************************************************************/
 static const float lifebar_height = 2.0F;
@@ -24,7 +24,7 @@ static inline void gene_mutate(int gene[MOVING_WAYS]) {
 }
 
 /*************************************************************************************************/
-Linguisteen::IToroidalMovingAnimal::IToroidalMovingAnimal(int row, int col, const int gene[MOVING_WAYS], double duration, int cycle, int energy)
+JrLab::IToroidalMovingAnimal::IToroidalMovingAnimal(int row, int col, const int gene[MOVING_WAYS], double duration, int cycle, int energy)
         : duration(duration), breeding_cycle(cycle), row(row), col(col), energy(energy) {
     this->direction = random_uniform(0, MOVING_WAYS - 1);
     this->r = row >> 1;
@@ -45,7 +45,7 @@ Linguisteen::IToroidalMovingAnimal::IToroidalMovingAnimal(int row, int col, cons
     }
 }
 
-std::string Linguisteen::IToroidalMovingAnimal::description() {
+std::string JrLab::IToroidalMovingAnimal::description() {
     std::stringstream s;
 
     s << "子代: " << this->generation << ";";
@@ -61,7 +61,7 @@ std::string Linguisteen::IToroidalMovingAnimal::description() {
     return s.str();
 }
 
-void Linguisteen::IToroidalMovingAnimal::draw(dc_t* dc, float x, float y, float width, float height) {
+void JrLab::IToroidalMovingAnimal::draw(dc_t* dc, float x, float y, float width, float height) {
     float lifebar_width = float(this->energy) / float(this->full_energy);
     float breed_width = 1.0F - float(fxmax(this->countdown, 0)) / float(this->breeding_cycle);
 
@@ -73,7 +73,7 @@ void Linguisteen::IToroidalMovingAnimal::draw(dc_t* dc, float x, float y, float 
     }
 }
 
-void Linguisteen::IToroidalMovingAnimal::turn() {
+void JrLab::IToroidalMovingAnimal::turn() {
     int sum = 0, rnd;
 
     for (int idx = 0; idx < MOVING_WAYS; idx ++) {
@@ -84,7 +84,7 @@ void Linguisteen::IToroidalMovingAnimal::turn() {
     this->direction = (this->direction + this->angle(0, rnd)) % MOVING_WAYS;
 }
 
-int Linguisteen::IToroidalMovingAnimal::angle(int idx0, int rnd) {
+int JrLab::IToroidalMovingAnimal::angle(int idx0, int rnd) {
     int next = rnd - this->gene[idx0];
 
     if (next < 0) {
@@ -94,7 +94,7 @@ int Linguisteen::IToroidalMovingAnimal::angle(int idx0, int rnd) {
     }
 }
 
-void Linguisteen::IToroidalMovingAnimal::move(int* delta_row, int* delta_col) {
+void JrLab::IToroidalMovingAnimal::move(int* delta_row, int* delta_col) {
     int orow = this->r;
     int ocol = this->c;
     int dr = 0;
@@ -119,13 +119,13 @@ void Linguisteen::IToroidalMovingAnimal::move(int* delta_row, int* delta_col) {
     SET_BOX(delta_col, this->c - ocol);
 }
 
-void Linguisteen::IToroidalMovingAnimal::eat(int food_energy) {
+void JrLab::IToroidalMovingAnimal::eat(int food_energy) {
     int gain_energy = food_energy * random_uniform(10, 20) / 100;
 
     this->energy = fxmin(this->full_energy, this->energy + gain_energy);
 }
 
-void Linguisteen::IToroidalMovingAnimal::on_time_fly(int day) {
+void JrLab::IToroidalMovingAnimal::on_time_fly(int day) {
     if (this->bio_clock != day) {
         if (day > this->bio_clock) {
             int diff = (day - this->bio_clock);
@@ -141,7 +141,7 @@ void Linguisteen::IToroidalMovingAnimal::on_time_fly(int day) {
     }
 }
 
-IToroidalMovingAnimal* Linguisteen::IToroidalMovingAnimal::asexually_reproduce() {
+IToroidalMovingAnimal* JrLab::IToroidalMovingAnimal::asexually_reproduce() {
     auto offspring = new IToroidalMovingAnimal(this->row, this->col, this->gene, this->duration, this->breeding_cycle, this->full_energy);
 
     gene_mutate(offspring->gene);
@@ -157,73 +157,73 @@ IToroidalMovingAnimal* Linguisteen::IToroidalMovingAnimal::asexually_reproduce()
 }
 
 /*************************************************************************************************/
-Linguisteen::TMRooster::TMRooster(int row, int col, int direction, int energy) {
+JrLab::TMRooster::TMRooster(int row, int col, int direction, int energy) {
     this->attach_metadata(new IToroidalMovingAnimal(row, col, nullptr, 0.5, direction, energy));
 }
 
-Linguisteen::TMRooster::TMRooster(IToroidalMovingAnimal* self) {
+JrLab::TMRooster::TMRooster(IToroidalMovingAnimal* self) {
     this->attach_metadata(self);
 }
 
-void Linguisteen::TMRooster::draw(dc_t* dc, float x, float y, float width, float height) {
+void JrLab::TMRooster::draw(dc_t* dc, float x, float y, float width, float height) {
     Rooster::draw(dc, x, y, width, height);
     this->unsafe_metadata<IToroidalMovingAnimal>()->draw(dc, x, y, width, height);
 }
 
-Animal* Linguisteen::TMRooster::asexually_reproduce() {
+Animal* JrLab::TMRooster::asexually_reproduce() {
     return new TMRooster(this->unsafe_metadata<IToroidalMovingAnimal>()->asexually_reproduce());
 }
 
 /*************************************************************************************************/
-Linguisteen::TMCow::TMCow(int row, int col, int direction, int energy) {
+JrLab::TMCow::TMCow(int row, int col, int direction, int energy) {
     this->attach_metadata(new IToroidalMovingAnimal(row, col, nullptr, 2.0, direction, energy));
 }
 
-Linguisteen::TMCow::TMCow(IToroidalMovingAnimal* self) {
+JrLab::TMCow::TMCow(IToroidalMovingAnimal* self) {
     this->attach_metadata(self);
 }
 
-void Linguisteen::TMCow::draw(dc_t* dc, float x, float y, float width, float height) {
+void JrLab::TMCow::draw(dc_t* dc, float x, float y, float width, float height) {
     Cow::draw(dc, x, y, width, height);
     this->unsafe_metadata<IToroidalMovingAnimal>()->draw(dc, x, y, width, height);
 }
 
-Animal* Linguisteen::TMCow::asexually_reproduce() {
+Animal* JrLab::TMCow::asexually_reproduce() {
     return new TMCow(this->unsafe_metadata<IToroidalMovingAnimal>()->asexually_reproduce());
 }
 
 /*************************************************************************************************/
-Linguisteen::TMCat::TMCat(int row, int col, int direction, int energy) {
+JrLab::TMCat::TMCat(int row, int col, int direction, int energy) {
     this->attach_metadata(new IToroidalMovingAnimal(row, col, nullptr, 0.4, direction, energy));
 }
 
-Linguisteen::TMCat::TMCat(IToroidalMovingAnimal* self) {
+JrLab::TMCat::TMCat(IToroidalMovingAnimal* self) {
     this->attach_metadata(self);
 }
 
-void Linguisteen::TMCat::draw(dc_t* dc, float x, float y, float width, float height) {
+void JrLab::TMCat::draw(dc_t* dc, float x, float y, float width, float height) {
     Cat::draw(dc, x, y, width, height);
     this->unsafe_metadata<IToroidalMovingAnimal>()->draw(dc, x, y, width, height);
 }
 
-Animal* Linguisteen::TMCat::asexually_reproduce() {
+Animal* JrLab::TMCat::asexually_reproduce() {
     return new TMCat(this->unsafe_metadata<IToroidalMovingAnimal>()->asexually_reproduce());
 }
 
 /*************************************************************************************************/
-Linguisteen::TMPigeon::TMPigeon(int row, int col, int direction, int energy) {
+JrLab::TMPigeon::TMPigeon(int row, int col, int direction, int energy) {
     this->attach_metadata(new IToroidalMovingAnimal(row, col, nullptr, 0.3, direction, energy));
 }
 
-Linguisteen::TMPigeon::TMPigeon(IToroidalMovingAnimal* self) {
+JrLab::TMPigeon::TMPigeon(IToroidalMovingAnimal* self) {
     this->attach_metadata(self);
 }
 
-void Linguisteen::TMPigeon::draw(dc_t* dc, float x, float y, float width, float height) {
+void JrLab::TMPigeon::draw(dc_t* dc, float x, float y, float width, float height) {
     Pigeon::draw(dc, x, y, width, height);
     this->unsafe_metadata<IToroidalMovingAnimal>()->draw(dc, x, y, width, height);
 }
 
-Animal* Linguisteen::TMPigeon::asexually_reproduce() {
+Animal* JrLab::TMPigeon::asexually_reproduce() {
     return new TMPigeon(this->unsafe_metadata<IToroidalMovingAnimal>()->asexually_reproduce());
 }

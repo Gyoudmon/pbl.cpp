@@ -2,7 +2,7 @@
 
 #include <plteen/bang.hpp>
 
-namespace Linguisteen {
+namespace JrLab {
 #define MAZE_SIZE 15    // 方格单边数量
 
     class SelfAvoidingWalkWorld : public Plteen::TheBigBang {
