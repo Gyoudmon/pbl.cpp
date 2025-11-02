@@ -1,11 +1,11 @@
 // 导入语言基础课的大爆炸宇宙(BigBangCosmos)
-#include "digitama/basis.hpp"
+#include "digitama/JrLab.hpp"
 
 using namespace JrLab;
 
 int main(int argc, char* args[]) {
     /* 混沌初开，宇宙诞生 */
-    BasisCosmos universe;
+    JrLabCosmos universe;
 
     /* 创造游戏世界 */
     universe.construct(argc, args);
