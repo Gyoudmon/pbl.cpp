@@ -1,4 +1,4 @@
-// 导入语言基础课的大爆炸宇宙(BigBangCosmos)
+// 导入语言基础课的大爆炸宇宙(JrLabCosmos)
 #include "digitama/JrLab.hpp"
 
 using namespace JrLab;
