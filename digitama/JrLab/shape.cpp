@@ -1,0 +1,37 @@
+#include "shape.hpp"    // 导入本模块自己的头文件
+
+using namespace Plteen; // 声明本模块的类和函数默认以 Plteen 的名义使用，或者
+using namespace JrLab;  // 以 JrLab 的名义使用
+
+/*************************************************************************************************/
+// 实现 ShapeWorld::load 方法，在舞台上加入基础几何图形的实例，注意添加顺序
+void JrLab::ShapeWorld::load(float width, float height) {
+    // 调用父类的同名方法加载标题和小猫助手
+    TheBigBang::load(width, height);
+
+    // 苍绿色院子
+    this->garden = this->spawn<Ellipselet>(200, 80, PALEGREEN, KHAKI);
+    
+    // 房屋部件
+    this->roof = this->spawn<RegularPolygonlet>(3, 140.0F, -90.0F, DEEPSKYBLUE, ROYALBLUE); // 深空蓝屋顶
+    this->wall = this->spawn<Rectanglet>(200, 180, WHITESMOKE, SNOW);                       // 白色墙壁
+    this->door = this->spawn<Rectanglet>(42, 84, KHAKI, DARKKHAKI);                         // 卡其色门
+    this->lock = this->spawn<Circlet>(4, CHOCOLATE);                                        // 巧克力色门锁
+    this->window = this->spawn<RoundedSquarelet>(64, -0.15F, LIGHTSKYBLUE, SKYBLUE);        // 天蓝色窗户
+}
+
+// 实现 ShapeWorld::reflow 方法，重新排列几何图形在舞台上的位置
+void JrLab::ShapeWorld::reflow(float width, float height) {
+    // 调用父类的同名方法排列标题和小猫助手
+    TheBigBang::reflow(width, height);
+
+    // 排列基本图形以组装房屋
+    this->move_to(this->roof, Position(width * 0.50F, height * 0.50F), MatterPort::CB);
+    this->move_to(this->wall, Position(this->roof, MatterPort::CB), MatterPort::CT);
+    this->move_to(this->door, Position(this->wall, MatterPort::RB), MatterPort::RB, { -24.0F, 0.0F });
+    this->move_to(this->lock, Position(this->door, MatterPort::RC), MatterPort::RC, { -4.0F,  0.0F });
+    this->move_to(this->window, Position(this->wall, MatterPort::CC), MatterPort::RC);
+
+    // 排列院子
+    this->move_to(this->garden, Position(this->wall, MatterPort::CC), MatterPort::CT);
+}
