@@ -80,3 +80,6 @@ __pycache__
 # database
 *.db
 
+# Student Projects
+BigBangCosmos.cpp
+student
