@@ -1,17 +1,17 @@
-#include "cosmos.hpp"
+#include "basis.hpp"
 
 // 导入一个个任务世界
-#include "shape.hpp"                // 几何图形
-#include "paddleball.hpp"           // 托球游戏
-#include "angry_bird.hpp"           // 愤怒小鸟
+#include "basis/shape.hpp"                // 几何图形
+#include "basis/paddleball.hpp"           // 托球游戏
+#include "basis/angry_bird.hpp"           // 愤怒小鸟
 
-#include "color_mixture.hpp"        // 混色模型
-#include "color_wheel.hpp"          // 色相环
-#include "drunkard.hpp"             // 醉汉漫步
+#include "basis/color_mixture.hpp"        // 混色模型
+#include "basis/color_wheel.hpp"          // 色相环
+#include "basis/drunkard.hpp"             // 醉汉漫步
 
-#include "self_avoiding_walk.hpp"   // 自回避随机游走
-#include "game_of_life.hpp"         // 生命游戏
-#include "evolution.hpp"            // 演化游戏
+#include "basis/self_avoiding_walk.hpp"   // 自回避随机游走
+#include "basis/game_of_life.hpp"         // 生命游戏
+#include "basis/evolution.hpp"            // 演化游戏
 
 // 导入教师演示程序
 #include <pltmos/stream.hpp>
@@ -25,8 +25,8 @@ using namespace WarGrey::STEM;
 using namespace WarGrey::PLT;
 
 /*************************************************************************************************/
-// 定义和实现 BigBangCosmos::construct 函数，构造本地宇宙，执行初始化，加载任务世界    
-void JrLab::BigBangCosmos::construct(int argc, char* argv[]) {
+// 定义和实现 BasisCosmos::construct 函数，构造本地宇宙，执行初始化，加载任务世界    
+void JrLab::BasisCosmos::construct(int argc, char* argv[]) {
     TheCosmos::construct(argc, argv);
     this->set_window_size(1200, 0);
             
@@ -57,7 +57,7 @@ void JrLab::BigBangCosmos::construct(int argc, char* argv[]) {
     this->spawn<StreamPlane>(this->stream_source.c_str());
 }
 
-void JrLab::BigBangCosmos::parse_cmdline_options(int argc, char* argv[]) {
+void JrLab::BasisCosmos::parse_cmdline_options(int argc, char* argv[]) {
     CmdlineOps opt = CmdlineOps::_;
             
     for (int idx = 1; idx < argc; idx ++) {

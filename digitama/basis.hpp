@@ -1,19 +1,19 @@
 #pragma once
 
-#include "../splash.hpp"
+#include "splash.hpp"
 
 /*************************************************************************************************/
 namespace JrLab {
     enum class CmdlineOps { GameOfLifeDemo, StreamFile, CarryNumber, _ };
 
-    /* 定义本地宇宙类，并命名为 BigBangCosmos，继承自 TheCosmos 类 */
-    class BigBangCosmos : public TheCosmos {
+    /* 定义本地宇宙类，并命名为 BasisCosmos，继承自 TheCosmos 类 */
+    class BasisCosmos : public TheCosmos {
     public:
-        BigBangCosmos(int fps = 60) : TheCosmos(fps) {}
-        virtual ~BigBangCosmos() {}
+        BasisCosmos(int fps = 60) : TheCosmos(fps) {}
+        virtual ~BasisCosmos() {}
 
     public:
-        // 定义 BigBangCosmos::construct 函数，执行初始化，加载任务世界    
+        // 定义 BasisCosmos::construct 函数，执行初始化，加载任务世界    
         void construct(int argc, char* argv[]) override;
 
     protected:
