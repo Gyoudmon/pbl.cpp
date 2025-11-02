@@ -1,10 +1,10 @@
 #include <plteen/game.hpp>
 
 namespace JrLab {
-    class TheCosmos : public Plteen::Cosmos {
+    class TheSplashCosmos : public Plteen::Cosmos {
     public:
-        TheCosmos(int fps) : Plteen::Cosmos(fps) {}
-        virtual ~TheCosmos();
+        TheSplashCosmos(int fps) : Plteen::Cosmos(fps) {}
+        virtual ~TheSplashCosmos();
 
     public:  // 覆盖游戏基本方法
         void construct(int argc, char* argv[]) override;

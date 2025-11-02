@@ -27,7 +27,7 @@ using namespace WarGrey::PLT;
 /*************************************************************************************************/
 // 定义和实现 JrLabCosmos::construct 函数，构造本地宇宙，执行初始化，加载任务世界    
 void JrLab::JrLabCosmos::construct(int argc, char* argv[]) {
-    TheCosmos::construct(argc, argv);
+    TheSplashCosmos::construct(argc, argv);
     this->set_window_size(1200, 0);
             
     // 按顺序加载各个任务世界

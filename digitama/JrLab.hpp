@@ -7,9 +7,9 @@ namespace JrLab {
     enum class CmdlineOps { GameOfLifeDemo, StreamFile, CarryNumber, _ };
 
     /* 定义本地宇宙类，并命名为 BasisCosmos，继承自 TheCosmos 类 */
-    class JrLabCosmos : public TheCosmos {
+    class JrLabCosmos : public TheSplashCosmos {
     public:
-        JrLabCosmos(int fps = 60) : TheCosmos(fps) {}
+        JrLabCosmos(int fps = 60) : TheSplashCosmos(fps) {}
         virtual ~JrLabCosmos() {}
 
     public:

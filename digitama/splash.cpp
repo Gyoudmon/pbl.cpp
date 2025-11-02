@@ -232,11 +232,11 @@ namespace {
 }
 
 /*************************************************************************************************/
-JrLab::TheCosmos::~TheCosmos() {
+JrLab::TheSplashCosmos::~TheSplashCosmos() {
     imgdb_teardown();
 }
 
-void JrLab::TheCosmos::construct(int argc, char* argv[]) {
+void JrLab::TheSplashCosmos::construct(int argc, char* argv[]) {
     GameFont::fontsize(21);
     
     enter_digimon_zone(argv[0]);
@@ -256,12 +256,12 @@ void JrLab::TheCosmos::construct(int argc, char* argv[]) {
     this->splash = this->push_plane(new SplashPlane(this));
 }
 
-void JrLab::TheCosmos::update(uint64_t count, uint32_t interval, uint64_t uptime) {
+void JrLab::TheSplashCosmos::update(uint64_t count, uint32_t interval, uint64_t uptime) {
     if (this->has_current_mission_completed()) {
         this->transfer_to_plane(0);
     }
 }
 
-bool JrLab::TheCosmos::can_exit() {
+bool JrLab::TheSplashCosmos::can_exit() {
     return this->splash->has_mission_completed();
 }
