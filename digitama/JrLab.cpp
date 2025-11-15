@@ -24,8 +24,8 @@ using namespace JrLab;
 using namespace WarGrey::STEM;
 using namespace WarGrey::PLT;
 
-/*************************************************************************************************/
-// 定义和实现 JrLabCosmos::construct 函数，构造本地宇宙，执行初始化，加载任务世界    
+/*****************************************************************************/
+// 定义和实现 JrLabCosmos::construct 函数，构造本地宇宙，执行初始化，加载任务世界
 void JrLab::JrLabCosmos::construct(int argc, char* argv[]) {
     TheSplashCosmos::construct(argc, argv);
     this->set_window_size(1200, 0);
